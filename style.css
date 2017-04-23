@@ -4,7 +4,9 @@ div.page {
 }
 
 div.page {
-  transition: opacity .2s cubic-bezier(.4,0,.2,1)
+  transition: opacity .2s ease-out;
+  transition: clip .2s ease-out;
+  clip: rect(0px, 0px, 0px, 0px);
 }
 
 div.page.home {
@@ -15,12 +17,7 @@ div.page.book {
   background-color: lightblue;
 }
 
-div.book > table {
-  transition: opacity .2s cubic-bezier(.4,0,.2,1)
-  position: absolute;
-  opacity: 0;
-}
-
 .show {
   opacity: 1 !important;
+  clip: rect(0px, 1000px, 1000px, 0px) !important;
 }
