@@ -1,7 +1,7 @@
 $(document).ready(function() {
   var menu = ['home', 'book'];
   var req_page = ['book'];
-  var preset_page = "";
+  var present_page = "";
   var old_page_html = "";
   $('a.mdl-navigation__link').click(function() {
     var classes = $(this).attr('class');
@@ -14,11 +14,11 @@ $(document).ready(function() {
     }
     if(selected_menu != -1) {
       $('div.page').removeClass('show');
-      if(preset_page !== "") {
-        preset_page.html(old_page_html);
+      if(present_page !== "") {
+        present_page.html(old_page_html);
       }
-      preset_page = $('div.page.' + menu[selected_menu]);
-      old_page_html = $(preset_page.html());
+      present_page = $('div.page.' + menu[selected_menu]);
+      old_page_html = $(present_page.html());
       $('div.page.' + menu[selected_menu]).addClass("show");
       if(req_page.indexOf(menu[selected_menu]) != -1) {
         $.get("connect-data.php?command=1&table=" + menu[selected_menu], function(data) {
@@ -27,7 +27,7 @@ $(document).ready(function() {
           var head = table_json.head;
           for(var i = 0; i < head.length; i++) {
             var col = '<th>' + head[i] + '</th>';
-            console.log(col);
+            // console.log(col);
             $('div.' + menu[selected_menu] + ' thead > tr').append(col);
           }
           var body = table_json.body;
@@ -40,6 +40,7 @@ $(document).ready(function() {
             $('div.' + menu[selected_menu] + ' tbody').append(row);
           }
         });
+        present_page.children("table").addClass("show");
       }
     }
   });

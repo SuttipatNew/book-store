@@ -15,6 +15,12 @@ div.page.book {
   background-color: lightblue;
 }
 
+div.book > table {
+  transition: opacity .2s cubic-bezier(.4,0,.2,1)
+  position: absolute;
+  opacity: 0;
+}
+
 .show {
   opacity: 1 !important;
 }
