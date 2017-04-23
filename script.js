@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  var menu = ['home', 'books'];
+  var menu = ['home', 'book'];
   $('a.mdl-navigation__link').click(function() {
     var classes = $(this).attr('class');
     var selected_menu = -1;
@@ -13,7 +13,7 @@ $(document).ready(function() {
       $('div.page').removeClass('show');
       $('div.page.'+menu[selected_menu]).addClass("show");
       $('.mdl-layout__drawer').attr('aria-hidden', 'true');
-      load_data('hello');
+      load_data(menu[selected_menu]);
     }
   });
 });
