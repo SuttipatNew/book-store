@@ -50,6 +50,25 @@ if($_GET['command'] == '1') {
   } else {
     echo "0 results";
   }
+} else if($_GET['command'] == '2') {
+  $sql = "INSERT INTO " . $_GET['table'];
+  $tmp = "SHOW COLUMNS FROM ". $_GET['table'];
+  $result = $conn->query($tmp);
+  $field = "(";
+  $row = $result->fetch_assoc();
+  while($row) {
+    $field .= $row['Field'];
+    if($row = $result->fetch_assoc()) {
+      $field .= ",";
+    }
+  }
+  $field .= ")";
+  $sql .= " " . $field . " VALUES " . $_GET['data'];
+  if ($conn->query($sql) === TRUE) {
+    echo "New record created successfully";
+  } else {
+      echo "Error: " . $sql . "<br>" . $conn->error;
+  }
 }
 
 $conn->close();

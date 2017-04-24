@@ -95,4 +95,25 @@ $(document).ready(function() {
       present_table_col_count = -1;
     }
   });
+
+  $(document).on("click", '.save-button', function() {
+    console.log('click');
+    var send_data = [];
+    var input_box = present_page.find('input');
+    input_box.each(function(index) {
+      send_data.push($(this).val());
+    });
+    var data_str = JSON.stringify(send_data);
+    data_str = '(' + data_str.substring(1, data_str.length - 1) + ')';
+    var link = "connect-data.php?command=2&table=" + present_page_str + "&data=" + data_str
+    console.log(link);
+    // $.get(link, function(data) {
+    //   console.log(data);
+    //   if(data == "true") {
+    //     console.log('Success');
+    //   } else {
+    //     console.log('Failed');
+    //   }
+    // });
+  });
 });
