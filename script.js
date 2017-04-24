@@ -58,4 +58,9 @@ $(document).ready(function() {
     present_page.find('tbody').append(row);
     present_page.find('div.form-edit-button').addClass('show');
   });
+
+  $('.cancel-button').click(function() {
+    present_page.find('tbody > tr').last().remove();
+    present_page.find('div.form-edit-button').removeClass('show');
+  });
 });
