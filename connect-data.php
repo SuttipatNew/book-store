@@ -17,7 +17,9 @@ if($_GET['command'] == '1') {
   $result = $conn->query($sql);
   echo "{ \"head\" : [";
   $row = $result->fetch_assoc();
+  $col_num = 0;
   while($row) {
+    $col_num++;
     echo "\"" . $row['Field'] . "\"";
     if($row = $result->fetch_assoc()) {
       echo ",";
@@ -44,7 +46,7 @@ if($_GET['command'] == '1') {
         echo ",";
       }
     }
-    echo "]}\n";
+    echo "], \"column\" : " . $col_num . "}\n";
   } else {
     echo "0 results";
   }
