@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  console.log('start');
   var menu = ['home', 'book'];
   var req_page = ['book'];
   var present_page = "";
@@ -42,5 +43,9 @@ $(document).ready(function() {
         });
       }
     }
+  });
+
+  $('.add-button').click(function() {
+    present_page.find('div.form-edit-button').addClass('show');
   });
 });

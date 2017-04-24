@@ -17,5 +17,11 @@ div.page {
 }
 
 div.page table {
-  width: 1080px;
+  width: 100%;
+}
+
+div.form-edit-button {
+  text-align: right;
+  padding: 0px;
+  display: none;
 }
