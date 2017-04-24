@@ -1,23 +1,21 @@
 div.page {
   opacity: 0;
-  position: absolute;
+  display: none;
+  max-width: 1080px !important;
 }
 
 div.page {
-  transition: opacity .2s ease-out;
-  transition: clip .2s ease-out;
+  transition: opacity .5s ease-out;
+  transition: clip .5s ease-out;
   clip: rect(0px, 0px, 0px, 0px);
 }
 
-div.page.home {
-  background-color: pink;
-}
-
-div.page.book {
-  background-color: lightblue;
-}
-
 .show {
+  display: block !important;
   opacity: 1 !important;
   clip: rect(0px, 1000px, 1000px, 0px) !important;
+}
+
+div.page table {
+  width: 1080px;
 }

@@ -40,7 +40,6 @@ $(document).ready(function() {
             $('div.' + menu[selected_menu] + ' tbody').append(row);
           }
         });
-        present_page.children("table").addClass("show");
       }
     }
   });
