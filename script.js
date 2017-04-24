@@ -3,9 +3,10 @@ $(document).ready(function() {
   var menu = ['home', 'book'];
   var req_page = ['book'];
   var present_page = "";
+  var present_page_str = "";
   var old_page_html = "";
   var present_table_col_count = -1;
-  $('a.mdl-navigation__link').click(function() {
+  $('a.mdl-navigation__link').click(function load_page() {
     var classes = $(this).attr('class');
     var selected_menu = -1;
     for(var i = 0; i < menu.length; i++) {
@@ -15,15 +16,16 @@ $(document).ready(function() {
       }
     }
     if(selected_menu != -1) {
+      present_page_str = menu[selected_menu];
       $('div.page').removeClass('show');
       if(present_page !== "") {
         present_page.html(old_page_html);
       }
-      present_page = $('div.page.' + menu[selected_menu]);
+      present_page = $('div.page.' + present_page_str);
       old_page_html = $(present_page.html());
-      $('div.page.' + menu[selected_menu]).addClass("show");
-      if(req_page.indexOf(menu[selected_menu]) != -1) {
-        $.get("connect-data.php?command=1&table=" + menu[selected_menu], function(data) {
+      $('div.page.' + present_page_str).addClass("show");
+      if(req_page.indexOf(present_page_str) != -1) {
+        $.get("connect-data.php?command=1&table=" + present_page_str, function(data) {
           // console.log(JSON.parse(data));
           var table_json = JSON.parse(data);
           var head = table_json.head;
@@ -31,7 +33,7 @@ $(document).ready(function() {
           for(var i = 0; i < present_table_col_count; i++) {
             var col = '<th>' + head[i] + '</th>';
             // console.log(col);
-            $('div.' + menu[selected_menu] + ' thead > tr').append(col);
+            $('div.' + present_page_str + ' thead > tr').append(col);
           }
           var body = table_json.body;
           for(var i = 0; i < body.length; i++) {
@@ -40,7 +42,7 @@ $(document).ready(function() {
               row += "<td>" + body[i][j] + "</td>\n";
             }
             row += "</tr>\n"
-            $('div.' + menu[selected_menu] + ' tbody').append(row);
+            $('div.' + present_page_str + ' tbody').append(row);
           }
         });
       } else {
@@ -49,7 +51,8 @@ $(document).ready(function() {
     }
   });
 
-  $('.add-button').click(function() {
+  // $('.add-button').click(function() {
+  $(document).on("click", '.add-button', function() {
     var row = "<tr>\n";
     for(var i = 0; i < present_table_col_count; i++) {
       row += "<td><input type=\"text\"></td>\n";
@@ -62,5 +65,36 @@ $(document).ready(function() {
   $('.cancel-button').click(function() {
     present_page.find('tbody > tr').last().remove();
     present_page.find('div.form-edit-button').removeClass('show');
+  });
+
+  // $('.refresh-button').click(function() {
+  $(document).on("click", '.refresh-button', function() {
+    present_page.html(old_page_html);
+    old_page_html = present_page.html();
+    present_page.addClass("show");
+    if(req_page.indexOf(present_page_str) != -1) {
+      $.get("connect-data.php?command=1&table=" + present_page_str, function(data) {
+        // console.log(JSON.parse(data));
+        var table_json = JSON.parse(data);
+        var head = table_json.head;
+        present_table_col_count = table_json.column;
+        for(var i = 0; i < present_table_col_count; i++) {
+          var col = '<th>' + head[i] + '</th>';
+          // console.log(col);
+          present_page.find('thead > tr').append(col);
+        }
+        var body = table_json.body;
+        for(var i = 0; i < body.length; i++) {
+          var row = "<tr>\n";
+          for(var j = 0; j < present_table_col_count; j++) {
+            row += "<td>" + body[i][j] + "</td>\n";
+          }
+          row += "</tr>\n"
+          present_page.find('tbody').append(row);
+        }
+      });
+    } else {
+      present_table_col_count = -1;
+    }
   });
 });

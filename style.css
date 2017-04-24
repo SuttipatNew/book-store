@@ -25,3 +25,7 @@ div.form-edit-button {
   padding: 0px;
   display: none;
 }
+
+.refresh-button {
+  float: right;
+}
