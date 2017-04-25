@@ -80,10 +80,14 @@ $(document).ready(function() {
           var row = "<tr>\n";
           for(var i = 0; i < present_table_col_count; i++) {
             var type = "text";
-            if(head[i].Type === "date") {
-              type = "date"
+            var disabled = "";
+            if(head[i].Type === "date" && head[i].Field !== "LastUpdate") {
+              type = "date";
             }
-            row += "<td><input type=\"" + type + "\"></td>\n";
+            if(head[i].Field === "LastUpdate") {
+              disabled = " disabled value=\"timestamp\"";
+            }
+            row += "<td><input type=\"" + type + "\"" + disabled + "></td>\n";
           }
           row += "</tr>\n";
           present_page.find('tbody').append(row);
@@ -254,13 +258,19 @@ $(document).ready(function() {
         col.each(function(index) {
           var input_box_html = "<input type=\""
           var type = "text";
-          if(head[index].Type === "date") {
+          var disabled = "";
+          var text = $(this).text();
+          if(head[index].Type === "date" && head[index].Field !== "LastUpdate") {
             type = "date"
           }
           if(head[index].Key === "PRI") {
             old_id = $(this).text();
           }
-          input_box_html += type + "\" value=\"" + $(this).text() + "\">";
+          if(head[index].Field === "LastUpdate") {
+            disabled = " disabled";
+            text = "timestamp"
+          }
+          input_box_html += type + "\"" + disabled + " value=\"" + text + "\">";
           $(this).html(input_box_html);
         });
         present_page.find('div.form.add-button').addClass('show');
