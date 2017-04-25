@@ -20,7 +20,17 @@ if($_GET['command'] == '1') {
   $col_num = 0;
   while($row) {
     $col_num++;
-    echo "\"" . $row['Field'] . "\"";
+    echo "{";
+    $tmp = $row;
+    end($tmp);
+    foreach ($row as $key => $value) {
+     echo " \"" . $key . "\" : \"" . $value . "\"";
+     if($key != key($tmp)) {
+       echo ",";
+     }
+    }
+    echo "}";
+    // echo "\"" . $row['Field'] . "\"";
     if($row = $result->fetch_assoc()) {
       echo ",";
     }

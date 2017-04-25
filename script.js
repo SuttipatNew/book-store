@@ -32,7 +32,7 @@ $(document).ready(function() {
           var head = table_json.head;
           present_table_col_count = table_json.column;
           for(var i = 0; i < present_table_col_count; i++) {
-            var col = '<th>' + head[i] + '</th>';
+            var col = '<th>' + head[i].Field + '</th>';
             // console.log(col);
             $('div.' + present_page_str + ' thead > tr').append(col);
           }
@@ -112,7 +112,7 @@ function refresh_page() {
       var head = table_json.head;
       present_table_col_count = table_json.column;
       for(var i = 0; i < present_table_col_count; i++) {
-        var col = '<th>' + head[i] + '</th>';
+        var col = '<th>' + head[i].Field + '</th>';
         // console.log(col);
         present_page.find('thead > tr').append(col);
       }
