@@ -50,12 +50,14 @@ $(document).ready(function() {
               $('div.' + present_page_str + ' tbody').append(row);
             }
           }
-          $("main .progress-bar").removeClass("show");
+          remove_progress_bar()
         });
       } else {
         present_table_col_count = -1;
-        $("main .progress-bar").removeClass("show");
+        remove_progress_bar()
       }
+    } else {
+      remove_progress_bar()
     }
   });
 
@@ -200,10 +202,16 @@ function refresh_page(do_after_done) {
       if (typeof do_after_done !== 'undefined') {
         do_after_done();
       }
-      $("main .progress-bar").removeClass("show");
+      remove_progress_bar()
     });
   } else {
     present_table_col_count = -1;
   }
   status = "";
+}
+
+function remove_progress_bar() {
+  setTimeout(function() {
+    $("main .progress-bar").removeClass("show");
+  }, 800);
 }
