@@ -128,10 +128,42 @@ $(document).ready(function() {
       if(data == "true") {
         console.log('Success');
         refresh_page();
+        status = "";
       } else {
+        alert("Insert failed.")
         console.log('Failed');
       }
-      status = "";
+    });
+  });
+
+  $(document).on("click", 'button.delete-button', function() {
+    var checked = present_page.find("input:checked");
+    checked.each(function(index) {
+      var col = $(this).closest("tr").find('td');
+      // console.log(col);
+      $.get("connect-data.php?command=1&table=" + present_page_str, function(data) {
+        var table_json = JSON.parse(data);
+        var head = table_json.head;
+        var id = "";
+        col.each(function(index) {
+          if(index > 0 && head[index - 1].Key === "PRI") {
+            id = $(this).text();
+            return false;
+          }
+        });
+        // console.log("id: " + id);
+        $.get("connect-data.php?command=3&table=" + present_page_str + "&id=" + id, function(data) {
+          console.log(data);
+          if(data == "true") {
+            console.log('Success');
+            refresh_page();
+            status = "";
+          } else {
+            alert("Insert failed.")
+            console.log('Failed');
+          }
+        });
+      });
     });
   });
 });

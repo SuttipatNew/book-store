@@ -1,4 +1,9 @@
 <?php
+/* command
+  1 = select
+  2 = INSERT
+  3 = DELETE
+*/
 header('Content-Type: text/html; charset=utf-8');
 $servername = "localhost";
 $username = "user1";
@@ -65,6 +70,8 @@ if($_GET['command'] == '1') {
   }
 } else if($_GET['command'] == '2') {
   $sql = "INSERT INTO " . $_GET['table'];
+
+  // get columns name
   $tmp = "SHOW COLUMNS FROM ". $_GET['table'];
   $result = $conn->query($tmp);
   $field = "(";
@@ -77,6 +84,28 @@ if($_GET['command'] == '1') {
   }
   $field .= ")";
   $sql .= " " . $field . " VALUES " . $_GET['data'];
+  if ($conn->query($sql) === TRUE) {
+    echo "true";
+  } else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+  }
+} else if($_GET['command'] == '3') {
+  $sql = "DELETE FROM " . $_GET['table'] . " WHERE ";
+
+  // find primary key
+  $prim = "";
+  $tmp = "SHOW COLUMNS FROM ". $_GET['table'];
+  $result = $conn->query($tmp);
+  $row = $result->fetch_assoc();
+  while($row) {
+    $type = $row['Key'];
+    if($type == "PRI") {
+      $prim = $row['Field'];
+      break;
+    }
+  }
+
+  $sql .= $prim . " = " . $_GET['id'];
   if ($conn->query($sql) === TRUE) {
     echo "true";
   } else {
