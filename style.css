@@ -1,34 +1,34 @@
 div.page {
-  opacity: 0;
-  display: none;
-  max-width: 1080px !important;
+    opacity: 0;
+    display: none;
+    max-width: 1080px !important;
 }
 
 div.page {
-  transition: opacity .5s ease-out;
+    transition: opacity .5s ease-out;
 }
 
 .show {
-  display: block !important;
-  opacity: 1 !important;
+    display: block !important;
+    opacity: 1 !important;
 }
 
 div.page table {
-  width: 100%;
+    width: 100%;
 }
 
 div.form {
-  text-align: right;
-  padding: 0px;
-  display: none;
+    text-align: right;
+    padding: 0px;
+    display: none;
 }
 
 .refresh-button {
-  float: right;
+    float: right;
 }
 
 div.progress-bar {
-  /*display: none;*/
-  opacity: 0;
-  width: 100%;
+    /*display: none;*/
+    opacity: 0;
+    width: 100%;
 }

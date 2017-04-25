@@ -16,7 +16,8 @@
   limitations under the License
 -->
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="A front-end template that helps you build fast, modern mobile web apps.">
@@ -56,189 +57,184 @@
 
     </script>
     <style>
-    #view-source {
-      position: fixed;
-      display: block;
-      right: 0;
-      bottom: 0;
-      margin-right: 40px;
-      margin-bottom: 40px;
-      z-index: 900;
-    }
+        #view-source {
+            position: fixed;
+            display: block;
+            right: 0;
+            bottom: 0;
+            margin-right: 40px;
+            margin-bottom: 40px;
+            z-index: 900;
+        }
     </style>
-  </head>
-  <body>
+</head>
+
+<body>
     <div class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
-      <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
-        <div class="mdl-layout__header-row">
-          <span class="mdl-layout-title">Home</span>
-          <div class="mdl-layout-spacer"></div>
-          <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
-            <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
+        <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title">Home</span>
+                <div class="mdl-layout-spacer"></div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable">
+                    <label class="mdl-button mdl-js-button mdl-button--icon" for="search">
               <i class="material-icons">search</i>
             </label>
-            <div class="mdl-textfield__expandable-holder">
-              <input class="mdl-textfield__input" type="text" id="search">
-              <label class="mdl-textfield__label" for="search">Enter your query...</label>
-            </div>
-          </div>
-          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
+                    <div class="mdl-textfield__expandable-holder">
+                        <input class="mdl-textfield__input" type="text" id="search">
+                        <label class="mdl-textfield__label" for="search">Enter your query...</label>
+                    </div>
+                </div>
+                <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="hdrbtn">
             <i class="material-icons">more_vert</i>
           </button>
-          <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
-            <li class="mdl-menu__item">About</li>
-            <li class="mdl-menu__item">Contact</li>
-            <li class="mdl-menu__item">Legal information</li>
-          </ul>
-        </div>
-      </header>
-      <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
-        <header class="demo-drawer-header">
-          <img src="images/user.jpg" class="demo-avatar">
-          <div class="demo-avatar-dropdown">
-            <span>hello@example.com</span>
-            <div class="mdl-layout-spacer"></div>
-            <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
+                <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="hdrbtn">
+                    <li class="mdl-menu__item">About</li>
+                    <li class="mdl-menu__item">Contact</li>
+                    <li class="mdl-menu__item">Legal information</li>
+                </ul>
+            </div>
+        </header>
+        <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+            <header class="demo-drawer-header">
+                <img src="images/user.jpg" class="demo-avatar">
+                <div class="demo-avatar-dropdown">
+                    <span>hello@example.com</span>
+                    <div class="mdl-layout-spacer"></div>
+                    <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
               <i class="material-icons" role="presentation">arrow_drop_down</i>
               <span class="visuallyhidden">Accounts</span>
             </button>
-            <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
-              <li class="mdl-menu__item">hello@example.com</li>
-              <li class="mdl-menu__item">info@example.com</li>
-              <li class="mdl-menu__item"><i class="material-icons">add</i>Add another account...</li>
-            </ul>
-          </div>
-        </header>
-        <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
-          <a class="mdl-navigation__link home" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Home</a>
-          <a class="mdl-navigation__link book" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Books</a>
-          <a class="mdl-navigation__link sub_agent" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Sub-agent</a>
-          <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Spam</a>
-          <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>Forums</a>
-          <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">flag</i>Updates</a>
-          <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">local_offer</i>Promos</a>
-          <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">shopping_cart</i>Purchases</a>
-          <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i>Social</a>
-          <div class="mdl-layout-spacer"></div>
-          <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i><span class="visuallyhidden">Help</span></a>
-        </nav>
-      </div>
-      <main class="mdl-layout__content mdl-color--grey-100">
-
-        <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate progress-bar"></div>
-
-
-        <!-- dialog -->
-        <dialog class="mdl-dialog">
-        <h4 class="mdl-dialog__title">Do you want to save?</h4>
-        <div class="mdl-dialog__content">
-          <p>
-            Allowing us to collect data will let us get you the information you want faster.
-          </p>
+                    <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
+                        <li class="mdl-menu__item">hello@example.com</li>
+                        <li class="mdl-menu__item">info@example.com</li>
+                        <li class="mdl-menu__item"><i class="material-icons">add</i>Add another account...</li>
+                    </ul>
+                </div>
+            </header>
+            <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
+                <a class="mdl-navigation__link home" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Home</a>
+                <a class="mdl-navigation__link book" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Books</a>
+                <a class="mdl-navigation__link sub_agent" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Sub-agent</a>
+                <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Spam</a>
+                <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>Forums</a>
+                <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">flag</i>Updates</a>
+                <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">local_offer</i>Promos</a>
+                <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">shopping_cart</i>Purchases</a>
+                <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i>Social</a>
+                <div class="mdl-layout-spacer"></div>
+                <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i><span class="visuallyhidden">Help</span></a>
+            </nav>
         </div>
-        <div class="mdl-dialog__actions">
-          <button type="button" class="mdl-button confirm">Confirm</button>
-          <button type="button" class="mdl-button close">Cancel</button>
-        </div>
-        </dialog>
-        <!-- dialog -->
+        <main class="mdl-layout__content mdl-color--grey-100">
+
+            <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate progress-bar"></div>
 
 
-        <!-- Home -->
-        <div class="page home mdl-grid show">
-          <p>this is Home</p>
-        </div>
+            <!-- dialog -->
+            <dialog class="mdl-dialog">
+                <h4 class="mdl-dialog__title">Do you want to save?</h4>
+                <div class="mdl-dialog__content">
+                    <p>
+                        Allowing us to collect data will let us get you the information you want faster.
+                    </p>
+                </div>
+                <div class="mdl-dialog__actions">
+                    <button type="button" class="mdl-button confirm">Confirm</button>
+                    <button type="button" class="mdl-button close">Cancel</button>
+                </div>
+            </dialog>
+            <!-- dialog -->
 
-        <!-- Books -->
-        <div class="page book mdl-grid">
-          <div class="mdl-cell mdl-cell--12-col">
-            <button class="mdl-button mdl-js-button mdl-button--raised add-button">
+
+            <!-- Home -->
+            <div class="page home mdl-grid show">
+                <p>this is Home</p>
+            </div>
+
+            <!-- Books -->
+            <div class="page book mdl-grid">
+                <div class="mdl-cell mdl-cell--12-col">
+                    <button class="mdl-button mdl-js-button mdl-button--raised add-button">
               Add new book
-            </button>
-            &nbsp;
-            <button class="mdl-button mdl-js-button mdl-button--raised delete-button-select">
+            </button> &nbsp;
+                    <button class="mdl-button mdl-js-button mdl-button--raised delete-button-select">
               Delete book
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect refresh-button">
+                    <button class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect refresh-button">
               <i class="material-icons">replay</i>
             </button>
-          </div>
-          <div class="mdl-cell mdl-cell--12-col">
-            <table class="mdl-data-table mdl-js-data-table">
-              <thead>
-                <tr>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>
-          </div>
-          <div class="mdl-cell mdl-cell--12-col form add-button">
-            <button class="mdl-button mdl-js-button mdl-button--raised cancel-button">
+                </div>
+                <div class="mdl-cell mdl-cell--12-col">
+                    <table class="mdl-data-table mdl-js-data-table">
+                        <thead>
+                            <tr>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mdl-cell mdl-cell--12-col form add-button">
+                    <button class="mdl-button mdl-js-button mdl-button--raised cancel-button">
               Cancel
-            </button>
-            &nbsp;
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored save-button">
+            </button> &nbsp;
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored save-button">
               Save
             </button>
-          </div>
-          <div class="mdl-cell mdl-cell--12-col form delete-button">
-            <button class="mdl-button mdl-js-button mdl-button--raised cancel-button">
+                </div>
+                <div class="mdl-cell mdl-cell--12-col form delete-button">
+                    <button class="mdl-button mdl-js-button mdl-button--raised cancel-button">
               Cancel
-            </button>
-            &nbsp;
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored delete-button">
+            </button> &nbsp;
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored delete-button">
               Delete
             </button>
-          </div>
-        </div>
+                </div>
+            </div>
 
-        <!-- SubAgent -->
-        <div class="page sub_agent mdl-grid">
-          <div class="mdl-cell mdl-cell--12-col">
-            <button class="mdl-button mdl-js-button mdl-button--raised add-button">
+            <!-- SubAgent -->
+            <div class="page sub_agent mdl-grid">
+                <div class="mdl-cell mdl-cell--12-col">
+                    <button class="mdl-button mdl-js-button mdl-button--raised add-button">
               Add new Sub-agent
-            </button>
-            &nbsp;
-            <button class="mdl-button mdl-js-button mdl-button--raised delete-button-select">
+            </button> &nbsp;
+                    <button class="mdl-button mdl-js-button mdl-button--raised delete-button-select">
               Delete Sub-agent
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect refresh-button">
+                    <button class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect refresh-button">
               <i class="material-icons">replay</i>
             </button>
-          </div>
-          <div class="mdl-cell mdl-cell--12-col">
-            <table class="mdl-data-table mdl-js-data-table">
-              <thead>
-                <tr>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>
-          </div>
-          <div class="mdl-cell mdl-cell--12-col form add-button">
-            <button class="mdl-button mdl-js-button mdl-button--raised cancel-button">
+                </div>
+                <div class="mdl-cell mdl-cell--12-col">
+                    <table class="mdl-data-table mdl-js-data-table">
+                        <thead>
+                            <tr>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mdl-cell mdl-cell--12-col form add-button">
+                    <button class="mdl-button mdl-js-button mdl-button--raised cancel-button">
               Cancel
-            </button>
-            &nbsp;
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored save-button">
+            </button> &nbsp;
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored save-button">
               Save
             </button>
-          </div>
-          <div class="mdl-cell mdl-cell--12-col form delete-button">
-            <button class="mdl-button mdl-js-button mdl-button--raised cancel-button">
+                </div>
+                <div class="mdl-cell mdl-cell--12-col form delete-button">
+                    <button class="mdl-button mdl-js-button mdl-button--raised cancel-button">
               Cancel
-            </button>
-            &nbsp;
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent delete-button">
+            </button> &nbsp;
+                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent delete-button">
               Delete
             </button>
-          </div>
-        </div>
-      </main>
+                </div>
+            </div>
+        </main>
     </div>
-      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" style="position: fixed; left: -1000px; height: -1000px;">
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" style="position: fixed; left: -1000px; height: -1000px;">
         <defs>
           <mask id="piemask" maskContentUnits="objectBoundingBox">
             <circle cx=0.5 cy=0.5 r=0.49 fill="white" />
@@ -250,7 +246,7 @@
           </g>
         </defs>
       </svg>
-      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 500 250" style="position: fixed; left: -1000px; height: -1000px;">
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 500 250" style="position: fixed; left: -1000px; height: -1000px;">
         <defs>
           <g id="chart">
             <g id="Gridlines">
@@ -285,7 +281,8 @@
           </g>
         </defs>
       </svg>
-      <!-- <a href="https://github.com/google/material-design-lite/blob/mdl-1.x/templates/dashboard/" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white">View Source</a> -->
+    <!-- <a href="https://github.com/google/material-design-lite/blob/mdl-1.x/templates/dashboard/" target="_blank" id="view-source" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored mdl-color-text--white">View Source</a> -->
     <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-  </body>
+</body>
+
 </html>
