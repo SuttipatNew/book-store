@@ -80,7 +80,7 @@ $(document).ready(function() {
       status = "delete";
       present_page.find('thead > tr').prepend("<th>Select</th>")
       present_page.find('tbody > tr').each(function(index) {
-        $(this).prepend("<td><input type=\"checkbox\"><td>")
+        $(this).prepend("<td><input type=\"checkbox\"></td>")
       });
       present_page.find('div.form.delete-button').addClass('show');
     }
