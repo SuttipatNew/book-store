@@ -5,6 +5,11 @@
   3 = DELETE
   4 = UPDATE
 */
+
+date_default_timezone_set("Asia/Bangkok");
+// echo "The time is " . date("Y-m-d");
+$time_stamp = date("Y-m-d");
+
 header('Content-Type: text/html; charset=utf-8');
 $servername = "localhost";
 $username = "user1";
@@ -54,7 +59,11 @@ if($_GET['command'] == '1') {
       $tmp = $row;
       end($tmp);
       foreach($row as $key => $value) {
-        echo "\"" . $value . "\"";
+        if($key == "LastUpdate") {
+          echo "\"" . $time_stamp . "\"";
+        } else {
+          echo "\"" . $value . "\"";
+        }
         if($key != key($tmp)) {
           echo ",";
         }
