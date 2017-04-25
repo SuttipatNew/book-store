@@ -8,6 +8,8 @@ var status = "";
 $(document).ready(function() {
   console.log('start');
   $(document).on("click", 'a.mdl-navigation__link', function() {
+    var title = $(this).html().substring($(this).html().indexOf("</i>") + "</i>".length, $(this).html().length);
+    $('span.mdl-layout-title').text(title);
     var classes = $(this).attr('class');
     var selected_menu = -1;
     for(var i = 0; i < menu.length; i++) {
