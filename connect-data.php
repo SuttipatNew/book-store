@@ -25,11 +25,13 @@ if($_GET['command'] == '1') {
       echo ",";
     }
   }
-  echo "],";
-  echo "\n\"body\" : [";
+  echo "], ";
+  echo "\"column\" : " . $col_num . ", \n";
+  echo "\n\"body\" : ";
   $sql = "SELECT * FROM " . $_GET['table'];
   $result = $conn->query($sql);
   if ($result->num_rows > 0) {
+    echo "[";
     $row = $result->fetch_assoc();
     while($row) {
       echo "[";
@@ -46,9 +48,10 @@ if($_GET['command'] == '1') {
         echo ",";
       }
     }
-    echo "], \"column\" : " . $col_num . "}\n";
+    echo "]}\n";
   } else {
-    echo "0 results";
+    // echo "0 results";
+    echo "\"\" }";
   }
 } else if($_GET['command'] == '2') {
   $sql = "INSERT INTO " . $_GET['table'];
@@ -65,9 +68,9 @@ if($_GET['command'] == '1') {
   $field .= ")";
   $sql .= " " . $field . " VALUES " . $_GET['data'];
   if ($conn->query($sql) === TRUE) {
-    echo "New record created successfully";
+    echo "true";
   } else {
-      echo "Error: " . $sql . "<br>" . $conn->error;
+    echo "Error: " . $sql . "<br>" . $conn->error;
   }
 }
 
