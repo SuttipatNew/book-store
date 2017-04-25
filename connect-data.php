@@ -158,7 +158,22 @@ if($_GET['command'] == '1') {
   } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
   }
-}
+} else if($_GET['command'] == '5') {
+
+} 
+// else if($_GET['command'] == '6') {
+//   if ($result=mysqli_query($con,$sql)) {
+//   // Get field information for all fields
+//     while ($fieldinfo=mysqli_fetch_field($result)) {
+//       $sql="SELECT Lastname,Age FROM Persons ORDER BY Lastname";
+//       printf("Name: %s\n",$fieldinfo->name);
+//     // printf("Table: %s\n",$fieldinfo->table);
+//     // printf("max. Len: %d\n",$fieldinfo->max_length);
+//     }
+//   // Free result set
+//   mysqli_free_result($result);
+//   }
+// }
 
 $conn->close();
 ?>
