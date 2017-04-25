@@ -11,6 +11,7 @@ var checked = null;
 var input_box = null;
 var data_str = "";
 var link = "";
+var selected_search_field = "";
 $(document).ready(function() {
 
 	var dialog = document.querySelector('dialog');
@@ -54,6 +55,7 @@ $(document).ready(function() {
 						
 						$('div.' + present_page_str + ' thead > tr').append(col);
 						$("#professsion").append(dropdown);
+
 					}
 					var body = table_json.body;
 					if (body !== "") {
@@ -66,14 +68,6 @@ $(document).ready(function() {
 							$('div.' + present_page_str + ' tbody').append(row);
 						}
 					}
-
-					//update dropdown
-					// var head = table_json.head;
-					// console.log(body);
-					// for (var i = 0; i < column.length; i++) {
-					// 	console.log("<option value=\"option " + i + "\">" + column[i] + "</option>")
-						// $("#professsion").append("<option value=\"option " + i + "\">" + column[i] + "</option>");
-					// }
 
 					remove_progress_bar()
 				});
@@ -305,6 +299,12 @@ $(document).ready(function() {
 				refresh_page();
 			}
 		}
+	});
+
+	$("#professsion").change(function(){
+			// console.log("eiei")
+			selected_search_field = $('#professsion option:selected').text();
+			console.log(selected_search_field);
 	});
 });
 
