@@ -136,6 +136,9 @@ $(document).ready(function() {
       alert("Please input every field.");
       return;
     }
+    if(action === "edit") {
+      subaction = "confirmation";
+    }
     var data_str = JSON.stringify(send_data);
     data_str = data_str.substring(1, data_str.length - 1);
     var link = "";
@@ -144,19 +147,49 @@ $(document).ready(function() {
     } else if(action === "edit") {
       link = "connect-data.php?command=4&table=" + present_page_str + "&data=" + data_str + "&old_id=" + old_id;
     }
-    // console.log(link);
-    $.get(link, function(data) {
-      // console.log(data);
-      if(data == "true") {
-        console.log('Success');
-        refresh_page(function() {
-          action = "";
-        }, true);
-      } else {
-        alert("Insert failed.")
-        console.log('Failed');
-      }
-    });
+
+    if(subaction !== "confirmation") {
+      // console.log(link);
+      $.get(link, function(data) {
+        // console.log(data);
+        if(data == "true") {
+          console.log('Success');
+          refresh_page(function() {
+            action = "";
+          }, true);
+        } else {
+          alert("Insert failed.")
+          console.log('Failed');
+        }
+      });
+    } else {
+      dialog.showModal();
+      dialog.querySelector('.close').addEventListener('click', function() {
+        if(subaction === "confirmation") {
+          dialog.close();
+          subaction = "";
+        }
+      });
+      dialog.querySelector('.confirm').addEventListener('click', function() {
+        if(subaction === "confirmation") {
+          dialog.close();
+          subaction = "";
+          $.get(link, function(data) {
+            // console.log(data);
+            if(data == "true") {
+              console.log('Success');
+              refresh_page(function() {
+                action = "";
+              }, true);
+            } else {
+              alert("Insert failed.")
+              console.log('Failed');
+            }
+          });
+        }
+      });
+    }
+
   });
 
   $(document).on("click", 'button.delete-button', function() {
@@ -191,7 +224,6 @@ $(document).ready(function() {
                   return false;
                 }
               });
-              // console.log("id: " + id);
               $.get("connect-data.php?command=3&table=" + present_page_str + "&id=" + id, function(data) {
                 if(data == "true") {
                   console.log('Success');
