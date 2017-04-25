@@ -15,7 +15,7 @@ $(document).ready(function() {
     dialogPolyfill.registerDialog(dialog);
   }
 
-  // console.log('start');
+  console.log('start');
   $(document).on("click", 'a.mdl-navigation__link', function() {
     $("main .progress-bar").addClass("show");
     var title = $(this).html().substring($(this).html().indexOf("</i>") + "</i>".length, $(this).html().length);
@@ -120,7 +120,7 @@ $(document).ready(function() {
   });
 
   $(document).on("click", 'button.refresh-button', function() {
-    console.log('refresh');
+    // console.log('refresh');
     refresh_page(function() {
       action = "";
     }, true);
@@ -144,7 +144,6 @@ $(document).ready(function() {
       subaction = "confirmation";
     }
     var data_str = JSON.stringify(send_data);
-    data_str = data_str.substring(1, data_str.length - 1);
     var link = "";
     if(action === "add") {
       link = "connect-data.php?command=2&table=" + present_page_str + "&data=" + data_str;
@@ -152,8 +151,8 @@ $(document).ready(function() {
       link = "connect-data.php?command=4&table=" + present_page_str + "&data=" + data_str + "&old_id=" + old_id;
     }
 
+    // console.log(link);
     if(subaction !== "confirmation") {
-      // console.log(link);
       $.get(link, function(data) {
         // console.log(data);
         if(data == "true") {

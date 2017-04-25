@@ -5,6 +5,9 @@
   3 = DELETE
   4 = UPDATE
 */
+date_default_timezone_set("Asia/Bangkok");
+// echo "The time is " . date("Y-m-d");
+$timestamp = date("Y-m-d");
 header('Content-Type: text/html; charset=utf-8');
 $servername = "localhost";
 $username = "user1";
@@ -84,7 +87,22 @@ if($_GET['command'] == '1') {
     }
   }
   $field .= ")";
-  $sql .= " " . $field . " VALUES " . "(" . $_GET['data'] . ")";
+  $value = "(";
+  $data = json_decode($_GET['data']);
+  for($i = 0; $i < count($data); $i++) {
+    $value .= "\"";
+    if($data[$i] == "timestamp") {
+      $value .= $timestamp;
+    } else {
+      $value .= $data[$i];
+    }
+    $value .= "\"";
+    if($i < count($data) - 1) {
+      $value .= ",";
+    }
+  }
+  $value .= ")";
+  $sql .= " " . $field . " VALUES " . $value;
   if ($conn->query($sql) === TRUE) {
     echo "true";
   } else {
@@ -114,7 +132,7 @@ if($_GET['command'] == '1') {
   }
 } else if($_GET['command'] == '4') {
   $sql = "UPDATE " . $_GET['table'] . " SET ";
-  $data = json_decode("[" . $_GET['data'] . "]");
+  $data = json_decode($_GET['data']);
   $prim = "";
   $tmp = "SHOW COLUMNS FROM ". $_GET['table'];
   $result = $conn->query($tmp);
