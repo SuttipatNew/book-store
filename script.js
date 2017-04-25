@@ -56,14 +56,22 @@ $(document).ready(function() {
 
   $(document).on("click", '.add-button', function() {
     if(status === "") {
-      status = "add";
-      var row = "<tr>\n";
-      for(var i = 0; i < present_table_col_count; i++) {
-        row += "<td><input type=\"text\"></td>\n";
-      }
-      row += "</tr>\n";
-      present_page.find('tbody').append(row);
-      present_page.find('div.form-edit-button').addClass('show');
+      $.get("connect-data.php?command=1&table=" + present_page_str, function(data) {
+        status = "add";
+        var table_json = JSON.parse(data);
+        var head = table_json.head;
+        var row = "<tr>\n";
+        for(var i = 0; i < present_table_col_count; i++) {
+          var type = "text";
+          if(head[i].Type === "date") {
+            type = "date"
+          }
+          row += "<td><input type=\"" + type + "\"></td>\n";
+        }
+        row += "</tr>\n";
+        present_page.find('tbody').append(row);
+        present_page.find('div.form-edit-button').addClass('show');
+      });
     }
   });
 
@@ -82,22 +90,29 @@ $(document).ready(function() {
     var send_data = [];
     var input_box = present_page.find('input');
     input_box.each(function(index) {
+      if($(this).val() === "") {
+        alert("error");
+        return false;
+      }
       send_data.push($(this).val());
     });
+    if(send_data.length !== input_box.length) {
+      return;
+    }
     var data_str = JSON.stringify(send_data);
     data_str = '(' + data_str.substring(1, data_str.length - 1) + ')';
     var link = "connect-data.php?command=2&table=" + present_page_str + "&data=" + data_str
     console.log(link);
-    $.get(link, function(data) {
-      console.log(data);
-      if(data == "true") {
-        console.log('Success');
-        refresh_page();
-      } else {
-        console.log('Failed');
-      }
-      status = "";
-    });
+    // $.get(link, function(data) {
+    //   console.log(data);
+    //   if(data == "true") {
+    //     console.log('Success');
+    //     refresh_page();
+    //   } else {
+    //     console.log('Failed');
+    //   }
+    //   status = "";
+    // });
   });
 });
 
