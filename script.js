@@ -1,5 +1,5 @@
-var menu = ['home', 'book', 'sub_agent'];
-var req_page = ['book', 'sub_agent']; //name of page that have to get data from db
+var menu = ['home', 'book', 'sub-agent'];
+var req_page = ['book', 'sub-agent']; //name of page that have to get data from db
 var present_page = "";
 var present_page_str = "";
 var old_page_html = "";
