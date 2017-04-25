@@ -1,9 +1,11 @@
 <?php
 /* command
-  1 = select
+  1 = select (show everything jingerbell in table)
   2 = INSERT
   3 = DELETE
   4 = UPDATE
+  5 = search
+  6 = get_field
 */
 date_default_timezone_set("Asia/Bangkok");
 // echo "The time is " . date("Y-m-d");
