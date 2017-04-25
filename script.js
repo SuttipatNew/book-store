@@ -54,8 +54,8 @@ $(document).ready(function() {
     }
   });
 
-  $(document).on("click", '.add-button', function() {
-    if(status === "") {
+  $(document).on("click", 'button.add-button', function() {
+    if(status !== "add") {
       $.get("connect-data.php?command=1&table=" + present_page_str, function(data) {
         status = "add";
         var table_json = JSON.parse(data);
@@ -70,49 +70,67 @@ $(document).ready(function() {
         }
         row += "</tr>\n";
         present_page.find('tbody').append(row);
-        present_page.find('div.form-edit-button').addClass('show');
+        present_page.find('div.form.add-button').addClass('show');
       });
     }
   });
 
-  $(document).on("click", '.cancel-button', function() {
-    present_page.find('tbody > tr').last().remove();
-    present_page.find('div.form-edit-button').removeClass('show');
+  $(document).on("click", 'button.delete-button-select', function() {
+    if(status !== "delete") {
+      status = "delete";
+      present_page.find('thead > tr').prepend("<th>Select</th>")
+      present_page.find('tbody > tr').each(function(index) {
+        $(this).prepend("<td><input type=\"checkbox\"><td>")
+      });
+      present_page.find('div.form.delete-button').addClass('show');
+    }
+  });
+
+  $(document).on("click", 'button.cancel-button', function() {
+    if(status === "add") {
+      present_page.find('tbody > tr').last().remove();
+    } else if(status === "delete") {
+      present_page.find('th').first().remove();
+      present_page.find('tbody > tr').each(function(index) {
+        $(this).find('td').first().remove();
+      });
+    }
+    present_page.find('div.form').removeClass('show');
     status = "";
   });
 
-  $(document).on("click", '.refresh-button', function() {
+  $(document).on("click", 'button.refresh-button', function() {
     refresh_page();
   });
 
-  $(document).on("click", '.save-button', function() {
+  $(document).on("click", 'button.save-button', function() {
     // console.log('click');
     var send_data = [];
     var input_box = present_page.find('input');
     input_box.each(function(index) {
       if($(this).val() === "") {
-        alert("error");
         return false;
       }
       send_data.push($(this).val());
     });
     if(send_data.length !== input_box.length) {
+      alert("Please input every field.");
       return;
     }
     var data_str = JSON.stringify(send_data);
     data_str = '(' + data_str.substring(1, data_str.length - 1) + ')';
     var link = "connect-data.php?command=2&table=" + present_page_str + "&data=" + data_str
     console.log(link);
-    // $.get(link, function(data) {
-    //   console.log(data);
-    //   if(data == "true") {
-    //     console.log('Success');
-    //     refresh_page();
-    //   } else {
-    //     console.log('Failed');
-    //   }
-    //   status = "";
-    // });
+    $.get(link, function(data) {
+      console.log(data);
+      if(data == "true") {
+        console.log('Success');
+        refresh_page();
+      } else {
+        console.log('Failed');
+      }
+      status = "";
+    });
   });
 });
 

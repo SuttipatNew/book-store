@@ -48,7 +48,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.cyan-light_blue.min.css">
     <link rel="stylesheet" href="material.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="s.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
     <script type="text/javascript" src="script.js"></script>
@@ -132,6 +132,10 @@
             <button class="mdl-button mdl-js-button mdl-button--raised add-button">
               Add new book
             </button>
+            &nbsp;
+            <button class="mdl-button mdl-js-button mdl-button--raised delete-button-select">
+              Delete book
+            </button>
             <button class="mdl-button mdl-js-button mdl-button--icon refresh-button">
               <i class="material-icons">replay</i>
             </button>
@@ -146,13 +150,22 @@
               </tbody>
             </table>
           </div>
-          <div class="mdl-cell mdl-cell--12-col form-edit-button">
+          <div class="mdl-cell mdl-cell--12-col form add-button">
             <button class="mdl-button mdl-js-button mdl-button--raised cancel-button">
               Cancel
             </button>
-            &nbsp;&nbsp;
+            &nbsp;
             <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored save-button">
               Save
+            </button>
+          </div>
+          <div class="mdl-cell mdl-cell--12-col form delete-button">
+            <button class="mdl-button mdl-js-button mdl-button--raised cancel-button">
+              Cancel
+            </button>
+            &nbsp;
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored delete-button">
+              Delete
             </button>
           </div>
         </div>
