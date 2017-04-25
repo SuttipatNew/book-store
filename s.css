@@ -29,3 +29,8 @@ div.form {
 .refresh-button {
   float: right;
 }
+
+div.progress-bar {
+  display: none;
+  width: 100%;
+}

@@ -112,7 +112,7 @@
         <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
           <a class="mdl-navigation__link home" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Home</a>
           <a class="mdl-navigation__link book" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Books</a>
-          <a class="mdl-navigation__link sub-agent" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Sub-Agent</a>
+          <a class="mdl-navigation__link sub_agent" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Sub-agent</a>
           <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">report</i>Spam</a>
           <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>Forums</a>
           <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">flag</i>Updates</a>
@@ -124,6 +124,7 @@
         </nav>
       </div>
       <main class="mdl-layout__content mdl-color--grey-100">
+        <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate progress-bar"></div>
         <!-- Home -->
         <div class="page home mdl-grid show">
           <p>this is Home</p>
@@ -139,7 +140,7 @@
             <button class="mdl-button mdl-js-button mdl-button--raised delete-button-select">
               Delete book
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--icon refresh-button">
+            <button class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect refresh-button">
               <i class="material-icons">replay</i>
             </button>
           </div>
@@ -174,16 +175,16 @@
         </div>
 
         <!-- SubAgent -->
-        <div class="page sub-agent mdl-grid">
+        <div class="page sub_agent mdl-grid">
           <div class="mdl-cell mdl-cell--12-col">
             <button class="mdl-button mdl-js-button mdl-button--raised add-button">
-              Add new Sub-Agent
+              Add new Sub-agent
             </button>
             &nbsp;
             <button class="mdl-button mdl-js-button mdl-button--raised delete-button-select">
-              Delete book
+              Delete Sub-agent
             </button>
-            <button class="mdl-button mdl-js-button mdl-button--icon refresh-button">
+            <button class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect refresh-button">
               <i class="material-icons">replay</i>
             </button>
           </div>
@@ -211,7 +212,7 @@
               Cancel
             </button>
             &nbsp;
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored delete-button">
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent delete-button">
               Delete
             </button>
           </div>

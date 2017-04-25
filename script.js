@@ -1,5 +1,5 @@
-var menu = ['home', 'book', 'sub-agent'];
-var req_page = ['book', 'sub-agent']; //name of page that have to get data from db
+var menu = ['home', 'book', 'sub_agent'];
+var req_page = ['book', 'sub_agent']; //name of page that have to get data from db
 var present_page = "";
 var present_page_str = "";
 var old_page_html = "";
@@ -8,6 +8,7 @@ var status = "";
 $(document).ready(function() {
   console.log('start');
   $(document).on("click", 'a.mdl-navigation__link', function() {
+    $("main .progress-bar").addClass("show");
     var title = $(this).html().substring($(this).html().indexOf("</i>") + "</i>".length, $(this).html().length);
     $('span.mdl-layout-title').text(title);
     var classes = $(this).attr('class');
@@ -49,60 +50,62 @@ $(document).ready(function() {
               $('div.' + present_page_str + ' tbody').append(row);
             }
           }
+          $("main .progress-bar").removeClass("show");
         });
       } else {
         present_table_col_count = -1;
+        $("main .progress-bar").removeClass("show");
       }
     }
   });
 
   $(document).on("click", 'button.add-button', function() {
     if(status !== "add") {
-      $.get("connect-data.php?command=1&table=" + present_page_str, function(data) {
-        status = "add";
-        var table_json = JSON.parse(data);
-        var head = table_json.head;
-        var row = "<tr>\n";
-        for(var i = 0; i < present_table_col_count; i++) {
-          var type = "text";
-          if(head[i].Type === "date") {
-            type = "date"
+      refresh_page(function() {
+        $.get("connect-data.php?command=1&table=" + present_page_str, function(data) {
+          status = "add";
+          var table_json = JSON.parse(data);
+          var head = table_json.head;
+          var row = "<tr>\n";
+          for(var i = 0; i < present_table_col_count; i++) {
+            var type = "text";
+            if(head[i].Type === "date") {
+              type = "date"
+            }
+            row += "<td><input type=\"" + type + "\"></td>\n";
           }
-          row += "<td><input type=\"" + type + "\"></td>\n";
-        }
-        row += "</tr>\n";
-        present_page.find('tbody').append(row);
-        present_page.find('div.form.add-button').addClass('show');
+          row += "</tr>\n";
+          present_page.find('tbody').append(row);
+          present_page.find('div.form.add-button').addClass('show');
+        });
       });
+
     }
   });
 
   $(document).on("click", 'button.delete-button-select', function() {
     if(status !== "delete") {
       status = "delete";
-      present_page.find('thead > tr').prepend("<th>Select</th>")
-      present_page.find('tbody > tr').each(function(index) {
-        $(this).prepend("<td><input type=\"checkbox\"></td>")
+      refresh_page(function() {
+          present_page.find('thead > tr').prepend("<th>Select</th>")
+          present_page.find('tbody > tr').each(function(index) {
+            $(this).prepend("<td><input type=\"checkbox\"></td>")
+          });
+          present_page.find('div.form.delete-button').addClass('show');
       });
-      present_page.find('div.form.delete-button').addClass('show');
     }
   });
 
   $(document).on("click", 'button.cancel-button', function() {
-    if(status === "add") {
-      present_page.find('tbody > tr').last().remove();
-    } else if(status === "delete") {
-      present_page.find('th').first().remove();
-      present_page.find('tbody > tr').each(function(index) {
-        $(this).find('td').first().remove();
-      });
-    }
-    present_page.find('div.form').removeClass('show');
-    status = "";
+    refresh_page(function() {
+      status = "";
+    });
   });
 
   $(document).on("click", 'button.refresh-button', function() {
-    refresh_page();
+    refresh_page(function() {
+      status = "";
+    });
   });
 
   $(document).on("click", 'button.save-button', function() {
@@ -127,8 +130,9 @@ $(document).ready(function() {
       console.log(data);
       if(data == "true") {
         console.log('Success');
-        refresh_page();
-        status = "";
+        refresh_page(function() {
+          status = "";
+        });
       } else {
         alert("Insert failed.")
         console.log('Failed');
@@ -168,7 +172,8 @@ $(document).ready(function() {
   });
 });
 
-function refresh_page() {
+function refresh_page(do_after_done) {
+  $("main .progress-bar").addClass("show");
   present_page.html(old_page_html);
   old_page_html = present_page.html();
   present_page.addClass("show");
@@ -192,6 +197,10 @@ function refresh_page() {
         row += "</tr>\n"
         present_page.find('tbody').append(row);
       }
+      if (typeof do_after_done !== 'undefined') {
+        do_after_done();
+      }
+      $("main .progress-bar").removeClass("show");
     });
   } else {
     present_table_col_count = -1;
