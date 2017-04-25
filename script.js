@@ -105,9 +105,10 @@ $(document).ready(function() {
   });
 
   $(document).on("click", 'button.refresh-button', function() {
+    console.log('refresh');
     refresh_page(function() {
       status = "";
-    });
+    }, true);
   });
 
   $(document).on("click", 'button.save-button', function() {
@@ -134,7 +135,7 @@ $(document).ready(function() {
         console.log('Success');
         refresh_page(function() {
           status = "";
-        });
+        }, true);
       } else {
         alert("Insert failed.")
         console.log('Failed');
@@ -174,8 +175,13 @@ $(document).ready(function() {
   });
 });
 
-function refresh_page(do_after_done) {
-  $("main .progress-bar").addClass("show");
+function refresh_page(do_after_done, progress_bar) {
+  if (typeof progress_bar === 'undefined') {
+    progress_bar = false;
+  }
+  if(progress_bar) {
+    $("main .progress-bar").addClass("show");
+  }
   present_page.html(old_page_html);
   old_page_html = present_page.html();
   present_page.addClass("show");
