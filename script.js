@@ -74,35 +74,7 @@ $(document).ready(function() {
   });
 
   $(document).on("click", '.refresh-button', function() {
-    present_page.html(old_page_html);
-    old_page_html = present_page.html();
-    present_page.addClass("show");
-    if(req_page.indexOf(present_page_str) != -1) {
-      $.get("connect-data.php?command=1&table=" + present_page_str, function(data) {
-        // console.log(JSON.parse(data));
-        var table_json = JSON.parse(data);
-        var head = table_json.head;
-        present_table_col_count = table_json.column;
-        for(var i = 0; i < present_table_col_count; i++) {
-          var col = '<th>' + head[i] + '</th>';
-          // console.log(col);
-          present_page.find('thead > tr').append(col);
-        }
-        var body = table_json.body;
-        for(var i = 0; i < body.length; i++) {
-          var row = "<tr>\n";
-          for(var j = 0; j < present_table_col_count; j++) {
-            row += "<td>" + body[i][j] + "</td>\n";
-          }
-          row += "</tr>\n"
-          present_page.find('tbody').append(row);
-        }
-        status = "";
-      });
-    } else {
-      present_table_col_count = -1;
-      status = "";
-    }
+    refresh_page();
   });
 
   $(document).on("click", '.save-button', function() {
