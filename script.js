@@ -8,6 +8,9 @@ var action = "";
 var subaction = "";
 var old_id = "";
 var checked = null;
+var input_box = null;
+var data_str = "";
+var link = "";
 $(document).ready(function() {
 
     var dialog = document.querySelector('dialog');
@@ -130,7 +133,7 @@ $(document).ready(function() {
     $(document).on("click", 'button.save-button', function() {
         // console.log('click');
         var send_data = [];
-        var input_box = present_page.find('input');
+        input_box = present_page.find('input');
         input_box.each(function(index) {
             if ($(this).val() === "") {
                 return false;
@@ -144,8 +147,8 @@ $(document).ready(function() {
         if (action === "edit") {
             subaction = "confirmation";
         }
-        var data_str = JSON.stringify(send_data);
-        var link = "";
+        data_str = JSON.stringify(send_data);
+        link = "";
         if (action === "add") {
             link = "connect-data.php?command=2&table=" + present_page_str + "&data=" + data_str;
         } else if (action === "edit") {
@@ -168,13 +171,13 @@ $(document).ready(function() {
             });
         } else {
             dialog.showModal();
-            dialog.querySelector('.close').addEventListener('click', function() {
+            $(document).on('click', 'dialog button.close', function() {
                 if (subaction === "confirmation") {
                     dialog.close();
                     subaction = "";
                 }
             });
-            dialog.querySelector('.confirm').addEventListener('click', function() {
+            $(document).on('click', 'dialog button.confirm', function() {
                 if (subaction === "confirmation") {
                     dialog.close();
                     subaction = "";
