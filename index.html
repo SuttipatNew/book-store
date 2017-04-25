@@ -112,7 +112,7 @@
         <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
           <a class="mdl-navigation__link home" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">home</i>Home</a>
           <a class="mdl-navigation__link book" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Books</a>
-          <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">delete</i>Trash</a>
+          <a class="mdl-navigation__link sub_agent" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Sub-Agent</a>
           <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">report</i>Spam</a>
           <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">forum</i>Forums</a>
           <a class="mdl-navigation__link" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">flag</i>Updates</a>
@@ -124,13 +124,60 @@
         </nav>
       </div>
       <main class="mdl-layout__content mdl-color--grey-100">
+        <!-- Home -->
         <div class="page home mdl-grid show">
           <p>this is Home</p>
         </div>
+
+        <!-- Books -->
         <div class="page book mdl-grid">
           <div class="mdl-cell mdl-cell--12-col">
             <button class="mdl-button mdl-js-button mdl-button--raised add-button">
               Add new book
+            </button>
+            &nbsp;
+            <button class="mdl-button mdl-js-button mdl-button--raised delete-button-select">
+              Delete book
+            </button>
+            <button class="mdl-button mdl-js-button mdl-button--icon refresh-button">
+              <i class="material-icons">replay</i>
+            </button>
+          </div>
+          <div class="mdl-cell mdl-cell--12-col">
+            <table class="mdl-data-table mdl-js-data-table">
+              <thead>
+                <tr>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
+          </div>
+          <div class="mdl-cell mdl-cell--12-col form add-button">
+            <button class="mdl-button mdl-js-button mdl-button--raised cancel-button">
+              Cancel
+            </button>
+            &nbsp;
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored save-button">
+              Save
+            </button>
+          </div>
+          <div class="mdl-cell mdl-cell--12-col form delete-button">
+            <button class="mdl-button mdl-js-button mdl-button--raised cancel-button">
+              Cancel
+            </button>
+            &nbsp;
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored delete-button">
+              Delete
+            </button>
+          </div>
+        </div>
+
+        <!-- SubAgent -->
+        <div class="page sub_agent mdl-grid">
+          <div class="mdl-cell mdl-cell--12-col">
+            <button class="mdl-button mdl-js-button mdl-button--raised add-button">
+              Add new Sub-Agent
             </button>
             &nbsp;
             <button class="mdl-button mdl-js-button mdl-button--raised delete-button-select">
