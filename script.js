@@ -7,6 +7,7 @@ var present_table_col_count = -1;
 var action = "";
 var subaction = "";
 var old_id = "";
+var checked = null;
 $(document).ready(function() {
 
     var dialog = document.querySelector('dialog');
@@ -196,24 +197,26 @@ $(document).ready(function() {
     });
 
     $(document).on("click", 'button.delete-button', function() {
-        var checked = present_page.find("input:checked");
+        checked = present_page.find("input:checked");
+        console.log(checked.length);
         if (checked.length > 0 && action === "delete") {
-            if (!dialog.showModal) {
-                dialogPolyfill.registerDialog(dialog);
-                console.log('not show');
-            }
+            // if (!dialog.showModal) {
+            //     dialogPolyfill.registerDialog(dialog);
+            //     console.log('not show');
+            // }
             dialog.showModal();
             subaction = "confirmation"
-            dialog.querySelector('.close').addEventListener('click', function() {
+            $(document).on('click', 'dialog button.close', function() {
                 if (subaction === "confirmation") {
                     dialog.close();
                     subaction = "";
                 }
             });
-            dialog.querySelector('.confirm').addEventListener('click', function() {
+            $(document).on('click', 'dialog button.confirm', function() {
                 if (subaction === "confirmation") {
                     dialog.close();
                     subaction = "";
+                    console.log(checked.length);
                     checked.each(function(index) {
                         var col = $(this).closest("tr").find('td');
                         // console.log(col);
@@ -231,9 +234,11 @@ $(document).ready(function() {
                                 if (data == "true") {
                                     console.log('Success');
                                     action = "";
-                                    refresh_page();
+                                    setTimeout(function() {
+                                        refresh_page();
+                                    }, 100);
                                 } else {
-                                    alert("Insert failed.")
+                                    alert("Delete failed.")
                                     console.log('Failed');
                                 }
                             });
