@@ -248,6 +248,16 @@ $(document).ready(function() {
       });
     }
   });
+
+
+
+  $(document).keyup(function(e) {
+     if (e.keyCode == 27) {
+       if(status !== "") {
+         refresh_page();
+       }
+    }
+  });
 });
 
 function refresh_page(do_after_done, progress_bar) {
