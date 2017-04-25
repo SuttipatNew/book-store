@@ -7,6 +7,25 @@ var present_table_col_count = -1;
 var status = "";
 var old_id = "";
 $(document).ready(function() {
+
+  var dialog = document.querySelector('dialog');
+  var showDialogButton = document.querySelector('button.delete-button');
+  if (! dialog.showModal) {
+    dialogPolyfill.registerDialog(dialog);
+  }
+  // showDialogButton.addEventListener('click', function() {
+  //   dialog.showModal();
+  // });
+  // dialog.querySelector('.close').addEventListener('click', function() {
+  //   dialog.close();
+  // });
+
+
+
+
+
+
+
   // console.log('start');
   $(document).on("click", 'a.mdl-navigation__link', function() {
     $("main .progress-bar").addClass("show");
@@ -151,33 +170,54 @@ $(document).ready(function() {
 
   $(document).on("click", 'button.delete-button', function() {
     var checked = present_page.find("input:checked");
-    checked.each(function(index) {
-      var col = $(this).closest("tr").find('td');
-      // console.log(col);
-      $.get("connect-data.php?command=1&table=" + present_page_str, function(data) {
-        var table_json = JSON.parse(data);
-        var head = table_json.head;
-        var id = "";
-        col.each(function(index) {
-          if(index > 0 && head[index - 1].Key === "PRI") {
-            id = $(this).text();
-            return false;
-          }
-        });
-        // console.log("id: " + id);
-        $.get("connect-data.php?command=3&table=" + present_page_str + "&id=" + id, function(data) {
-          // console.log(data);
-          if(data == "true") {
-            console.log('Success');
-            refresh_page();
-            status = "";
-          } else {
-            alert("Insert failed.")
-            console.log('Failed');
-          }
-        });
+    if(checked.length > 0 && status === "delete") {
+      if (! dialog.showModal) {
+        dialogPolyfill.registerDialog(dialog);
+        console.log('not show');
+      }
+      dialog.showModal();
+      status = "delete-confirmation"
+      dialog.querySelector('.close').addEventListener('click', function() {
+        if(status === "delete-confirmation") {
+          dialog.close();
+          status = "delete";
+        }
       });
-    });
+      dialog.querySelector('.confirm').addEventListener('click', function() {
+        if (status === "delete-confirmation") {
+          dialog.close();
+          status = "";
+          checked.each(function(index) {
+            var col = $(this).closest("tr").find('td');
+            // console.log(col);
+            $.get("connect-data.php?command=1&table=" + present_page_str, function(data) {
+              var table_json = JSON.parse(data);
+              var head = table_json.head;
+              var id = "";
+              col.each(function(index) {
+                if(index > 0 && head[index - 1].Key === "PRI") {
+                  id = $(this).text();
+                  return false;
+                }
+              });
+              // console.log("id: " + id);
+              $.get("connect-data.php?command=3&table=" + present_page_str + "&id=" + id, function(data) {
+                if(data == "true") {
+                  console.log('Success');
+                  refresh_page(function() {
+                    status = "";
+                  });
+                } else {
+                  alert("Insert failed.")
+                  status = "delete";
+                  console.log('Failed');
+                }
+              });
+            });
+          });
+        }
+      });
+    }
   });
 
   // edit record
