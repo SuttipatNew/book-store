@@ -4,7 +4,8 @@ var present_page = "";
 var present_page_str = "";
 var old_page_html = "";
 var present_table_col_count = -1;
-var status = "";
+var action = "";
+var subaction = "";
 var old_id = "";
 $(document).ready(function() {
 
@@ -70,10 +71,10 @@ $(document).ready(function() {
   });
 
   $(document).on("click", 'button.add-button', function() {
-    if(status !== "add") {
+    if(action !== "add") {
       refresh_page(function() {
         $.get("connect-data.php?command=1&table=" + present_page_str, function(data) {
-          status = "add";
+          action = "add";
           var table_json = JSON.parse(data);
           var head = table_json.head;
           var row = "<tr>\n";
@@ -94,10 +95,10 @@ $(document).ready(function() {
   });
 
   $(document).on("click", 'button.delete-button-select', function() {
-    if(status !== "delete") {
+    if(action !== "delete") {
       if(present_page.find('tbody > tr').length > 0) {
         refresh_page(function() {
-          status = "delete";
+          action = "delete";
           present_page.find('thead > tr').prepend("<th>Select</th>")
           present_page.find('tbody > tr').each(function(index) {
             $(this).prepend("<td><input type=\"checkbox\"></td>")
@@ -110,14 +111,14 @@ $(document).ready(function() {
 
   $(document).on("click", 'button.cancel-button', function() {
     refresh_page(function() {
-      status = "";
+      action = "";
     });
   });
 
   $(document).on("click", 'button.refresh-button', function() {
     console.log('refresh');
     refresh_page(function() {
-      status = "";
+      action = "";
     }, true);
   });
 
@@ -138,9 +139,9 @@ $(document).ready(function() {
     var data_str = JSON.stringify(send_data);
     data_str = data_str.substring(1, data_str.length - 1);
     var link = "";
-    if(status === "add") {
+    if(action === "add") {
       link = "connect-data.php?command=2&table=" + present_page_str + "&data=" + data_str;
-    } else if(status === "edit") {
+    } else if(action === "edit") {
       link = "connect-data.php?command=4&table=" + present_page_str + "&data=" + data_str + "&old_id=" + old_id;
     }
     // console.log(link);
@@ -149,7 +150,7 @@ $(document).ready(function() {
       if(data == "true") {
         console.log('Success');
         refresh_page(function() {
-          status = "";
+          action = "";
         }, true);
       } else {
         alert("Insert failed.")
@@ -160,23 +161,23 @@ $(document).ready(function() {
 
   $(document).on("click", 'button.delete-button', function() {
     var checked = present_page.find("input:checked");
-    if(checked.length > 0 && status === "delete") {
+    if(checked.length > 0 && action === "delete") {
       if (! dialog.showModal) {
         dialogPolyfill.registerDialog(dialog);
         console.log('not show');
       }
       dialog.showModal();
-      status = "delete-confirmation"
+      subaction = "confirmation"
       dialog.querySelector('.close').addEventListener('click', function() {
-        if(status === "delete-confirmation") {
+        if(subaction === "confirmation") {
           dialog.close();
-          status = "delete";
+          subaction = "";
         }
       });
       dialog.querySelector('.confirm').addEventListener('click', function() {
-        if (status === "delete-confirmation") {
+        if (subaction === "confirmation") {
           dialog.close();
-          status = "";
+          subaction = "";
           checked.each(function(index) {
             var col = $(this).closest("tr").find('td');
             // console.log(col);
@@ -194,12 +195,10 @@ $(document).ready(function() {
               $.get("connect-data.php?command=3&table=" + present_page_str + "&id=" + id, function(data) {
                 if(data == "true") {
                   console.log('Success');
-                  refresh_page(function() {
-                    status = "";
-                  });
+                  action = "";
+                  refresh_page();
                 } else {
                   alert("Insert failed.")
-                  status = "delete";
                   console.log('Failed');
                 }
               });
@@ -213,8 +212,8 @@ $(document).ready(function() {
   // edit record
   $(document).on("click", 'tr', function() {
     // console.log('edit');
-    if(status === "") {
-      status = "edit";
+    if(action === "") {
+      action = "edit";
       var row = $(this);
       $.get("connect-data.php?command=1&table=" + present_page_str, function(data) {
         var table_json = JSON.parse(data);
@@ -241,7 +240,7 @@ $(document).ready(function() {
 
   $(document).keyup(function(e) {
      if (e.keyCode == 27) {
-       if(status !== "") {
+       if(action !== "") {
          refresh_page();
        }
     }
@@ -286,7 +285,7 @@ function refresh_page(do_after_done, progress_bar) {
   } else {
     present_table_col_count = -1;
   }
-  status = "";
+  action = "";
 }
 
 function remove_progress_bar() {
