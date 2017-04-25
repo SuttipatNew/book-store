@@ -6,14 +6,11 @@ div.page {
 
 div.page {
   transition: opacity .5s ease-out;
-  transition: clip .5s ease-out;
-  clip: rect(0px, 0px, 0px, 0px);
 }
 
 .show {
   display: block !important;
   opacity: 1 !important;
-  clip: rect(0px, 1000px, 1000px, 0px) !important;
 }
 
 div.page table {
