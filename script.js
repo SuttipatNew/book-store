@@ -5,8 +5,9 @@ var present_page_str = "";
 var old_page_html = "";
 var present_table_col_count = -1;
 var status = "";
+var old_id = "";
 $(document).ready(function() {
-  console.log('start');
+  // console.log('start');
   $(document).on("click", 'a.mdl-navigation__link', function() {
     $("main .progress-bar").addClass("show");
     var title = $(this).html().substring($(this).html().indexOf("</i>") + "</i>".length, $(this).html().length);
@@ -87,13 +88,13 @@ $(document).ready(function() {
 
   $(document).on("click", 'button.delete-button-select', function() {
     if(status !== "delete") {
-      status = "delete";
       refresh_page(function() {
-          present_page.find('thead > tr').prepend("<th>Select</th>")
-          present_page.find('tbody > tr').each(function(index) {
-            $(this).prepend("<td><input type=\"checkbox\"></td>")
-          });
-          present_page.find('div.form.delete-button').addClass('show');
+        status = "delete";
+        present_page.find('thead > tr').prepend("<th>Select</th>")
+        present_page.find('tbody > tr').each(function(index) {
+          $(this).prepend("<td><input type=\"checkbox\"></td>")
+        });
+        present_page.find('div.form.delete-button').addClass('show');
       });
     }
   });
@@ -126,11 +127,16 @@ $(document).ready(function() {
       return;
     }
     var data_str = JSON.stringify(send_data);
-    data_str = '(' + data_str.substring(1, data_str.length - 1) + ')';
-    var link = "connect-data.php?command=2&table=" + present_page_str + "&data=" + data_str
-    console.log(link);
+    data_str = data_str.substring(1, data_str.length - 1);
+    var link = "";
+    if(status === "add") {
+      link = "connect-data.php?command=2&table=" + present_page_str + "&data=" + data_str;
+    } else if(status === "edit") {
+      link = "connect-data.php?command=4&table=" + present_page_str + "&data=" + data_str + "&old_id=" + old_id;
+    }
+    // console.log(link);
     $.get(link, function(data) {
-      console.log(data);
+      // console.log(data);
       if(data == "true") {
         console.log('Success');
         refresh_page(function() {
@@ -160,7 +166,7 @@ $(document).ready(function() {
         });
         // console.log("id: " + id);
         $.get("connect-data.php?command=3&table=" + present_page_str + "&id=" + id, function(data) {
-          console.log(data);
+          // console.log(data);
           if(data == "true") {
             console.log('Success');
             refresh_page();
@@ -172,6 +178,33 @@ $(document).ready(function() {
         });
       });
     });
+  });
+
+  // edit record
+  $(document).on("click", 'tr', function() {
+    // console.log('edit');
+    if(status === "") {
+      status = "edit";
+      var row = $(this);
+      $.get("connect-data.php?command=1&table=" + present_page_str, function(data) {
+        var table_json = JSON.parse(data);
+        var head = table_json.head;
+        var col = row.find("td");
+        col.each(function(index) {
+          var input_box_html = "<input type=\""
+          var type = "text";
+          if(head[index].Type === "date") {
+            type = "date"
+          }
+          if(head[index].Key === "PRI") {
+            old_id = $(this).text();
+          }
+          input_box_html += type + "\" value=\"" + $(this).text() + "\">";
+          $(this).html(input_box_html);
+        });
+        present_page.find('div.form.add-button').addClass('show');
+      });
+    }
   });
 });
 

@@ -3,6 +3,7 @@
   1 = select
   2 = INSERT
   3 = DELETE
+  4 = UPDATE
 */
 header('Content-Type: text/html; charset=utf-8');
 $servername = "localhost";
@@ -83,7 +84,7 @@ if($_GET['command'] == '1') {
     }
   }
   $field .= ")";
-  $sql .= " " . $field . " VALUES " . $_GET['data'];
+  $sql .= " " . $field . " VALUES " . "(" . $_GET['data'] . ")";
   if ($conn->query($sql) === TRUE) {
     echo "true";
   } else {
@@ -106,6 +107,32 @@ if($_GET['command'] == '1') {
   }
 
   $sql .= $prim . " = " . $_GET['id'];
+  if ($conn->query($sql) === TRUE) {
+    echo "true";
+  } else {
+    echo "Error: " . $sql . "<br>" . $conn->error;
+  }
+} else if($_GET['command'] == '4') {
+  $sql = "UPDATE " . $_GET['table'] . " SET ";
+  $data = json_decode("[" . $_GET['data'] . "]");
+  $prim = "";
+  $tmp = "SHOW COLUMNS FROM ". $_GET['table'];
+  $result = $conn->query($tmp);
+  $row = $result->fetch_assoc();
+  $i = 0;
+  while($row) {
+    $sql .= $row['Field'] . " = \"" . $data[$i] . "\"";
+    $type = $row['Key'];
+    if($type == "PRI") {
+      $prim = $row['Field'];
+    }
+    if($row = $result->fetch_assoc()) {
+      $sql .= ", ";
+    }
+    $i++;
+  }
+  $sql .= " WHERE " . $prim . " = " . $_GET['old_id'];
+  // echo $sql;
   if ($conn->query($sql) === TRUE) {
     echo "true";
   } else {
