@@ -107,14 +107,16 @@ $(document).ready(function() {
 
   $(document).on("click", 'button.delete-button-select', function() {
     if(status !== "delete") {
-      refresh_page(function() {
-        status = "delete";
-        present_page.find('thead > tr').prepend("<th>Select</th>")
-        present_page.find('tbody > tr').each(function(index) {
-          $(this).prepend("<td><input type=\"checkbox\"></td>")
+      if(present_page.find('tbody > tr').length > 0) {
+        refresh_page(function() {
+          status = "delete";
+          present_page.find('thead > tr').prepend("<th>Select</th>")
+          present_page.find('tbody > tr').each(function(index) {
+            $(this).prepend("<td><input type=\"checkbox\"></td>")
+          });
+          present_page.find('div.form.delete-button').addClass('show');
         });
-        present_page.find('div.form.delete-button').addClass('show');
-      });
+      }
     }
   });
 
