@@ -1,9 +1,10 @@
 <?php
 /* command
-  1 = select
+  1 = select (show everything jingerbell in table)
   2 = INSERT
   3 = DELETE
   4 = UPDATE
+  5 = search
 */
 date_default_timezone_set("Asia/Bangkok");
 // echo "The time is " . date("Y-m-d");
@@ -156,7 +157,9 @@ if($_GET['command'] == '1') {
   } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
   }
-}
+} else if($_GET['command'] == '5') {
+
+} 
 
 $conn->close();
 ?>
