@@ -1,7 +1,7 @@
 var menu = ['home', 'book', 'sub_agent'];
 var req_page = ['book', 'sub_agent']; //name of page that have to get data from db
-var present_page = "";
-var present_page_str = "";
+var present_page = $("div.page.home");
+var present_page_str = "home";
 var old_page_html = "";
 var present_table_col_count = -1;
 var action = "";
@@ -11,6 +11,7 @@ var checked = null;
 var input_box = null;
 var data_str = "";
 var link = "";
+var check_length = 0;
 $(document).ready(function() {
 
     var dialog = document.querySelector('dialog');
@@ -107,7 +108,7 @@ $(document).ready(function() {
             if (present_page.find('tbody > tr').length > 0) {
                 refresh_page(function() {
                     action = "delete";
-                    present_page.find('thead > tr').prepend("<th>Select</th>")
+                    present_page.find('thead > tr').prepend("<th><input type=\"checkbox\"></th>")
                     present_page.find('tbody > tr').each(function(index) {
                         $(this).prepend("<td><input type=\"checkbox\"></td>")
                     });
@@ -200,8 +201,9 @@ $(document).ready(function() {
     });
 
     $(document).on("click", 'button.delete-button', function() {
-        checked = present_page.find("input:checked");
-        console.log(checked.length);
+        checked = present_page.find("tbody input:checked");
+        check_length = checked.length;
+        // console.log(checked.length);
         if (checked.length > 0 && action === "delete") {
             // if (!dialog.showModal) {
             //     dialogPolyfill.registerDialog(dialog);
@@ -237,9 +239,9 @@ $(document).ready(function() {
                                 if (data == "true") {
                                     console.log('Success');
                                     action = "";
-                                    setTimeout(function() {
+                                    if(index === check_length - 1) {
                                         refresh_page();
-                                    }, 100);
+                                    }
                                 } else {
                                     alert("Delete failed.")
                                     console.log('Failed');
@@ -292,6 +294,14 @@ $(document).ready(function() {
             if (action !== "") {
                 refresh_page();
             }
+        }
+    });
+
+    $(document).on('click', 'th > input', function() {
+        if (this.checked) {
+            present_page.find("input:checkbox").attr("checked", true);
+        } else {
+            present_page.find("input:checkbox").attr("checked", false);
         }
     });
 });
