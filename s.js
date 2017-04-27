@@ -14,28 +14,12 @@ var selected_search_field = "";
 var target = null;
 $(document).ready(function() {
 
-
-	var dialog = document.querySelector('dialog');
-	var showDialogButton = document.querySelector('button.delete-button');
-	if (!dialog.showModal) {
-		dialogPolyfill.registerDialog(dialog);
-	}
-
-	// console.log('start');
+	console.log('start');
 	bind_all();
 
-	$(document).on("click", 'button.cancel-button', function() {
-		refresh_page(false, function() {
-			action = "";
-		});
-	});
 
-	$(document).on("click", 'button.refresh-button', function() {
-		// console.log('refresh');
-		refresh_page(true, function() {
-			bind_all();
-		});
-	});
+
+	
 
 	$(document).on("click", 'button.save-button', function() {
 		console.log(action);

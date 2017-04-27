@@ -5,6 +5,15 @@ function bind_all() {
 
     $('button.delete-button-select').unbind().bind("click.delete_mode", delete_mode);
 
+    $('button.cancel-button').unbind().bind("click", function() {
+        refresh_page(false);
+    });
+
+    $('button.refresh-button').unbind().bind("click", function() {
+		// console.log('refresh');
+		refresh_page(true);
+	});
+
     // console.log("bind");
 }
 
