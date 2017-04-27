@@ -80,10 +80,22 @@ if ($_GET['command'] == '1') {
     echo "\"\" }";
     }
 } elseif ($_GET['command'] == '2') {
+    $tmp = "SELECT * FROM " . $_GET['table'];
+    $result = $conn->query($tmp);
+    if ($result->num_rows == 0) {
+        $tmp = "TRUNCATE TABLE " . $_GET['table'];
+        $conn->query($tmp);
+        if(isset($_GET['sql']) && $_GET['sql'] == "true") {
+            echo $tmp . '<br>';
+        }
+    }
+
+
+
     $sql = "INSERT INTO " . $_GET['table'];
 
   // get columns name
-  $tmp = "SHOW COLUMNS FROM ". $_GET['table'];
+    $tmp = "SHOW COLUMNS FROM ". $_GET['table'];
     $result = $conn->query($tmp);
     $field = "(";
     $row = $result->fetch_assoc();
