@@ -13,11 +13,11 @@ var selected_search_field = "";
 var target = null;
 $(document).ready(function() {
 
-	// console.log('start');
+	console.log('start');
 	bind_all();
 
 	// edit record
-	$(document).on("click", 'div.page tbody tr', function() {
+	$(document).on("dblclick", 'div.page tbody tr', function() {
 		// console.log('edit');
 		if (action === "") {
 			var row = $(this);
