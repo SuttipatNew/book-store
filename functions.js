@@ -243,6 +243,8 @@ function save_data() {
 }
 
 function delete_data() {
+    console.log('delete_data');
+    action = "";
     checked = present_page.selector.find("tbody input:checked");
     check_length = checked.length;
     // console.log(checked.length);
@@ -275,6 +277,7 @@ function delete_data() {
                         } else {
                             alert("Delete failed.")
                             console.log('Failed');
+                            action = "delete";
                         }
                     });
                     $.get("connect-data.php?command=3&table=" + present_page_str + "&id=" + id + "&sql=true", function(data) {
