@@ -12,10 +12,8 @@ var check_length = 0;
 var selected_search_field = "";
 var target = null;
 $(document).ready(function() {
-
 	console.log('start');
 	bind_all();
-
 	// edit record
 	$(document).on("dblclick", 'div.page tbody tr', function() {
 		// console.log('edit');

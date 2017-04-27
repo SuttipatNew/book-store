@@ -1,4 +1,16 @@
+
+
 var action = "";
+var dialog;
+$(document).ready(function() {
+    dialog = document.querySelector('dialog');
+    // dialog.showModal();
+});
+
+function unbind_dialog() {
+    $('dialog .confirm-button').unbind();
+    $('dialog .close-button').unbind();
+}
 
 function bind_all() {
     $('a.mdl-navigation__link').unbind().bind('click.change_page', change_page);
@@ -21,6 +33,7 @@ function bind_all() {
 
     $('button.delete-button').unbind().bind("click", delete_data);
 
+    dialog = document.querySelector('dialog');
     // console.log("bind");
 }
 
@@ -222,7 +235,12 @@ function save_data() {
             console.log(data);
         });
     } else if (action === 'edit') {
-        if(confirm("Do you want to save changes?")) {
+        dialog.showModal();
+        $('dialog .confirm-button').bind('click', function() {
+            if(dialog.open) {
+                dialog.close();
+            }
+            unbind_dialog();
             $.get(link, function(data) {
                 // console.log(data);
                 if (data == "true") {
@@ -238,7 +256,13 @@ function save_data() {
             $.get(link + '&sql=true', function(data) {
                 console.log(data);
             });
-        }
+        });
+        $('dialog .close-button').bind('click', function() {
+            if(dialog.open){
+                dialog.close()
+            }
+            unbind_dialog();
+        });
     }
 }
 
@@ -249,8 +273,14 @@ function delete_data() {
     check_length = checked.length;
     // console.log(checked.length);
     if (checked.length > 0) {
-        if(confirm("Do you want to save changes?")) {
-            // console.log(checked.length);
+        dialog.showModal();
+        // console.log(checked.length);
+
+        $('dialog .confirm-button').bind('click', function() {
+            if(dialog.open) {
+                dialog.close();
+            }
+            unbind_dialog();
             checked.each(function(index) {
                 var col = $(this).closest("tr").find('td');
                 // console.log(col);
@@ -285,6 +315,12 @@ function delete_data() {
                     });
                 });
             });
-        }
+        });
+        $('dialog .close-button').bind('click', function() {
+            if(dialog.open) {
+                dialog.close();
+            }
+            unbind_dialog();
+        });
     }
 }

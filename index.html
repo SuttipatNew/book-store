@@ -52,8 +52,8 @@
     <link rel="stylesheet" href="style.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-    <script type="text/javascript" src="functions.js"></script>
-    <script type="text/javascript" src="s.js"></script>
+    <script type="text/javascript" src="function.js"></script>
+    <script type="text/javascript" src="script.js"></script>
 
     </script>
     <style>
@@ -133,6 +133,16 @@
         <main class="mdl-layout__content mdl-color--grey-100">
 
             <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate progress-bar"></div>
+
+            <dialog class="mdl-dialog">
+                <h4 class="mdl-dialog__title">Do you want to save changes?</h4>
+                <div class="mdl-dialog__content">
+                </div>
+                <div class="mdl-dialog__actions">
+                  <button type="button" class="mdl-button confirm-button">Confirm</button>
+                  <button type="button" class="mdl-button close-button">Cancel</button>
+                </div>
+            </dialog>
 
 
             <!-- dialog -->
