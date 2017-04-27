@@ -22,165 +22,163 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-if($_GET['command'] == '1') {
-    if(!isset($_GET['sql']) || $_GET['sql'] == "false") {
+if ($_GET['command'] == '1') {
+    if (!isset($_GET['sql']) || $_GET['sql'] == "false") {
         $sql = "SHOW COLUMNS FROM ". $_GET['table'];
         $result = $conn->query($sql);
         echo "{ \"head\" : [";
         $row = $result->fetch_assoc();
         $col_num = 0;
-        while($row) {
-        $col_num++;
-        echo "{";
-        $tmp = $row;
-        end($tmp);
-        foreach ($row as $key => $value) {
-         echo " \"" . $key . "\" : \"" . $value . "\"";
-         if($key != key($tmp)) {
-           echo ",";
-         }
-        }
-        echo "}";
+        while ($row) {
+            $col_num++;
+            echo "{";
+            $tmp = $row;
+            end($tmp);
+            foreach ($row as $key => $value) {
+                echo " \"" . $key . "\" : \"" . $value . "\"";
+                if ($key != key($tmp)) {
+                    echo ",";
+                }
+            }
+            echo "}";
         // echo "\"" . $row['Field'] . "\"";
-        if($row = $result->fetch_assoc()) {
-          echo ",";
+        if ($row = $result->fetch_assoc()) {
+            echo ",";
         }
         }
         echo "], ";
         echo "\"column\" : " . $col_num . ", \n";
         echo "\n\"body\" : ";
     }
-  $sql = "SELECT * FROM " . $_GET['table'];
-  if(isset($_GET['sql']) && $_GET['sql'] == "true") {
-      echo $sql;
-      return;
-  }
-  $result = $conn->query($sql);
-  if ($result->num_rows > 0) {
-    echo "[";
-    $row = $result->fetch_assoc();
-    while($row) {
-      echo "[";
-      $tmp = $row;
-      end($tmp);
-      foreach($row as $key => $value) {
-        echo "\"" . $value . "\"";
-        if($key != key($tmp)) {
-          echo ",";
-        }
-      }
-      echo "]";
-      if($row = $result->fetch_assoc()) {
-        echo ",";
-      }
+    $sql = "SELECT * FROM " . $_GET['table'];
+    if (isset($_GET['sql']) && $_GET['sql'] == "true") {
+        echo $sql;
+        return;
     }
-    echo "]}\n";
-  } else {
-    // echo "0 results";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        echo "[";
+        $row = $result->fetch_assoc();
+        while ($row) {
+            echo "[";
+            $tmp = $row;
+            end($tmp);
+            foreach ($row as $key => $value) {
+                echo "\"" . $value . "\"";
+                if ($key != key($tmp)) {
+                    echo ",";
+                }
+            }
+            echo "]";
+            if ($row = $result->fetch_assoc()) {
+                echo ",";
+            }
+        }
+        echo "]}\n";
+    } else {
+        // echo "0 results";
     echo "\"\" }";
-  }
-} else if($_GET['command'] == '2') {
-  $sql = "INSERT INTO " . $_GET['table'];
+    }
+} elseif ($_GET['command'] == '2') {
+    $sql = "INSERT INTO " . $_GET['table'];
 
   // get columns name
   $tmp = "SHOW COLUMNS FROM ". $_GET['table'];
-  $result = $conn->query($tmp);
-  $field = "(";
-  $row = $result->fetch_assoc();
-  while($row) {
-    $field .= $row['Field'];
-    if($row = $result->fetch_assoc()) {
-      $field .= ",";
+    $result = $conn->query($tmp);
+    $field = "(";
+    $row = $result->fetch_assoc();
+    while ($row) {
+        $field .= $row['Field'];
+        if ($row = $result->fetch_assoc()) {
+            $field .= ",";
+        }
     }
-  }
-  $field .= ")";
-  $value = "(";
-  $data = json_decode($_GET['data']);
-  for($i = 0; $i < count($data); $i++) {
-    if($data[$i] == "timestamp") {
-      $value .= "CURDATE()";
+    $field .= ")";
+    $value = "(";
+    $data = json_decode($_GET['data']);
+    for ($i = 0; $i < count($data); $i++) {
+        if ($data[$i] == "timestamp") {
+            $value .= "CURDATE()";
+        } else {
+            $value .= "\"" . $data[$i] . "\"";
+        }
+        if ($i < count($data) - 1) {
+            $value .= ",";
+        }
+    }
+    $value .= ")";
+    $sql .= " " . $field . " VALUES " . $value;
+    if (isset($_GET['sql']) && $_GET['sql'] == "true") {
+        echo $sql;
+        return;
+    }
+    if ($conn->query($sql) === true) {
+        echo "true";
     } else {
-        $value .= "\"" . $data[$i] . "\"";
+        echo "Error: " . $sql . "<br>" . $conn->error;
     }
-    if($i < count($data) - 1) {
-      $value .= ",";
-    }
-  }
-  $value .= ")";
-  $sql .= " " . $field . " VALUES " . $value;
-  if(isset($_GET['sql']) && $_GET['sql'] == "true") {
-      echo $sql;
-      return;
-  }
-  if ($conn->query($sql) === TRUE) {
-    echo "true";
-  } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
-  }
-} else if($_GET['command'] == '3') {
-  $sql = "DELETE FROM " . $_GET['table'] . " WHERE ";
+} elseif ($_GET['command'] == '3') {
+    $sql = "DELETE FROM " . $_GET['table'] . " WHERE ";
 
   // find primary key
   $prim = "";
-  $tmp = "SHOW COLUMNS FROM ". $_GET['table'];
-  $result = $conn->query($tmp);
-  $row = $result->fetch_assoc();
-  while($row) {
-    $type = $row['Key'];
-    if($type == "PRI") {
-      $prim = $row['Field'];
-      break;
+    $tmp = "SHOW COLUMNS FROM ". $_GET['table'];
+    $result = $conn->query($tmp);
+    $row = $result->fetch_assoc();
+    while ($row) {
+        $type = $row['Key'];
+        if ($type == "PRI") {
+            $prim = $row['Field'];
+            break;
+        }
     }
-  }
 
-  $sql .= $prim . " = " . $_GET['id'];
-  if(isset($_GET['sql']) && $_GET['sql'] == "true") {
-      echo $sql;
-      return;
-  }
-  if ($conn->query($sql) === TRUE) {
-    echo "true";
-  } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
-  }
-} else if($_GET['command'] == '4') {
-  $sql = "UPDATE " . $_GET['table'] . " SET ";
-  $data = json_decode($_GET['data']);
-  $prim = "";
-  $tmp = "SHOW COLUMNS FROM ". $_GET['table'];
-  $result = $conn->query($tmp);
-  $row = $result->fetch_assoc();
-  $i = 0;
-  while($row) {
-      if($data[$i] == "timestamp") {
-        $value = "CURDATE()";
-        $sql .= $row['Field'] . " = " . $value;
+    $sql .= $prim . " = " . $_GET['id'];
+    if (isset($_GET['sql']) && $_GET['sql'] == "true") {
+        echo $sql;
+        return;
+    }
+    if ($conn->query($sql) === true) {
+        echo "true";
     } else {
-        $sql .= $row['Field'] . " = \"" . $data[$i] . "\"";
+        echo "Error: " . $sql . "<br>" . $conn->error;
     }
-    $type = $row['Key'];
-    if($type == "PRI") {
-      $prim = $row['Field'];
+} elseif ($_GET['command'] == '4') {
+    $sql = "UPDATE " . $_GET['table'] . " SET ";
+    $data = json_decode($_GET['data']);
+    $prim = "";
+    $tmp = "SHOW COLUMNS FROM ". $_GET['table'];
+    $result = $conn->query($tmp);
+    $row = $result->fetch_assoc();
+    $i = 0;
+    while ($row) {
+        if ($data[$i] == "timestamp") {
+            $value = "CURDATE()";
+            $sql .= $row['Field'] . " = " . $value;
+        } else {
+            $sql .= $row['Field'] . " = \"" . $data[$i] . "\"";
+        }
+        $type = $row['Key'];
+        if ($type == "PRI") {
+            $prim = $row['Field'];
+        }
+        if ($row = $result->fetch_assoc()) {
+            $sql .= ", ";
+        }
+        $i++;
     }
-    if($row = $result->fetch_assoc()) {
-      $sql .= ", ";
+    $sql .= " WHERE " . $prim . " = " . $_GET['old_id'];
+    if (isset($_GET['sql']) && $_GET['sql'] == "true") {
+        echo $sql;
+        return;
     }
-    $i++;
-  }
-  $sql .= " WHERE " . $prim . " = " . $_GET['old_id'];
-  if(isset($_GET['sql']) && $_GET['sql'] == "true") {
-      echo $sql;
-      return;
-  }
   // echo $sql;
-  if ($conn->query($sql) === TRUE) {
-    echo "true";
+  if ($conn->query($sql) === true) {
+      echo "true";
   } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+      echo "Error: " . $sql . "<br>" . $conn->error;
   }
-} else if($_GET['command'] == '5') {
-
+} elseif ($_GET['command'] == '5') {
 }
 
 $conn->close();
-?>
