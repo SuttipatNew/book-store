@@ -17,7 +17,7 @@ $(document).ready(function() {
 	bind_all();
 
 	// edit record
-	$(document).on("click", 'div.page tbody tr', function() {
+	$(document).on("dblclick", 'div.page tbody tr', function() {
 		// console.log('edit');
 		if (action === "") {
 			var row = $(this);
