@@ -179,7 +179,14 @@ if($_GET['command'] == '1') {
     echo "Error: " . $sql . "<br>" . $conn->error;
   }
 } else if($_GET['command'] == '5') {
-
+     // $sql = "SELECT * FROM ".$_GET['table'];
+     // $sql .= "WHERE ".$_GET['field']." LIKE \"%"
+     // $sql .= .$_GET['data']."\"";
+     // // echo $_GET['table']
+     // echo $sql;
+   //   if ($conn->query($sql) === TRUE) {
+   //    echo "Database searched successfully";
+   // }
 }
 
 $conn->close();

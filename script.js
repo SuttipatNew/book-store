@@ -9,7 +9,6 @@ var input_box = null;
 var data_str = "";
 var link = "";
 var check_length = 0;
-var selected_search_field = "";
 var target = null;
 $(document).ready(function() {
 	console.log('start');
@@ -62,10 +61,4 @@ $(document).ready(function() {
             present_page.selector.find("input:checkbox").attr("checked", false);
         }
     });
-
-	$("#professsion").change(function(){
-			// console.log("eiei")
-			selected_search_field = $('#professsion option:selected').text();
-			console.log(selected_search_field);
-	});
 });
