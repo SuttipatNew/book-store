@@ -1,3 +1,5 @@
+var action = "";
+
 function bind_all() {
     $('a.mdl-navigation__link').unbind().bind('click.change_page', change_page);
 
@@ -7,14 +9,19 @@ function bind_all() {
 
     $('button.cancel-button').unbind().bind("click", function() {
         refresh_page(false);
+        action = "";
     });
 
     $('button.refresh-button').unbind().bind("click", function() {
-		// console.log('refresh');
 		refresh_page(true);
+        action = "";
 	});
 
-    // console.log("bind");
+    $('button.save-button').unbind().bind('click', save_data);
+
+    $('button.delete-button').unbind().bind("click", delete_data);
+
+    console.log("bind");
 }
 
 function refresh_page(progress_bar, _callback) {
@@ -125,7 +132,7 @@ function change_page() {
 }
 
 function add_mode() {
-    console.log('add haha');
+    action = "add";
     refresh_page(false, function() {
         $.get("connect-data.php?command=1&table=" + present_page_str, function(data) {
             action = "add";
@@ -148,11 +155,14 @@ function add_mode() {
             present_page.selector.find('div.form.add-button').addClass('show');
         });
         $("button.add-button").unbind();
+        $("tr").unbind();
+        action = "";
     });
 }
 
 function delete_mode() {
     console.log('delete');
+    action = "delete"
     if (present_page.selector.find('tbody > tr').length > 0) {
         console.log('adding checkbox');
         refresh_page(false, function() {
@@ -162,6 +172,100 @@ function delete_mode() {
             });
             present_page.selector.find('div.form.delete-button').addClass('show');
             $('button.delete-button-select').unbind();
+            $('tr').unbind();
         });
+    }
+}
+
+function save_data() {
+    var send_data = [];
+    input_box = present_page.selector.find('input');
+    input_box.each(function(index) {
+        if ($(this).val() === "") {
+            return false;
+        }
+        send_data.push($(this).val());
+    });
+    if (send_data.length !== input_box.length) {
+        alert("Please input every field.");
+        return;
+    }
+    data_str = JSON.stringify(send_data);
+    link = "";
+    if (action === "add") {
+        link = "connect-data.php?command=2&table=" + present_page_str + "&data=" + data_str;
+    } else if (action === "edit") {
+        link = "connect-data.php?command=4&table=" + present_page_str + "&data=" + data_str + "&old_id=" + old_id;
+    }
+    console.log(link);
+    if (action === 'add') {
+        $.get(link, function(data) {
+            console.log(data);
+            if (data == "true") {
+                console.log('Success');
+                refresh_page(true, function() {
+                    action = "";
+                });
+            } else {
+                alert("Insert failed.")
+                console.log('Failed');
+            }
+        });
+    } else if (action === 'edit') {
+        if(confirm("Do you want to save changes?")) {
+            $.get(link, function(data) {
+                // console.log(data);
+                if (data == "true") {
+                    console.log('Success');
+                    refresh_page(true, function() {
+                        action = "";
+                    });
+                } else {
+                    alert("Insert failed.")
+                    console.log('Failed');
+                }
+            });
+        }
+    }
+}
+
+function delete_data() {
+    checked = present_page.selector.find("tbody input:checked");
+    check_length = checked.length;
+    // console.log(checked.length);
+    if (checked.length > 0) {
+        if(confirm("Do you want to save changes?")) {
+            // console.log(checked.length);
+            checked.each(function(index) {
+                var col = $(this).closest("tr").find('td');
+                // console.log(col);
+                console.log("connect-data.php?command=1&table=" + present_page_str);
+                $.get("connect-data.php?command=1&table=" + present_page_str, function(data) {
+                    var table_json = JSON.parse(data);
+                    var head = table_json.head;
+                    var id = "";
+                    col.each(function(index) {
+                        if (index > 0 && head[index - 1].Key === "PRI") {
+                            id = $(this).text();
+                            return false;
+                        }
+                    });
+                    console.log("connect-data.php?command=3&table=" + present_page_str + "&id=" + id);
+                    $.get("connect-data.php?command=3&table=" + present_page_str + "&id=" + id, function(data) {
+                        if (data == "true") {
+                            console.log('Success');
+                            if(index === check_length - 1) {
+                                refresh_page(function() {
+                                    action = "";
+                                });
+                            }
+                        } else {
+                            alert("Delete failed.")
+                            console.log('Failed');
+                        }
+                    });
+                });
+            });
+        }
     }
 }
