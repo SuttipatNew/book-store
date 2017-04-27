@@ -99,6 +99,8 @@ if ($_GET['command'] == '1') {
     for ($i = 0; $i < count($data); $i++) {
         if ($data[$i] == "timestamp") {
             $value .= "CURDATE()";
+        } else if($data[$i] == "id") {
+            $value .= "NULL";
         } else {
             $value .= "\"" . $data[$i] . "\"";
         }

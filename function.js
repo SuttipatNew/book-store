@@ -1,5 +1,3 @@
-
-
 var action = "";
 var dialog;
 $(document).ready(function() {
@@ -25,9 +23,9 @@ function bind_all() {
     });
 
     $('button.refresh-button').unbind().bind("click", function() {
-		refresh_page(true);
+        refresh_page(true);
         action = "";
-	});
+    });
 
     $('button.save-button').unbind().bind('click', save_data);
 
@@ -163,6 +161,9 @@ function add_mode() {
                 if (head[i].Type === "date" && head[i].Field !== "LastUpdate") {
                     type = "date";
                 }
+                if (head[i].Key === "PRI") {
+                    disabled = " disabled value=\"id\"";
+                }
                 if (head[i].Field === "LastUpdate") {
                     disabled = " disabled value=\"timestamp\"";
                 }
@@ -237,7 +238,7 @@ function save_data() {
     } else if (action === 'edit') {
         dialog.showModal();
         $('dialog .confirm-button').bind('click', function() {
-            if(dialog.open) {
+            if (dialog.open) {
                 dialog.close();
             }
             unbind_dialog();
@@ -258,7 +259,7 @@ function save_data() {
             });
         });
         $('dialog .close-button').bind('click', function() {
-            if(dialog.open){
+            if (dialog.open) {
                 dialog.close()
             }
             unbind_dialog();
@@ -277,7 +278,7 @@ function delete_data() {
         // console.log(checked.length);
 
         $('dialog .confirm-button').bind('click', function() {
-            if(dialog.open) {
+            if (dialog.open) {
                 dialog.close();
             }
             unbind_dialog();
@@ -299,7 +300,7 @@ function delete_data() {
                     $.get("connect-data.php?command=3&table=" + present_page_str + "&id=" + id, function(data) {
                         if (data == "true") {
                             console.log('Success');
-                            if(index === check_length - 1) {
+                            if (index === check_length - 1) {
                                 refresh_page(function() {
                                     action = "";
                                 });
@@ -317,7 +318,7 @@ function delete_data() {
             });
         });
         $('dialog .close-button').bind('click', function() {
-            if(dialog.open) {
+            if (dialog.open) {
                 dialog.close();
             }
             unbind_dialog();

@@ -37,6 +37,7 @@ $(document).ready(function() {
                     }
                     if (head[index].Key === "PRI") {
                         old_id = $(this).text();
+                        disabled = " disabled";
                     }
                     if (head[index].Field === "LastUpdate") {
                         disabled = " disabled";
