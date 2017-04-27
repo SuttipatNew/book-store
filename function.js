@@ -33,6 +33,16 @@ function bind_all() {
 
     $('button.delete-button').unbind().bind("click", delete_data);
 
+    $('i.search-button').unbind().bind("click", function(){
+        search();
+    });
+
+    $(document).keyup(function(e) {
+        if (e.keyCode === 13) {
+         search();
+        }
+    });
+
     dialog = document.querySelector('dialog');
     // console.log("bind");
 }
@@ -322,5 +332,13 @@ function delete_data() {
             }
             unbind_dialog();
         });
+    }
+}
+
+function search() {
+    console.log('click search');
+    var keyword = $('input.search-box').val();
+    if(keyword !== '') {
+        console.log(keyword);
     }
 }
