@@ -21,7 +21,7 @@ function bind_all() {
 
     $('button.delete-button').unbind().bind("click", delete_data);
 
-    console.log("bind");
+    // console.log("bind");
 }
 
 function refresh_page(progress_bar, _callback) {
@@ -56,6 +56,11 @@ function refresh_page(progress_bar, _callback) {
                 _callback();
             }
             remove_progress_bar()
+        });
+
+        // print sql command
+        $.get("connect-data.php?command=1&table=" + present_page_str + '&sql=true', function(data) {
+            console.log(data);
         });
     } else {
         present_table_col_count = -1;
@@ -200,7 +205,7 @@ function save_data() {
     console.log(link);
     if (action === 'add') {
         $.get(link, function(data) {
-            console.log(data);
+            // console.log(data);
             if (data == "true") {
                 console.log('Success');
                 refresh_page(true, function() {
@@ -210,6 +215,11 @@ function save_data() {
                 alert("Insert failed.")
                 console.log('Failed');
             }
+        });
+
+        // print sql command
+        $.get(link + '&sql=true', function(data) {
+            console.log(data);
         });
     } else if (action === 'edit') {
         if(confirm("Do you want to save changes?")) {
@@ -224,6 +234,9 @@ function save_data() {
                     alert("Insert failed.")
                     console.log('Failed');
                 }
+            });
+            $.get(link + '&sql=true', function(data) {
+                console.log(data);
             });
         }
     }
@@ -263,6 +276,9 @@ function delete_data() {
                             alert("Delete failed.")
                             console.log('Failed');
                         }
+                    });
+                    $.get("connect-data.php?command=3&table=" + present_page_str + "&id=" + id + "&sql=true", function(data) {
+                        console.log(data);
                     });
                 });
             });

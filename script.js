@@ -13,7 +13,7 @@ var selected_search_field = "";
 var target = null;
 $(document).ready(function() {
 
-	console.log('start');
+	// console.log('start');
 	bind_all();
 
 	// edit record
