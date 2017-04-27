@@ -21,6 +21,16 @@ function bind_all() {
 
     $('button.delete-button').unbind().bind("click", delete_data);
 
+    // $('i.search-button').unbind().bind('click', function(){
+    // 	// search();
+    // });
+    
+    // $(document).keyup(function(e) {
+    //     if (e.keyCode === 13) {
+    //     	// search();
+    //     }
+    // });
+
     // console.log("bind");
 }
 
@@ -287,4 +297,10 @@ function delete_data() {
             });
         }
     }
+}
+
+function search() {
+	var keyword = $('input.box-search').val();
+	console.log(keyword);
+
 }
