@@ -33,7 +33,9 @@ $(document).ready(function() {
                     var disabled = "";
                     var text = $(this).text();
                     if (head[index].Type === "date" && head[index].Field !== "LastUpdate") {
-                        type = "date"
+                        type = "date";
+                    } else if (head[index].Type.indexOf("int") !== -1 && head[index].Key !== "PRI") {
+                        type = "number";
                     }
                     if (head[index].Key === "PRI") {
                         old_id = $(this).text();

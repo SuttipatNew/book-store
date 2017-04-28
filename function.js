@@ -160,6 +160,8 @@ function add_mode() {
                 var disabled = "";
                 if (head[i].Type === "date" && head[i].Field !== "LastUpdate") {
                     type = "date";
+                } else if (head[i].Type.indexOf("int") !== -1 && head[i].Key !== "PRI") {
+                    type = "number";
                 }
                 if (head[i].Key === "PRI") {
                     disabled = " disabled value=\"id\"";
