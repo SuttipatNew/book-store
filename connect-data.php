@@ -179,14 +179,39 @@ if($_GET['command'] == '1') {
     echo "Error: " . $sql . "<br>" . $conn->error;
   }
 } else if($_GET['command'] == '5') {
-     // $sql = "SELECT * FROM ".$_GET['table'];
-     // $sql .= "WHERE ".$_GET['field']." LIKE \"%"
-     // $sql .= .$_GET['data']."\"";
-     // // echo $_GET['table']
-     // echo $sql;
+  // echo "hello";
+     $sql = "SELECT * FROM ".$_GET['table'];
+     $sql .= " WHERE ".$_GET['field']." LIKE \"%";
+     $sql .= $_GET['data']."%\"";
+     // echo $_GET['table']
+     if(isset($_GET['sql']) && $_GET['sql'] == "true") {
+      echo $sql;
+      return;
+      }
+     $result = $conn->query($sql);
    //   if ($conn->query($sql) === TRUE) {
    //    echo "Database searched successfully";
    // }
+   if ($result->num_rows > 0) {
+    echo "[";
+    $row = $result->fetch_assoc();
+    while($row) {
+      echo "[";
+      $tmp = $row;
+      end($tmp);
+      foreach($row as $key => $value) {
+        echo "\"" . $value . "\"";
+        if($key != key($tmp)) {
+          echo ",";
+        }
+      }
+      echo "]";
+      if($row = $result->fetch_assoc()) {
+        echo ",";
+      }
+    }
+    echo "]\n";
+  }
 }
 
 $conn->close();
