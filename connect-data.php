@@ -196,7 +196,7 @@ if ($_GET['command'] == '1') {
 // } elseif ($_GET['command'] == '5') {
 // =======
 } else if($_GET['command'] == '5') {
-  // echo "hello";
+// echo "hello";
      $sql = "SELECT * FROM ".$_GET['table'];
      $sql .= " WHERE ".$_GET['field']." LIKE \"%";
      $sql .= $_GET['data']."%\"";
