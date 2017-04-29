@@ -192,9 +192,9 @@ if ($_GET['command'] == '1') {
   } else {
       echo "Error: " . $sql . "<br>" . $conn->error;
   }
-// <<<<<<< HEAD
-// } elseif ($_GET['command'] == '5') {
-// =======
+<<<<<<< HEAD
+} elseif ($_GET['command'] == '5') {
+=======
 } else if($_GET['command'] == '5') {
   // echo "hello";
      $sql = "SELECT * FROM ".$_GET['table'];
@@ -229,7 +229,7 @@ if ($_GET['command'] == '1') {
     }
     echo "]\n";
   }
-// >>>>>>> search
+>>>>>>> search
 }
 
 $conn->close();
