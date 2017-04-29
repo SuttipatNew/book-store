@@ -1,5 +1,5 @@
 
-
+var present_page_str;
 var action = "";
 var selected_search_field = "";
 var dialog;
@@ -14,6 +14,7 @@ function unbind_dialog() {
 }
 
 function bind_all() {
+    // console.log('bind_all');
     $('a.mdl-navigation__link').unbind().bind('click.change_page', change_page);
 
     $('button.add-button').unbind().bind('click.add_mode', add_mode);
@@ -117,7 +118,10 @@ function change_page() {
             break;
         }
     }
+    // console.log(selected_menu);
     if (selected_menu != -1) {
+        // console.log('change_page page');
+        var last_page_selector = present_page_str;
         present_page_str = menu[selected_menu];
         $('div.page').removeClass('show');
         if (present_page.selector !== "") {
@@ -132,10 +136,15 @@ function change_page() {
                 var table_json = JSON.parse(data);
                 var head = table_json.head;
                 present_table_col_count = table_json.column;
+
+                $('#professsion').empty();
+                var select_field_msg = '<option value="">Select search field...</option>';
+                $("#professsion").append(select_field_msg);
+
                 for (var i = 0; i < present_table_col_count; i++) {
                     var col = '<th>' + head[i].Field + '</th>';
-                    // console.log(col);
-                    var dropdown = "<option value=\"option " + i + "\">" + head[i].Field + "</option>";
+                    var dropdown = "<option value=\"option " + i + "\" id=\"field_choice\">" + head[i].Field + "</option>";
+                    console.log(dropdown);
 
                     $('div.' + present_page_str + ' thead > tr').append(col);
                     $("#professsion").append(dropdown);
