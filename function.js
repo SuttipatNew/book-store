@@ -144,7 +144,7 @@ function change_page() {
                 for (var i = 0; i < present_table_col_count; i++) {
                     var col = '<th>' + head[i].Field + '</th>';
                     var dropdown = "<option value=\"option " + i + "\" id=\"field_choice\">" + head[i].Field + "</option>";
-                    console.log(dropdown);
+                    // console.log(dropdown);
 
                     $('div.' + present_page_str + ' thead > tr').append(col);
                     $("#professsion").append(dropdown);
