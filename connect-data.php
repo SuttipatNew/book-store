@@ -85,7 +85,7 @@ if ($_GET['command'] == '1') {
     if ($result->num_rows == 0) {
         $tmp = "TRUNCATE TABLE " . $_GET['table'];
         $conn->query($tmp);
-        if(isset($_GET['sql']) && $_GET['sql'] == "true") {
+        if (isset($_GET['sql']) && $_GET['sql'] == "true") {
             echo $tmp . '<br>';
         }
     }
@@ -111,7 +111,7 @@ if ($_GET['command'] == '1') {
     for ($i = 0; $i < count($data); $i++) {
         if ($data[$i] == "timestamp") {
             $value .= "CURDATE()";
-        } else if($data[$i] == "id") {
+        } elseif ($data[$i] == "id") {
             $value .= "NULL";
         } else {
             $value .= "\"" . $data[$i] . "\"";
@@ -192,44 +192,40 @@ if ($_GET['command'] == '1') {
   } else {
       echo "Error: " . $sql . "<br>" . $conn->error;
   }
-// <<<<<<< HEAD
-// } elseif ($_GET['command'] == '5') {
-// =======
-} else if($_GET['command'] == '5') {
-// echo "hello";
-     $sql = "SELECT * FROM ".$_GET['table'];
-     $sql .= " WHERE ".$_GET['field']." LIKE \"%";
-     $sql .= $_GET['data']."%\"";
+} elseif ($_GET['command'] == '5') {
+    // echo "hello";
+    $sql = "SELECT * FROM ".$_GET['table'];
+    $sql .= " WHERE ".$_GET['field']." LIKE \"%";
+    $sql .= $_GET['data']."%\"";
      // echo $_GET['table']
-     if(isset($_GET['sql']) && $_GET['sql'] == "true") {
-      echo $sql;
-      return;
-      }
-     $result = $conn->query($sql);
+    if (isset($_GET['sql']) && $_GET['sql'] == "true") {
+        echo $sql;
+        return;
+    }
+    $result = $conn->query($sql);
    //   if ($conn->query($sql) === TRUE) {
    //    echo "Database searched successfully";
    // }
    if ($result->num_rows > 0) {
-    echo "[";
-    $row = $result->fetch_assoc();
-    while($row) {
-      echo "[";
-      $tmp = $row;
-      end($tmp);
-      foreach($row as $key => $value) {
-        echo "\"" . $value . "\"";
-        if($key != key($tmp)) {
-          echo ",";
-        }
-      }
-      echo "]";
-      if($row = $result->fetch_assoc()) {
-        echo ",";
-      }
-    }
-    echo "]\n";
-  }
-// >>>>>>> search
+       echo "[";
+       $row = $result->fetch_assoc();
+       while ($row) {
+           echo "[";
+           $tmp = $row;
+           end($tmp);
+           foreach ($row as $key => $value) {
+               echo "\"" . $value . "\"";
+               if ($key != key($tmp)) {
+                   echo ",";
+               }
+           }
+           echo "]";
+           if ($row = $result->fetch_assoc()) {
+               echo ",";
+           }
+       }
+       echo "]\n";
+   }
 }
 
 $conn->close();

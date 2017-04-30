@@ -381,6 +381,9 @@ function search() {
                 $('tbody').append(row);
             }
         });
+        $.get(php_command + "&sql=true", function(data) {
+            console.log(data);
+        });
 
     }
 }
