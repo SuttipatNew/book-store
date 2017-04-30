@@ -400,7 +400,7 @@ function load_ord_delivery() {
             }
         }
     });
-    $.get("connect-data.php?command=6&sql=true", function(data) {
+    $.get("connect-data.php?command=7&sql=true", function(data) {
         console.log(data);
     });
 }
