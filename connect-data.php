@@ -226,6 +226,29 @@ if ($_GET['command'] == '1') {
        }
        echo "]\n";
    }
+} elseif ($_GET['command'] == '6') {
+    $sql = "SELECT order_table.OrdID, sub_agent.SAName, Addr, Lane, Road FROM order_table INNER JOIN sub_agent ON order_table.CustID = sub_agent.SAID INNER JOIN address ON sub_agent.AddrID = address.AddrID WHERE OrdDate = CURDATE() AND OrdID IN (SELECT OrdID FROM delivery)";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        echo "[";
+        $row = $result->fetch_assoc();
+        while ($row) {
+            echo "[";
+            $tmp = $row;
+            end($tmp);
+            foreach ($row as $key => $value) {
+                echo "\"" . $value . "\"";
+                if ($key != key($tmp)) {
+                    echo ",";
+                }
+            }
+            echo "]";
+            if ($row = $result->fetch_assoc()) {
+                echo ",";
+            }
+        }
+        echo "]}\n";
+    }
 }
 
 $conn->close();
