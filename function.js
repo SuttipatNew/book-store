@@ -365,7 +365,7 @@ function search() {
         console.log("php command: " + php_command);
          $.get(php_command, function(data) {
             // console.log('get data');
-            console.log(data);
+            // console.log(data);
             // refresh_page(true);
             while($('tbody tr').length > 0) {
                 $('tbody tr').remove();

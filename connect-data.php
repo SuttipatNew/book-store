@@ -110,7 +110,7 @@ if ($_GET['command'] == '1') {
     $data = json_decode($_GET['data']);
     for ($i = 0; $i < count($data); $i++) {
         if ($data[$i] == "timestamp") {
-            $value .= "CURDATE()";
+            $value .= "NOW()";
         } elseif ($data[$i] == "id") {
             $value .= "NULL";
         } else {
@@ -167,7 +167,7 @@ if ($_GET['command'] == '1') {
     $i = 0;
     while ($row) {
         if ($data[$i] == "timestamp") {
-            $value = "CURDATE()";
+            $value = "NOW()";
             $sql .= $row['Field'] . " = " . $value;
         } else {
             $sql .= $row['Field'] . " = \"" . $data[$i] . "\"";
