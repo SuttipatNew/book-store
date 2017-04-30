@@ -241,6 +241,10 @@ if ($_GET['command'] == '1') {
     }
     $data_json .= "], \"column\" : " . count($head) . ", \"body\" : [";
     $sql .= " FROM order_table INNER JOIN sub_agent ON order_table.CustID = sub_agent.SAID INNER JOIN address ON sub_agent.AddrID = address.AddrID WHERE OrdDate = CURDATE() AND OrdID IN (SELECT OrdID FROM delivery)";
+    if (isset($_GET['sql']) && $_GET['sql'] == "true") {
+        echo $sql;
+        return;
+    }
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $row = $result->fetch_assoc();

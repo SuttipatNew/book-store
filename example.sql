@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 30, 2017 at 12:17 PM
+-- Generation Time: Apr 30, 2017 at 01:12 PM
 -- Server version: 5.7.18-0ubuntu0.16.04.1
 -- PHP Version: 7.1.4-1+deb.sury.org~xenial+1
 
@@ -103,7 +103,7 @@ CREATE TABLE `order_table` (
 --
 
 INSERT INTO `order_table` (`OrdID`, `CustID`, `Discount`, `OrdDate`, `LastUpdate`) VALUES
-(1, 1, 1, '2017-04-30', '2017-04-30 00:00:00'),
+(1, 1, 1, '2017-04-30', '2017-04-30 12:56:45'),
 (2, 2, 2, '2017-04-30', '2017-04-30 00:00:00');
 
 -- --------------------------------------------------------
@@ -113,7 +113,7 @@ INSERT INTO `order_table` (`OrdID`, `CustID`, `Discount`, `OrdDate`, `LastUpdate
 --
 
 CREATE TABLE `regular_cust` (
-  `RCID` int(11) NOT NULL,
+  `RCID` char(4) NOT NULL,
   `RCName` varchar(200) NOT NULL,
   `AddrID` int(11) NOT NULL,
   `LastUpdate` datetime NOT NULL
@@ -124,7 +124,7 @@ CREATE TABLE `regular_cust` (
 --
 
 INSERT INTO `regular_cust` (`RCID`, `RCName`, `AddrID`, `LastUpdate`) VALUES
-(1, 'ป่าไม้', 2, '2017-04-30 09:00:00');
+('C001', 'ป่าไม้', 2, '2017-04-30 13:09:48');
 
 -- --------------------------------------------------------
 
@@ -133,7 +133,7 @@ INSERT INTO `regular_cust` (`RCID`, `RCName`, `AddrID`, `LastUpdate`) VALUES
 --
 
 CREATE TABLE `sub_agent` (
-  `SAID` int(4) NOT NULL,
+  `SAID` char(4) CHARACTER SET utf8 NOT NULL,
   `SAName` varchar(200) CHARACTER SET utf8 NOT NULL,
   `AddrID` int(4) NOT NULL,
   `LastUpdate` datetime NOT NULL
@@ -144,8 +144,8 @@ CREATE TABLE `sub_agent` (
 --
 
 INSERT INTO `sub_agent` (`SAID`, `SAName`, `AddrID`, `LastUpdate`) VALUES
-(1, 'ศูนย์หนังสือชะอำ', 1, '2017-04-30 08:25:20'),
-(3, 'ชชช', 1, '2017-04-30 09:01:30');
+('1', 'ศูนย์หนังสือชะอำ', 1, '2017-04-30 08:25:20'),
+('3', 'ชชช', 1, '2017-04-30 09:01:30');
 
 --
 -- Indexes for dumped tables
@@ -212,16 +212,6 @@ ALTER TABLE `delivery`
 --
 ALTER TABLE `order_table`
   MODIFY `OrdID` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `regular_cust`
---
-ALTER TABLE `regular_cust`
-  MODIFY `RCID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `sub_agent`
---
-ALTER TABLE `sub_agent`
-  MODIFY `SAID` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

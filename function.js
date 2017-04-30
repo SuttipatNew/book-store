@@ -89,6 +89,11 @@ function refresh_page(progress_bar, _callback) {
         $.get("connect-data.php?command=1&table=" + present_page.str + '&sql=true', function(data) {
             console.log(data);
         });
+    } else if(complex_page.indexOf(present_page.str) !== -1) {
+        if(present_page.str === "ord-on-day") {
+            load_ord_on_day();
+            remove_progress_bar();
+        }
     } else {
         present_table_col_count = -1;
         if (typeof do_after_done !== 'undefined') {
@@ -164,38 +169,8 @@ function change_page() {
             });
         } else if(complex_page.indexOf(present_page.str) !== -1) {
             if(present_page.str === "ord-on-day") {
-                $.get("connect-data.php?command=6", function(data) {
-                    // console.log(data);
-                    var table_json = JSON.parse(data);
-                    var head = table_json.head;
-                    present_table_col_count = table_json.column;
-
-                    $('#professsion').empty();
-                    var select_field_msg = '<option value="">Select search field...</option>';
-                    $("#professsion").append(select_field_msg);
-
-                    for (var i = 0; i < present_table_col_count; i++) {
-                        var col = '<th>' + head[i] + '</th>';
-                        var dropdown = "<option value=\"option " + i + "\" id=\"field_choice\">" + head[i] + "</option>";
-                        // console.log(dropdown);
-
-                        $('div.' + present_page.str + ' thead > tr').append(col);
-                        $("#professsion").append(dropdown);
-
-                    }
-                    var body = table_json.body;
-                    if (body !== "") {
-                        for (var i = 0; i < body.length; i++) {
-                            var row = "<tr>\n";
-                            for (var j = 0; j < present_table_col_count; j++) {
-                                row += "<td>" + body[i][j] + "</td>\n";
-                            }
-                            row += "</tr>\n"
-                            $('div.' + present_page.str + ' tbody').append(row);
-                        }
-                    }
-                    remove_progress_bar()
-                });
+                load_ord_on_day();
+                remove_progress_bar();
             }
         } else {
             present_table_col_count = -1;
@@ -222,7 +197,7 @@ function add_mode() {
                 } else if (head[i].Type.indexOf("int") !== -1 && head[i].Key !== "PRI") {
                     type = "number";
                 }
-                if (head[i].Key === "PRI") {
+                if (head[i].Key === "PRI" && head[i].Type.indexOf("int") !== -1) {
                     disabled = " disabled value=\"id\"";
                 }
                 if (head[i].Field === "LastUpdate") {
@@ -385,6 +360,43 @@ function delete_data() {
             unbind_dialog();
         });
     }
+}
+
+function load_ord_on_day() {
+    $.get("connect-data.php?command=6", function(data) {
+        // console.log(data);
+        var table_json = JSON.parse(data);
+        var head = table_json.head;
+        present_table_col_count = table_json.column;
+
+        $('#professsion').empty();
+        var select_field_msg = '<option value="">Select search field...</option>';
+        $("#professsion").append(select_field_msg);
+
+        for (var i = 0; i < present_table_col_count; i++) {
+            var col = '<th>' + head[i] + '</th>';
+            var dropdown = "<option value=\"option " + i + "\" id=\"field_choice\">" + head[i] + "</option>";
+            // console.log(dropdown);
+
+            $('div.' + present_page.str + ' thead > tr').append(col);
+            $("#professsion").append(dropdown);
+
+        }
+        var body = table_json.body;
+        if (body !== "") {
+            for (var i = 0; i < body.length; i++) {
+                var row = "<tr>\n";
+                for (var j = 0; j < present_table_col_count; j++) {
+                    row += "<td>" + body[i][j] + "</td>\n";
+                }
+                row += "</tr>\n"
+                $('div.' + present_page.str + ' tbody').append(row);
+            }
+        }
+    });
+    $.get("connect-data.php?command=6&sql=true", function(data) {
+        console.log(data);
+    });
 }
 
 function search() {

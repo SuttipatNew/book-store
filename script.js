@@ -1,6 +1,9 @@
 var menu = ['home', 'book', 'sub_agent', 'regular_cust', 'order_table', 'ord-on-day'];
 var table_page = ['book', 'sub_agent', 'regular_cust', 'order_table']; //name of page that have to get data from db
 var complex_page = ['ord-on-day'];
+var command_map = {
+    'ord-on-day' : 6
+}
 var present_page = {
     selector: $("div.page.home"),
     str: "home"
@@ -37,7 +40,7 @@ $(document).ready(function() {
                     } else if (head[index].Type.indexOf("int") !== -1 && head[index].Key !== "PRI") {
                         type = "number";
                     }
-                    if (head[index].Key === "PRI") {
+                    if (head[index].Key === "PRI" && head[index].Type.indexOf("int") !== -1) {
                         old_id = $(this).text();
                         disabled = " disabled";
                     }
