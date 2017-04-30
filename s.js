@@ -19,7 +19,7 @@ var link = "";
 var check_length = 0;
 var target = null;
 $(document).ready(function() {
-    console.log('start');
+    // console.log('start');
     bind_all();
     // edit record
     $(document).on("dblclick", 'div.page tbody tr', function() {
@@ -41,9 +41,9 @@ $(document).ready(function() {
                     } else if (head[index].Type.indexOf("int") !== -1 && head[index].Key !== "PRI") {
                         type = "number";
                     }
-                    if (head[index].Key === "PRI" && head[index].Type.indexOf("int") !== -1) {
+                    if (head[index].Key === "PRI") {
                         old_id = $(this).text();
-                        disabled = " disabled";
+                        // disabled = " disabled";
                     }
                     if (head[index].Field === "LastUpdate") {
                         disabled = " disabled";

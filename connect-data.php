@@ -183,7 +183,7 @@ if ($_GET['command'] == '1') {
         }
         $i++;
     }
-    $sql .= " WHERE " . $prim . " = " . $_GET['old_id'];
+    $sql .= " WHERE " . $prim . " = \"" . $_GET['old_id'] . "\"";
     if (isset($_GET['sql']) && $_GET['sql'] == "true") {
         echo $sql;
         return;
@@ -245,7 +245,7 @@ if ($_GET['command'] == '1') {
     $data_json .= "\"column\" : " . $col_num . ", \n";
     $data_json .= "\n\"body\" : [";
     $sql = "SELECT *";
-    $sql .= " FROM order_table WHERE OrdDate = CURDATE()";
+    $sql .= " FROM order_table WHERE OrdDate = CURDATE() ORDER BY CustID";
     if (isset($_GET['sql']) && $_GET['sql'] == "true") {
         echo $sql;
         return;

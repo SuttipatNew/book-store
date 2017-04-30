@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Apr 30, 2017 at 01:12 PM
+-- Generation Time: Apr 30, 2017 at 09:35 PM
 -- Server version: 5.7.18-0ubuntu0.16.04.1
 -- PHP Version: 7.1.4-1+deb.sury.org~xenial+1
 
@@ -51,10 +51,10 @@ INSERT INTO `address` (`AddrID`, `Addr`, `Lane`, `Road`, `SubDistID`, `Postal`, 
 --
 
 CREATE TABLE `book` (
-  `BookID` int(1) NOT NULL,
+  `BookID` char(5) CHARACTER SET utf8mb4 NOT NULL,
   `BookTitle` varchar(200) CHARACTER SET utf8mb4 NOT NULL,
+  `Price` double NOT NULL,
   `PubID` int(3) NOT NULL,
-  `QtyOnHand` int(4) NOT NULL,
   `LastUpdate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -62,8 +62,10 @@ CREATE TABLE `book` (
 -- Dumping data for table `book`
 --
 
-INSERT INTO `book` (`BookID`, `BookTitle`, `PubID`, `QtyOnHand`, `LastUpdate`) VALUES
-(1, '1', 1, 1, '2017-04-30 08:21:53');
+INSERT INTO `book` (`BookID`, `BookTitle`, `Price`, `PubID`, `LastUpdate`) VALUES
+('B0001', 'ไทยรัฐ เช้า', 10, 1, '2017-04-30 21:35:14'),
+('B0002', 'ไทยรัฐ บ่าย', 10, 1, '2017-04-30 21:35:09'),
+('B0003', 'เดลินิวส์ เช้า', 10, 2, '2017-04-30 21:30:21');
 
 -- --------------------------------------------------------
 
@@ -92,8 +94,8 @@ INSERT INTO `delivery` (`DvlID`, `OrdID`, `LastUpdate`) VALUES
 
 CREATE TABLE `order_table` (
   `OrdID` int(1) NOT NULL,
-  `CustID` int(11) NOT NULL,
-  `Discount` int(1) NOT NULL,
+  `CustID` char(4) CHARACTER SET utf8 NOT NULL,
+  `Discount` double NOT NULL,
   `OrdDate` date NOT NULL,
   `LastUpdate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -103,8 +105,34 @@ CREATE TABLE `order_table` (
 --
 
 INSERT INTO `order_table` (`OrdID`, `CustID`, `Discount`, `OrdDate`, `LastUpdate`) VALUES
-(1, 1, 1, '2017-04-30', '2017-04-30 12:56:45'),
-(2, 2, 2, '2017-04-30', '2017-04-30 00:00:00');
+(1, 'S001', 15, '2017-04-30', '2017-04-30 21:21:03'),
+(2, 'S002', 2, '2017-04-30', '2017-04-30 20:36:20'),
+(3, 'S001', 3, '2017-04-30', '2017-04-30 21:17:37');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ord_line`
+--
+
+CREATE TABLE `ord_line` (
+  `IssueID` int(11) NOT NULL,
+  `OrdID` int(11) NOT NULL,
+  `Quantity` int(11) NOT NULL,
+  `LastUpdate` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `publisher`
+--
+
+CREATE TABLE `publisher` (
+  `PubID` char(4) NOT NULL,
+  `PubName` varchar(200) NOT NULL,
+  `LastUpdate` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -144,8 +172,9 @@ CREATE TABLE `sub_agent` (
 --
 
 INSERT INTO `sub_agent` (`SAID`, `SAName`, `AddrID`, `LastUpdate`) VALUES
-('1', 'ศูนย์หนังสือชะอำ', 1, '2017-04-30 08:25:20'),
-('3', 'ชชช', 1, '2017-04-30 09:01:30');
+('S001', 'ศูนย์หนังสือชะอำ', 1, '2017-04-30 20:33:32'),
+('S002', 'เอกวรา', 2, '2017-04-30 20:35:51'),
+('S003', 'กิจเจริญ', 3, '2017-04-30 21:17:13');
 
 --
 -- Indexes for dumped tables
@@ -177,6 +206,18 @@ ALTER TABLE `order_table`
   ADD UNIQUE KEY `OrdID` (`OrdID`);
 
 --
+-- Indexes for table `ord_line`
+--
+ALTER TABLE `ord_line`
+  ADD PRIMARY KEY (`IssueID`,`OrdID`);
+
+--
+-- Indexes for table `publisher`
+--
+ALTER TABLE `publisher`
+  ADD PRIMARY KEY (`PubID`);
+
+--
 -- Indexes for table `regular_cust`
 --
 ALTER TABLE `regular_cust`
@@ -198,11 +239,6 @@ ALTER TABLE `sub_agent`
 ALTER TABLE `address`
   MODIFY `AddrID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT for table `book`
---
-ALTER TABLE `book`
-  MODIFY `BookID` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
---
 -- AUTO_INCREMENT for table `delivery`
 --
 ALTER TABLE `delivery`
@@ -211,7 +247,7 @@ ALTER TABLE `delivery`
 -- AUTO_INCREMENT for table `order_table`
 --
 ALTER TABLE `order_table`
-  MODIFY `OrdID` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `OrdID` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
