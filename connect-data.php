@@ -6,6 +6,7 @@
   4 = UPDATE
   5 = search
   6 = view order on day
+  7 = view delivery order
 */
 date_default_timezone_set("Asia/Bangkok");
 // echo "The time is " . date("Y-m-d");
@@ -228,6 +229,49 @@ if ($_GET['command'] == '1') {
        echo "]\n";
    }
 } elseif ($_GET['command'] == '6') {
+    $sql = "SHOW COLUMNS FROM order_table";
+    $result = $conn->query($sql);
+    $data_json .= "{ \"head\" : [";
+    $row = $result->fetch_assoc();
+    $col_num = 0;
+    while ($row) {
+        $col_num++;
+        $data_json .= "\"" . $row['Field'] . "\"";
+        if ($row = $result->fetch_assoc()) {
+            $data_json .= ",";
+        }
+    }
+    $data_json .= "], ";
+    $data_json .= "\"column\" : " . $col_num . ", \n";
+    $data_json .= "\n\"body\" : [";
+    $sql = "SELECT *";
+    $sql .= " FROM order_table WHERE OrdDate = CURDATE()";
+    if (isset($_GET['sql']) && $_GET['sql'] == "true") {
+        echo $sql;
+        return;
+    }
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        while ($row) {
+            $data_json .= "[";
+            $tmp = $row;
+            end($tmp);
+            foreach ($row as $key => $value) {
+                $data_json .= "\"" . $value . "\"";
+                if ($key != key($tmp)) {
+                    $data_json .= ",";
+                }
+            }
+            $data_json .= "]";
+            if ($row = $result->fetch_assoc()) {
+                $data_json .= ",";
+            }
+        }
+    }
+    $data_json .= "]}\n";
+    echo $data_json;
+} elseif ($_GET['command'] == '7') {
     $head = array('order_table.OrdID', 'sub_agent.SAName', 'Addr', 'Lane', 'Road');
     $data_json = "{ \"head\" : [";
     $sql = "SELECT ";
