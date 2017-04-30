@@ -359,26 +359,31 @@ function search() {
     if(keyword !== '' && selected_search_field !== 'Select search field...' && selected_search_field != '') {
         // var table_json = JSON.parse(data);
         console.log(keyword + ' ' + selected_search_field);
-        console.log(selected_search_field);
+        // console.log(selected_search_field);
         var php_command = "connect-data.php?command=5&table=" + present_page_str;
         php_command += "&field=" + selected_search_field + "&data=" + keyword;
         console.log("php command: " + php_command);
-         $.get(php_command, function(data) {
+        $.get(php_command, function(data) {
             // console.log('get data');
             // console.log(data);
             // refresh_page(true);
             while($('tbody tr').length > 0) {
                 $('tbody tr').remove();
             }
-            var data_json = JSON.parse(data);
-            // console.log(data_json[0][1]);
-            for(var i = 0; i < data_json.length; i++) {
-                var row = "<tr>\n";
-                for(var j = 0; j < data_json[i].length; j++) {
-                    row += "<td>" + data_json[i][j] + "</td>\n";
+            try {
+                var data_json = JSON.parse(data);
+                console.log(data_json[0][1]);
+                for(var i = 0; i < data_json.length; i++) {
+                    var row = "<tr>\n";
+                    for(var j = 0; j < data_json[i].length; j++) {
+                        row += "<td>" + data_json[i][j] + "</td>\n";
+                    }
+                    row += "</tr>";
+                    $('tbody').append(row);
                 }
-                row += "</tr>";
-                $('tbody').append(row);
+            }
+            catch(err) {
+                console.log('can\'t search');
             }
         });
         $.get(php_command + "&sql=true", function(data) {
