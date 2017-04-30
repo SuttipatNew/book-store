@@ -1,5 +1,5 @@
-var menu = ['home', 'book', 'sub_agent', 'ord-on-day'];
-var req_page = ['book', 'sub_agent']; //name of page that have to get data from db
+var menu = ['home', 'book', 'sub_agent', 'regular_cust', 'order_table', 'ord-on-day'];
+var table_page = ['book', 'sub_agent', 'regular_cust', 'order_table']; //name of page that have to get data from db
 var complex_page = ['ord-on-day'];
 var present_page = {
     selector: $("div.page.home"),
@@ -20,9 +20,9 @@ $(document).ready(function() {
     // edit record
     $(document).on("dblclick", 'div.page tbody tr', function() {
         // console.log('edit');
-        if (action === "" && req_page.indexOf(present_page.str) !== -1) {
+        if (action === "" && table_page.indexOf(present_page.str) !== -1) {
             var row = $(this);
-            $.get("connect-data.php?command=1&table=" + present_page_str, function(data) {
+            $.get("connect-data.php?command=1&table=" + present_page.str, function(data) {
                 action = "edit";
                 var table_json = JSON.parse(data);
                 var head = table_json.head;

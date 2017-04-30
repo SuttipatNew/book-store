@@ -1,4 +1,3 @@
-var present_page_str;
 var action = "";
 var selected_search_field = "";
 var dialog;
@@ -60,8 +59,8 @@ function refresh_page(progress_bar, _callback) {
     old_page_html = present_page.selector.html();
     bind_all();
     present_page.selector.addClass("show");
-    if (req_page.indexOf(present_page_str) != -1) {
-        $.get("connect-data.php?command=1&table=" + present_page_str, function(data) {
+    if (table_page.indexOf(present_page.str) != -1) {
+        $.get("connect-data.php?command=1&table=" + present_page.str, function(data) {
             // console.log(JSON.parse(data));
             var table_json = JSON.parse(data);
             var head = table_json.head;
@@ -87,7 +86,7 @@ function refresh_page(progress_bar, _callback) {
         });
 
         // print sql command
-        $.get("connect-data.php?command=1&table=" + present_page_str + '&sql=true', function(data) {
+        $.get("connect-data.php?command=1&table=" + present_page.str + '&sql=true', function(data) {
             console.log(data);
         });
     } else {
@@ -129,7 +128,7 @@ function change_page() {
         present_page.selector = $('div.page.' + present_page.str);
         old_page_html = $(present_page.selector.html());
         $('div.page.' + present_page.str).addClass("show");
-        if (req_page.indexOf(present_page.str) != -1) {
+        if (table_page.indexOf(present_page.str) != -1) {
             $.get("connect-data.php?command=1&table=" + present_page.str, function(data) {
                 // console.log(data);
                 var table_json = JSON.parse(data);
@@ -210,7 +209,7 @@ function change_page() {
 function add_mode() {
     action = "add";
     refresh_page(false, function() {
-        $.get("connect-data.php?command=1&table=" + present_page_str, function(data) {
+        $.get("connect-data.php?command=1&table=" + present_page.str, function(data) {
             action = "add";
             var table_json = JSON.parse(data);
             var head = table_json.head;
@@ -274,9 +273,9 @@ function save_data() {
     data_str = JSON.stringify(send_data);
     link = "";
     if (action === "add") {
-        link = "connect-data.php?command=2&table=" + present_page_str + "&data=" + data_str;
+        link = "connect-data.php?command=2&table=" + present_page.str + "&data=" + data_str;
     } else if (action === "edit") {
-        link = "connect-data.php?command=4&table=" + present_page_str + "&data=" + data_str + "&old_id=" + old_id;
+        link = "connect-data.php?command=4&table=" + present_page.str + "&data=" + data_str + "&old_id=" + old_id;
     }
     console.log(link);
     if (action === 'add') {
@@ -347,8 +346,8 @@ function delete_data() {
             checked.each(function(index) {
                 var col = $(this).closest("tr").find('td');
                 // console.log(col);
-                console.log("connect-data.php?command=1&table=" + present_page_str);
-                $.get("connect-data.php?command=1&table=" + present_page_str, function(data) {
+                console.log("connect-data.php?command=1&table=" + present_page.str);
+                $.get("connect-data.php?command=1&table=" + present_page.str, function(data) {
                     var table_json = JSON.parse(data);
                     var head = table_json.head;
                     var id = "";
@@ -358,8 +357,8 @@ function delete_data() {
                             return false;
                         }
                     });
-                    console.log("connect-data.php?command=3&table=" + present_page_str + "&id=" + id);
-                    $.get("connect-data.php?command=3&table=" + present_page_str + "&id=" + id, function(data) {
+                    console.log("connect-data.php?command=3&table=" + present_page.str + "&id=" + id);
+                    $.get("connect-data.php?command=3&table=" + present_page.str + "&id=" + id, function(data) {
                         if (data == "true") {
                             // console.log('Success');
                             if (index === check_length - 1) {
@@ -373,7 +372,7 @@ function delete_data() {
                             action = "delete";
                         }
                     });
-                    $.get("connect-data.php?command=3&table=" + present_page_str + "&id=" + id + "&sql=true", function(data) {
+                    $.get("connect-data.php?command=3&table=" + present_page.str + "&id=" + id + "&sql=true", function(data) {
                         console.log(data);
                     });
                 });
@@ -395,7 +394,7 @@ function search() {
         // var table_json = JSON.parse(data);
         console.log(keyword + ' ' + selected_search_field);
         console.log(selected_search_field);
-        var php_command = "connect-data.php?command=5&table=" + present_page_str;
+        var php_command = "connect-data.php?command=5&table=" + present_page.str;
         php_command += "&field=" + selected_search_field + "&data=" + keyword;
         console.log("php command: " + php_command);
          $.get(php_command, function(data) {

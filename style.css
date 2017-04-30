@@ -15,6 +15,15 @@ div.page {
 
 div.page table {
     width: 100%;
+    max-width: 1080px !important;
+}
+
+div.page table td {
+    width: 1%;
+}
+
+div.page table input {
+    max-width: 150px;
 }
 
 div.form {
