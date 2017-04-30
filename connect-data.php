@@ -5,6 +5,7 @@
   3 = DELETE
   4 = UPDATE
   5 = search
+  6 = view order on day
 */
 date_default_timezone_set("Asia/Bangkok");
 // echo "The time is " . date("Y-m-d");
@@ -227,28 +228,40 @@ if ($_GET['command'] == '1') {
        echo "]\n";
    }
 } elseif ($_GET['command'] == '6') {
-    $sql = "SELECT order_table.OrdID, sub_agent.SAName, Addr, Lane, Road FROM order_table INNER JOIN sub_agent ON order_table.CustID = sub_agent.SAID INNER JOIN address ON sub_agent.AddrID = address.AddrID WHERE OrdDate = CURDATE() AND OrdID IN (SELECT OrdID FROM delivery)";
+    $head = array('order_table.OrdID', 'sub_agent.SAName', 'Addr', 'Lane', 'Road');
+    $data_json = "{ \"head\" : [";
+    $sql = "SELECT ";
+    for ($i = 0; $i < count($head); $i++) {
+        $sql .= $head[$i];
+        $data_json .= "\"" . $head[$i] . "\"";
+        if ($i != count($head) - 1) {
+            $sql .= ", ";
+            $data_json .= ", ";
+        }
+    }
+    $data_json .= "], \"column\" : " . count($head) . ", \"body\" : [";
+    $sql .= " FROM order_table INNER JOIN sub_agent ON order_table.CustID = sub_agent.SAID INNER JOIN address ON sub_agent.AddrID = address.AddrID WHERE OrdDate = CURDATE() AND OrdID IN (SELECT OrdID FROM delivery)";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
-        echo "[";
         $row = $result->fetch_assoc();
         while ($row) {
-            echo "[";
+            $data_json .= "[";
             $tmp = $row;
             end($tmp);
             foreach ($row as $key => $value) {
-                echo "\"" . $value . "\"";
+                $data_json .= "\"" . $value . "\"";
                 if ($key != key($tmp)) {
-                    echo ",";
+                    $data_json .= ",";
                 }
             }
-            echo "]";
+            $data_json .= "]";
             if ($row = $result->fetch_assoc()) {
-                echo ",";
+                $data_json .= ",";
             }
         }
-        echo "]}\n";
     }
+    $data_json .= "]}\n";
+    echo $data_json;
 }
 
 $conn->close();

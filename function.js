@@ -120,17 +120,17 @@ function change_page() {
     // console.log(selected_menu);
     if (selected_menu != -1) {
         // console.log('change_page page');
-        var last_page_selector = present_page_str;
-        present_page_str = menu[selected_menu];
+        var last_page_selector = present_page.str;
+        present_page.str = menu[selected_menu];
         $('div.page').removeClass('show');
         if (present_page.selector !== "") {
             present_page.selector.html(old_page_html);
         }
-        present_page.selector = $('div.page.' + present_page_str);
+        present_page.selector = $('div.page.' + present_page.str);
         old_page_html = $(present_page.selector.html());
-        $('div.page.' + present_page_str).addClass("show");
-        if (req_page.indexOf(present_page_str) != -1) {
-            $.get("connect-data.php?command=1&table=" + present_page_str, function(data) {
+        $('div.page.' + present_page.str).addClass("show");
+        if (req_page.indexOf(present_page.str) != -1) {
+            $.get("connect-data.php?command=1&table=" + present_page.str, function(data) {
                 // console.log(data);
                 var table_json = JSON.parse(data);
                 var head = table_json.head;
@@ -145,7 +145,7 @@ function change_page() {
                     var dropdown = "<option value=\"option " + i + "\" id=\"field_choice\">" + head[i].Field + "</option>";
                     // console.log(dropdown);
 
-                    $('div.' + present_page_str + ' thead > tr').append(col);
+                    $('div.' + present_page.str + ' thead > tr').append(col);
                     $("#professsion").append(dropdown);
 
                 }
@@ -157,18 +157,53 @@ function change_page() {
                             row += "<td>" + body[i][j] + "</td>\n";
                         }
                         row += "</tr>\n"
-                        $('div.' + present_page_str + ' tbody').append(row);
+                        $('div.' + present_page.str + ' tbody').append(row);
                     }
                 }
 
                 remove_progress_bar()
             });
+        } else if(complex_page.indexOf(present_page.str) !== -1) {
+            if(present_page.str === "ord-on-day") {
+                $.get("connect-data.php?command=6", function(data) {
+                    // console.log(data);
+                    var table_json = JSON.parse(data);
+                    var head = table_json.head;
+                    present_table_col_count = table_json.column;
+
+                    $('#professsion').empty();
+                    var select_field_msg = '<option value="">Select search field...</option>';
+                    $("#professsion").append(select_field_msg);
+
+                    for (var i = 0; i < present_table_col_count; i++) {
+                        var col = '<th>' + head[i] + '</th>';
+                        var dropdown = "<option value=\"option " + i + "\" id=\"field_choice\">" + head[i] + "</option>";
+                        // console.log(dropdown);
+
+                        $('div.' + present_page.str + ' thead > tr').append(col);
+                        $("#professsion").append(dropdown);
+
+                    }
+                    var body = table_json.body;
+                    if (body !== "") {
+                        for (var i = 0; i < body.length; i++) {
+                            var row = "<tr>\n";
+                            for (var j = 0; j < present_table_col_count; j++) {
+                                row += "<td>" + body[i][j] + "</td>\n";
+                            }
+                            row += "</tr>\n"
+                            $('div.' + present_page.str + ' tbody').append(row);
+                        }
+                    }
+                    remove_progress_bar()
+                });
+            }
         } else {
             present_table_col_count = -1;
-            remove_progress_bar()
+            remove_progress_bar();
         }
     } else {
-        remove_progress_bar()
+        remove_progress_bar();
     }
 }
 

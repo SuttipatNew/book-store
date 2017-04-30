@@ -1,5 +1,6 @@
-var menu = ['home', 'book', 'sub_agent'];
+var menu = ['home', 'book', 'sub_agent', 'ord-on-day'];
 var req_page = ['book', 'sub_agent']; //name of page that have to get data from db
+var complex_page = ['ord-on-day'];
 var present_page = {
     selector: $("div.page.home"),
     str: "home"
@@ -14,12 +15,12 @@ var link = "";
 var check_length = 0;
 var target = null;
 $(document).ready(function() {
-    // console.log('start');
+    console.log('start');
     bind_all();
     // edit record
     $(document).on("dblclick", 'div.page tbody tr', function() {
         // console.log('edit');
-        if (action === "") {
+        if (action === "" && req_page.indexOf(present_page.str) !== -1) {
             var row = $(this);
             $.get("connect-data.php?command=1&table=" + present_page_str, function(data) {
                 action = "edit";
