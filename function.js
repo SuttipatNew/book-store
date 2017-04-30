@@ -45,7 +45,7 @@ function bind_all() {
     $("#professsion").unbind().change(function(){
             // console.log("eiei")
             selected_search_field = $('#professsion option:selected').text();
-            // console.log(selected_search_field);
+            console.log(selected_search_field);
     });
 
     dialog = document.querySelector('dialog');
@@ -147,8 +147,8 @@ function change_page() {
 
                     $('div.' + present_page_str + ' thead > tr').append(col);
                     $("#professsion").append(dropdown);
-
                 }
+
                 var body = table_json.body;
                 if (body !== "") {
                     for (var i = 0; i < body.length; i++) {
@@ -356,7 +356,7 @@ function delete_data() {
 function search() {
     // console.log('click search');
     var keyword = $('input.search-box').val();
-    if(keyword !== '') {
+    if(keyword !== '' && selected_search_field !== 'Select search field...' && selected_search_field != '') {
         // var table_json = JSON.parse(data);
         console.log(keyword + ' ' + selected_search_field);
         console.log(selected_search_field);
