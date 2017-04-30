@@ -1,8 +1,4 @@
-// <<<<<<< HEAD
-// =======
-
 var present_page_str;
-// >>>>>>> search
 var action = "";
 var selected_search_field = "";
 var dialog;
@@ -49,7 +45,7 @@ function bind_all() {
     $("#professsion").unbind().change(function(){
             // console.log("eiei")
             selected_search_field = $('#professsion option:selected').text();
-            console.log(selected_search_field);
+            // console.log(selected_search_field);
     });
 
     dialog = document.querySelector('dialog');
@@ -211,10 +207,10 @@ function add_mode() {
 }
 
 function delete_mode() {
-    console.log('delete');
+    // console.log('delete');
     action = "delete"
     if (present_page.selector.find('tbody > tr').length > 0) {
-        console.log('adding checkbox');
+        // console.log('adding checkbox');
         refresh_page(false, function() {
             present_page.selector.find('thead > tr').prepend("<th><input type=\"checkbox\"></th>")
             present_page.selector.find('tbody > tr').each(function(index) {
@@ -252,13 +248,13 @@ function save_data() {
         $.get(link, function(data) {
             // console.log(data);
             if (data == "true") {
-                console.log('Success');
+                // console.log('Success');
                 refresh_page(true, function() {
                     action = "";
                 });
             } else {
                 alert("Insert failed.")
-                console.log('Failed');
+                // console.log('Failed');
             }
         });
 
@@ -276,13 +272,13 @@ function save_data() {
             $.get(link, function(data) {
                 // console.log(data);
                 if (data == "true") {
-                    console.log('Success');
+                    // console.log('Success');
                     refresh_page(true, function() {
                         action = "";
                     });
                 } else {
                     alert("Insert failed.")
-                    console.log('Failed');
+                    // console.log('Failed');
                 }
             });
             $.get(link + '&sql=true', function(data) {
@@ -299,7 +295,7 @@ function save_data() {
 }
 
 function delete_data() {
-    console.log('delete_data');
+    // console.log('delete_data');
     action = "";
     checked = present_page.selector.find("tbody input:checked");
     check_length = checked.length;
@@ -330,7 +326,7 @@ function delete_data() {
                     console.log("connect-data.php?command=3&table=" + present_page_str + "&id=" + id);
                     $.get("connect-data.php?command=3&table=" + present_page_str + "&id=" + id, function(data) {
                         if (data == "true") {
-                            console.log('Success');
+                            // console.log('Success');
                             if (index === check_length - 1) {
                                 refresh_page(function() {
                                     action = "";
@@ -338,7 +334,7 @@ function delete_data() {
                             }
                         } else {
                             alert("Delete failed.")
-                            console.log('Failed');
+                            // console.log('Failed');
                             action = "delete";
                         }
                     });
@@ -368,14 +364,14 @@ function search() {
         php_command += "&field=" + selected_search_field + "&data=" + keyword;
         console.log("php command: " + php_command);
          $.get(php_command, function(data) {
-            console.log('get data');
+            // console.log('get data');
             console.log(data);
             // refresh_page(true);
             while($('tbody tr').length > 0) {
                 $('tbody tr').remove();
             }
             var data_json = JSON.parse(data);
-            console.log(data_json[0][1]);
+            // console.log(data_json[0][1]);
             for(var i = 0; i < data_json.length; i++) {
                 var row = "<tr>\n";
                 for(var j = 0; j < data_json[i].length; j++) {

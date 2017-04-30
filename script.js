@@ -69,13 +69,10 @@ $(document).ready(function() {
             present_page.selector.find("input:checkbox").attr("checked", false);
         }
     });
-<<<<<<< HEAD
 
     $("#professsion").change(function() {
         // console.log("eiei")
         selected_search_field = $('#professsion option:selected').text();
         console.log(selected_search_field);
     });
-=======
->>>>>>> search
 });
