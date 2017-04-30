@@ -118,8 +118,9 @@ function change_page() {
     $('span.mdl-layout-title').text(title);
     var classes = $(this).attr('class');
     var selected_menu = -1;
+    classes = classes.replace('mdl-navigation__link ', '');
     for (var i = 0; i < menu.length; i++) {
-        if (classes.indexOf(menu[i]) != -1) {
+        if (classes === menu[i]) {
             selected_menu = i;
             break;
         }
@@ -169,6 +170,9 @@ function change_page() {
                 }
 
                 remove_progress_bar()
+            });
+            $.get("connect-data.php?command=1&table=" + present_page.str + "&sql=true", function(data) {
+                console.log(data);
             });
         } else if(complex_page.indexOf(present_page.str) !== -1) {
             if(present_page.str === "ord-delivery") {
