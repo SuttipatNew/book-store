@@ -7,6 +7,7 @@
   5 = search
   6 = view order on day
   7 = view delivery order
+  8 = get sub agent receipt
 */
 date_default_timezone_set("Asia/Bangkok");
 // echo "The time is " . date("Y-m-d");
@@ -285,6 +286,51 @@ if ($_GET['command'] == '1') {
     }
     $data_json .= "], \"column\" : " . count($head) . ", \"body\" : [";
     $sql .= " FROM order_table INNER JOIN sub_agent ON order_table.CustID = sub_agent.SAID INNER JOIN address ON sub_agent.AddrID = address.AddrID WHERE OrdDate = CURDATE() AND OrdID IN (SELECT OrdID FROM delivery)";
+    if (isset($_GET['sql']) && $_GET['sql'] == "true") {
+        echo $sql;
+        return;
+    }
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        while ($row) {
+            $data_json .= "[";
+            $tmp = $row;
+            end($tmp);
+            foreach ($row as $key => $value) {
+                $data_json .= "\"" . $value . "\"";
+                if ($key != key($tmp)) {
+                    $data_json .= ",";
+                }
+            }
+            $data_json .= "]";
+            if ($row = $result->fetch_assoc()) {
+                $data_json .= ",";
+            }
+        }
+    }
+    $data_json .= "]}\n";
+    echo $data_json;
+} elseif ($_GET['command'] == '8') {
+    $head = array('SAName', 'SUM(Price*(100-Discount)/100)');
+    $data_json = "{ \"head\" : [";
+    $sql = "SELECT ";
+    for ($i = 0; $i < count($head); $i++) {
+        $sql .= $head[$i];
+        $data_json .= "\"" . $head[$i] . "\"";
+        if ($i != count($head) - 1) {
+            $sql .= ", ";
+            $data_json .= ", ";
+        }
+    }
+    $data_json .= "], \"column\" : " . count($head) . ", \"body\" : [";
+    $sql .= " FROM order_table INNER JOIN ord_line ON order_table.OrdID = ord_line.OrdID
+INNER JOIN issue ON ord_line.IssueID = issue.IssueID
+INNER JOIN book ON issue.BookID = book.BookID
+INNER JOIN sub_agent ON sub_agent.SAID = order_table.CustID
+WHERE MONTH(order_table.OrdDate) = MONTH(CURDATE())
+GROUP BY CustID
+HAVING COUNT(*) > 0";
     if (isset($_GET['sql']) && $_GET['sql'] == "true") {
         echo $sql;
         return;

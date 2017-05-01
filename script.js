@@ -1,6 +1,6 @@
-var menu = ['home', 'publisher', 'book', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery', 'ord-on-day', 'ord-delivery'];
+var menu = ['home', 'publisher', 'book', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery', 'ord-on-day', 'ord-delivery', 'sa-receipt'];
 var table_page = ['publisher', 'book', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery']; //name of page that have to get data from db
-var complex_page = ['ord-on-day', 'ord-delivery'];
+var complex_page = ['ord-on-day', 'ord-delivery', 'sa-receipt'];
 var command_map = {
     'ord-on-day' : 6,
     'ord-delivery' : 7
