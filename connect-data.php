@@ -5,13 +5,14 @@
   3 = DELETE
   4 = UPDATE
   5 = search
-  6 = view order on day
+  6 = view order on day of sub agent
   7 = view delivery order of sub agent customer
   8 = get sub agent receipt
   9 = find books which never be bought
   10 = get regular customer receipt
   11 = get unique book
   12 = view delivery order of regular customer
+  13 = view order on day of regular customer
 */
 date_default_timezone_set("Asia/Bangkok");
 // echo "The time is " . date("Y-m-d");
@@ -154,7 +155,7 @@ if ($_GET['command'] == '1') {
         }
     }
 
-    $sql .= $prim . " = " . $_GET['id'];
+    $sql .= $prim . " = \"" . $_GET['id'] . "\"";
     if (isset($_GET['sql']) && $_GET['sql'] == "true") {
         echo $sql;
         return;
@@ -234,23 +235,23 @@ if ($_GET['command'] == '1') {
        echo "]\n";
    }
 } elseif ($_GET['command'] == '6') {
-    $sql = "SHOW COLUMNS FROM order_table";
-    $result = $conn->query($sql);
-    $data_json .= "{ \"head\" : [";
-    $row = $result->fetch_assoc();
-    $col_num = 0;
-    while ($row) {
-        $col_num++;
-        $data_json .= "\"" . $row['Field'] . "\"";
-        if ($row = $result->fetch_assoc()) {
-            $data_json .= ",";
+    $head = array('SAName', 'order_table.OrdID', 'BookTitle');
+    $data_json = "{ \"head\" : [";
+    $sql = "SELECT ";
+    for ($i = 0; $i < count($head); $i++) {
+        $sql .= $head[$i];
+        $data_json .= "\"" . $head[$i] . "\"";
+        if ($i != count($head) - 1) {
+            $sql .= ", ";
+            $data_json .= ", ";
         }
     }
-    $data_json .= "], ";
-    $data_json .= "\"column\" : " . $col_num . ", \n";
-    $data_json .= "\n\"body\" : [";
-    $sql = "SELECT *";
-    $sql .= " FROM order_table WHERE OrdDate = CURDATE() ORDER BY CustID";
+    $data_json .= "], \"column\" : " . count($head) . ", \"body\" : [";
+    $sql .= " FROM order_table INNER JOIN sub_agent ON CustID = SAID
+    INNER JOIN ord_line ON order_table.OrdID = ord_line.OrdID
+    INNER JOIN issue ON ord_line.IssueID = issue.IssueID
+    INNER JOIN book ON issue.BookID = book.BookID
+    WHERE OrdDate = CURDATE() ORDER BY CustID";
     if (isset($_GET['sql']) && $_GET['sql'] == "true") {
         echo $sql;
         return;
@@ -513,6 +514,49 @@ HAVING COUNT(*) = 1";
     INNER JOIN province ON district.ProvinceID = province.ProvinceID
     INNER JOIN zipcodes ON zipcodes.SubDistCode = sub_district.SubDistrictCode
     WHERE OrdDate = CURDATE() AND OrdID IN (SELECT OrdID FROM delivery)";
+    if (isset($_GET['sql']) && $_GET['sql'] == "true") {
+        echo $sql;
+        return;
+    }
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        while ($row) {
+            $data_json .= "[";
+            $tmp = $row;
+            end($tmp);
+            foreach ($row as $key => $value) {
+                $data_json .= "\"" . $value . "\"";
+                if ($key != key($tmp)) {
+                    $data_json .= ",";
+                }
+            }
+            $data_json .= "]";
+            if ($row = $result->fetch_assoc()) {
+                $data_json .= ",";
+            }
+        }
+    }
+    $data_json .= "]}\n";
+    echo $data_json;
+} elseif ($_GET['command'] == '13') {
+    $head = array('RCName', 'order_table.OrdID', 'BookTitle');
+    $data_json = "{ \"head\" : [";
+    $sql = "SELECT ";
+    for ($i = 0; $i < count($head); $i++) {
+        $sql .= $head[$i];
+        $data_json .= "\"" . $head[$i] . "\"";
+        if ($i != count($head) - 1) {
+            $sql .= ", ";
+            $data_json .= ", ";
+        }
+    }
+    $data_json .= "], \"column\" : " . count($head) . ", \"body\" : [";
+    $sql .= " FROM order_table INNER JOIN regular_cust ON CustID = RCID
+    INNER JOIN ord_line ON order_table.OrdID = ord_line.OrdID
+    INNER JOIN issue ON ord_line.IssueID = issue.IssueID
+    INNER JOIN book ON issue.BookID = book.BookID
+    WHERE OrdDate = CURDATE() ORDER BY CustID";
     if (isset($_GET['sql']) && $_GET['sql'] == "true") {
         echo $sql;
         return;

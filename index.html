@@ -49,11 +49,11 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.cyan-light_blue.min.css">
     <link rel="stylesheet" href="material.css">
-    <link rel="stylesheet" href="a.css">
+    <link rel="stylesheet" href="style.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-    <script type="text/javascript" src="a.js"></script>
-    <script type="text/javascript" src="s.js"></script>
+    <script type="text/javascript" src="function.js"></script>
+    <script type="text/javascript" src="script.js"></script>
 
     </script>
     <style>
@@ -131,7 +131,8 @@
                 <a class="mdl-navigation__link order_table" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Order</a>
                 <a class="mdl-navigation__link ord_line" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Order line</a>
                 <a class="mdl-navigation__link delivery" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Delivery</a>
-                <a class="mdl-navigation__link ord-on-day" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Order on day</a>
+                <a class="mdl-navigation__link ord-on-day-sa" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Sub-agent order on day</a>
+                <a class="mdl-navigation__link ord-on-day-rc" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Regular customer order on day</a>
                 <a class="mdl-navigation__link ord-delivery-sa" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Sub-agent Order delivery</a>
                 <a class="mdl-navigation__link ord-delivery-rc" href="#"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">inbox</i>Regular customer Order delivery</a>
                 <div class="mdl-layout-spacer"></div>
@@ -594,7 +595,20 @@
                 </div>
             </div>
 
-            <div class="page ord-on-day mdl-grid">
+            <div class="page ord-on-day-sa mdl-grid">
+                <div class="mdl-cell mdl-cell--12-col">
+                    <table class="mdl-data-table mdl-js-data-table">
+                        <thead>
+                            <tr>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="page ord-on-day-rc mdl-grid">
                 <div class="mdl-cell mdl-cell--12-col">
                     <table class="mdl-data-table mdl-js-data-table">
                         <thead>

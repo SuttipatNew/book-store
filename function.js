@@ -7,17 +7,18 @@ var selected_search_field = "";
 var dialog;
 $(document).ready(function() {
     dialog = document.querySelector('dialog');
-    menu = ['home', 'publisher', 'book', 'book-no-bought', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery', 'ord-on-day', 'ord-delivery-sa', 'sa-receipt', 'rc-receipt', 'unique-book', 'ord-delivery-rc'];
+    menu = ['home', 'publisher', 'book', 'book-no-bought', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery', 'ord-on-day-sa', 'ord-delivery-sa', 'sa-receipt', 'rc-receipt', 'unique-book', 'ord-delivery-rc', 'ord-on-day-rc'];
     table_page = ['publisher', 'book', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery'];
-    complex_page = ['ord-on-day', 'ord-delivery-sa', 'sa-receipt', 'book-no-bought', 'rc-receipt', 'unique-book', 'ord-delivery-rc']
+    complex_page = ['ord-on-day-sa', 'ord-delivery-sa', 'sa-receipt', 'book-no-bought', 'rc-receipt', 'unique-book', 'ord-delivery-rc', 'ord-on-day-rc']
     command_map = {
-        'ord-on-day' : 6,
+        'ord-on-day-sa' : 6,
         'ord-delivery-sa' : 7,
         'sa-receipt' : 8,
         'book-no-bought' : 9,
         'rc-receipt' : 10,
         'unique-book' : 11,
-        'ord-delivery-rc' : 12
+        'ord-delivery-rc' : 12,
+        'ord-on-day-rc' : 13
     }
     // dialog.showModal();
 });
@@ -112,7 +113,7 @@ function refresh_page(progress_bar, _callback) {
         // if(present_page.str === "ord-delivery") {
         //     load_ord_delivery();
         //     remove_progress_bar();
-        // } else if(present_page.str === 'ord-on-day') {
+        // } else if(present_page.str === 'ord-on-day-sa') {
         //     load_ord_on_day();
         //     remove_progress_bar();
         // } else if(present_page.str === 'sa-receipt') {
@@ -206,7 +207,7 @@ function change_page() {
             // if(present_page.str === "ord-delivery") {
             //     load_ord_delivery();
             //     remove_progress_bar();
-            // } else if(present_page.str === 'ord-on-day') {
+            // } else if(present_page.str === 'ord-on-day-sa') {
             //     load_ord_on_day();
             //     remove_progress_bar();
             // } else if(present_page.str === 'sa-receipt') {
