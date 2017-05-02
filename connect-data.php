@@ -322,7 +322,7 @@ if ($_GET['command'] == '1') {
     $data_json .= "]}\n";
     echo $data_json;
 } elseif ($_GET['command'] == '8') {
-    $head = array('SAName', 'SUM(Price*(100-Discount)/100)');
+    $head = array('SAName', 'SUM(Price*Quantity*(100-Discount)/100)');
     $data_json = "{ \"head\" : [";
     $sql = "SELECT ";
     for ($i = 0; $i < count($head); $i++) {
@@ -408,7 +408,7 @@ WHERE NOT EXISTS
     $data_json .= "]}\n";
     echo $data_json;
 } elseif ($_GET['command'] == '10') {
-    $head = array('RCName', 'SUM(Price*(100-Discount)/100)');
+    $head = array('RCName', 'SUM(Price*Quantity*(100-Discount)/100)');
     $data_json = "{ \"head\" : [";
     $sql = "SELECT ";
     for ($i = 0; $i < count($head); $i++) {
