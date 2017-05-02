@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
--- https://www.phpmyadmin.net/
+-- version 4.5.4.1deb2ubuntu2
+-- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: May 01, 2017 at 11:27 AM
--- Server version: 10.1.21-MariaDB
--- PHP Version: 5.6.30
+-- Host: localhost
+-- Generation Time: May 02, 2017 at 09:25 AM
+-- Server version: 5.7.18-0ubuntu0.16.04.1
+-- PHP Version: 7.1.4-1+deb.sury.org~xenial+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -1141,6 +1141,13 @@ CREATE TABLE `issue` (
   `LastUpdate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `issue`
+--
+
+INSERT INTO `issue` (`IssueID`, `IssueDate`, `QtyOnHand`, `BookID`, `LastUpdate`) VALUES
+(1, '2017-05-02', 10, 'B0001', '2017-05-02 09:24:08');
+
 -- --------------------------------------------------------
 
 --
@@ -1170,11 +1177,18 @@ INSERT INTO `order_table` (`OrdID`, `CustID`, `Discount`, `OrdDate`, `LastUpdate
 --
 
 CREATE TABLE `ord_line` (
-  `IssueID` int(11) NOT NULL,
   `OrdID` int(11) NOT NULL,
+  `IssueID` int(11) NOT NULL,
   `Quantity` int(11) NOT NULL,
   `LastUpdate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `ord_line`
+--
+
+INSERT INTO `ord_line` (`OrdID`, `IssueID`, `Quantity`, `LastUpdate`) VALUES
+(2, 1, 10, '2017-05-02 09:17:56');
 
 -- --------------------------------------------------------
 
@@ -1282,6 +1296,13 @@ CREATE TABLE `publisher` (
   `PubName` varchar(200) NOT NULL,
   `LastUpdate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `publisher`
+--
+
+INSERT INTO `publisher` (`PubID`, `PubName`, `LastUpdate`) VALUES
+('P001', 'ไทยรัฐ', '2017-05-02 09:14:24');
 
 -- --------------------------------------------------------
 
@@ -17900,7 +17921,7 @@ ALTER TABLE `delivery`
 -- AUTO_INCREMENT for table `issue`
 --
 ALTER TABLE `issue`
-  MODIFY `IssueID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IssueID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `order_table`
 --
