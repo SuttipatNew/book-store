@@ -1,22 +1,26 @@
-var menu = ['home', 'publisher', 'book', 'book-no-bought', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery', 'ord-on-day', 'ord-delivery', 'sa-receipt'];
+var menu = ['home', 'publisher', 'book', 'book-no-bought', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery', 'ord-on-day', 'ord-delivery', 'sa-receipt', 'rc-receipt'];
 var table_page = ['publisher', 'book', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery']; //name of page that have to get data from db
-var complex_page = ['ord-on-day', 'ord-delivery', 'sa-receipt', 'book-no-bought'];
+var complex_page = ['ord-on-day', 'ord-delivery', 'sa-receipt', 'book-no-bought', 'rc-receipt'];
 var command_map = {
     'ord-on-day' : 6,
     'ord-delivery' : 7,
     'sa-receipt' : 8,
     'book-no-bought' : 9,
+    'rc-receipt' : 10
 }
 var action = "";
 var selected_search_field = "";
 var dialog;
 $(document).ready(function() {
     dialog = document.querySelector('dialog');
+    menu = ['home', 'publisher', 'book', 'book-no-bought', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery', 'ord-on-day', 'ord-delivery', 'sa-receipt', 'rc-receipt'];
+    complex_page = ['ord-on-day', 'ord-delivery', 'sa-receipt', 'book-no-bought', 'rc-receipt']
     command_map = {
         'ord-on-day' : 6,
         'ord-delivery' : 7,
         'sa-receipt' : 8,
         'book-no-bought' : 9,
+        'rc-receipt' : 10
     }
     // dialog.showModal();
 });
@@ -105,6 +109,7 @@ function refresh_page(progress_bar, _callback) {
             console.log(data);
         });
     } else if(complex_page.indexOf(present_page.str) !== -1) {
+        console.log(present_page.str);
         load_complex_page(command_map[present_page.str]);
         remove_progress_bar();
         // if(present_page.str === "ord-delivery") {
