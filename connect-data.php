@@ -276,7 +276,7 @@ if ($_GET['command'] == '1') {
     $data_json .= "]}\n";
     echo $data_json;
 } elseif ($_GET['command'] == '7') {
-    $head = array('order_table.OrdID', 'sub_agent.SAName', 'Addr', 'Lane', 'Road');
+    $head = array('order_table.OrdID', 'sub_agent.SAName', 'Addr', 'Lane', 'Road', 'SubDistrictName', 'DistrictName', 'ProvinceName');
     $data_json = "{ \"head\" : [";
     $sql = "SELECT ";
     for ($i = 0; $i < count($head); $i++) {
@@ -288,7 +288,12 @@ if ($_GET['command'] == '1') {
         }
     }
     $data_json .= "], \"column\" : " . count($head) . ", \"body\" : [";
-    $sql .= " FROM order_table INNER JOIN sub_agent ON order_table.CustID = sub_agent.SAID INNER JOIN address ON sub_agent.AddrID = address.AddrID WHERE OrdDate = CURDATE() AND OrdID IN (SELECT OrdID FROM delivery)";
+    $sql .= " FROM order_table INNER JOIN sub_agent ON order_table.CustID = sub_agent.SAID
+    INNER JOIN address ON sub_agent.AddrID = address.AddrID
+    INNER JOIN sub_district ON SubDistID = SubDistrictID
+    INNER JOIN district ON sub_district.DistrictID = district.DistrictID
+    INNER JOIN province ON district.ProvinceID = province.ProvinceID
+    WHERE OrdDate = CURDATE() AND OrdID IN (SELECT OrdID FROM delivery)";
     if (isset($_GET['sql']) && $_GET['sql'] == "true") {
         echo $sql;
         return;
