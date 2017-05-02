@@ -235,7 +235,7 @@ if ($_GET['command'] == '1') {
        echo "]\n";
    }
 } elseif ($_GET['command'] == '6') {
-    $head = array('SAName', 'order_table.OrdID', 'BookTitle');
+    $head = array('SAName', 'order_table.OrdID', 'BookTitle', 'Quantity');
     $data_json = "{ \"head\" : [";
     $sql = "SELECT ";
     for ($i = 0; $i < count($head); $i++) {
@@ -540,7 +540,7 @@ HAVING COUNT(*) = 1";
     $data_json .= "]}\n";
     echo $data_json;
 } elseif ($_GET['command'] == '13') {
-    $head = array('RCName', 'order_table.OrdID', 'BookTitle');
+    $head = array('RCName', 'order_table.OrdID', 'BookTitle', 'Quantity');
     $data_json = "{ \"head\" : [";
     $sql = "SELECT ";
     for ($i = 0; $i < count($head); $i++) {
