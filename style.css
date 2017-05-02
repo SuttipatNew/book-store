@@ -41,3 +41,7 @@ div.progress-bar {
     opacity: 0;
     width: 100%;
 }
+
+div.book-no-bought * {
+    text-align: center;
+}
