@@ -1,8 +1,23 @@
+var menu = ['home', 'publisher', 'book', 'book-no-bought', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery', 'ord-on-day', 'ord-delivery', 'sa-receipt'];
+var table_page = ['publisher', 'book', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery']; //name of page that have to get data from db
+var complex_page = ['ord-on-day', 'ord-delivery', 'sa-receipt', 'book-no-bought'];
+var command_map = {
+    'ord-on-day' : 6,
+    'ord-delivery' : 7,
+    'sa-receipt' : 8,
+    'book-no-bought' : 9,
+}
 var action = "";
 var selected_search_field = "";
 var dialog;
 $(document).ready(function() {
     dialog = document.querySelector('dialog');
+    command_map = {
+        'ord-on-day' : 6,
+        'ord-delivery' : 7,
+        'sa-receipt' : 8,
+        'book-no-bought' : 9,
+    }
     // dialog.showModal();
 });
 
@@ -90,19 +105,21 @@ function refresh_page(progress_bar, _callback) {
             console.log(data);
         });
     } else if(complex_page.indexOf(present_page.str) !== -1) {
-        if(present_page.str === "ord-delivery") {
-            load_ord_delivery();
-            remove_progress_bar();
-        } else if(present_page.str === 'ord-on-day') {
-            load_ord_on_day();
-            remove_progress_bar();
-        } else if(present_page.str === 'sa-receipt') {
-            load_sa_receipt();
-            remove_progress_bar();
-        } else if(present_page.str === 'book-no-bought') {
-            load_book_no_bought();
-            remove_progress_bar();
-        }
+        load_complex_page(command_map[present_page.str]);
+        remove_progress_bar();
+        // if(present_page.str === "ord-delivery") {
+        //     load_ord_delivery();
+        //     remove_progress_bar();
+        // } else if(present_page.str === 'ord-on-day') {
+        //     load_ord_on_day();
+        //     remove_progress_bar();
+        // } else if(present_page.str === 'sa-receipt') {
+        //     load_sa_receipt();
+        //     remove_progress_bar();
+        // } else if(present_page.str === 'book-no-bought') {
+        //     load_book_no_bought();
+        //     remove_progress_bar();
+        // }
     } else {
         present_table_col_count = -1;
         if (typeof do_after_done !== 'undefined') {
@@ -181,19 +198,22 @@ function change_page() {
                 console.log(data);
             });
         } else if(complex_page.indexOf(present_page.str) !== -1) {
-            if(present_page.str === "ord-delivery") {
-                load_ord_delivery();
-                remove_progress_bar();
-            } else if(present_page.str === 'ord-on-day') {
-                load_ord_on_day();
-                remove_progress_bar();
-            } else if(present_page.str === 'sa-receipt') {
-                load_sa_receipt();
-                remove_progress_bar();
-            } else if(present_page.str === 'book-no-bought') {
-                load_book_no_bought();
-                remove_progress_bar();
-            }
+            console.log(JSON.stringify(command_map));
+            load_complex_page(command_map[present_page.str]);
+            remove_progress_bar();
+            // if(present_page.str === "ord-delivery") {
+            //     load_ord_delivery();
+            //     remove_progress_bar();
+            // } else if(present_page.str === 'ord-on-day') {
+            //     load_ord_on_day();
+            //     remove_progress_bar();
+            // } else if(present_page.str === 'sa-receipt') {
+            //     load_sa_receipt();
+            //     remove_progress_bar();
+            // } else if(present_page.str === 'book-no-bought') {
+            //     load_book_no_bought();
+            //     remove_progress_bar();
+            // }
         } else {
             present_table_col_count = -1;
             remove_progress_bar();
@@ -384,8 +404,9 @@ function delete_data() {
     }
 }
 
-function load_ord_delivery() {
-    $.get("connect-data.php?command=7", function(data) {
+function load_complex_page(command) {
+    console.log('command:' + command);
+    $.get("connect-data.php?command="+command, function(data) {
         // console.log(data);
         var table_json = JSON.parse(data);
         var head = table_json.head;
@@ -416,118 +437,7 @@ function load_ord_delivery() {
             }
         }
     });
-    $.get("connect-data.php?command=7&sql=true", function(data) {
-        console.log(data);
-    });
-}
-
-function load_ord_on_day() {
-    $.get("connect-data.php?command=6", function(data) {
-        // console.log(data);
-        var table_json = JSON.parse(data);
-        var head = table_json.head;
-        present_table_col_count = table_json.column;
-
-        $('#professsion').empty();
-        var select_field_msg = '<option value="">Select search field...</option>';
-        $("#professsion").append(select_field_msg);
-
-        for (var i = 0; i < present_table_col_count; i++) {
-            var col = '<th>' + head[i] + '</th>';
-            var dropdown = "<option value=\"option " + i + "\" id=\"field_choice\">" + head[i] + "</option>";
-            // console.log(dropdown);
-
-            $('div.' + present_page.str + ' thead > tr').append(col);
-            $("#professsion").append(dropdown);
-
-        }
-        var body = table_json.body;
-        if (body !== "") {
-            for (var i = 0; i < body.length; i++) {
-                var row = "<tr>\n";
-                for (var j = 0; j < present_table_col_count; j++) {
-                    row += "<td>" + body[i][j] + "</td>\n";
-                }
-                row += "</tr>\n"
-                $('div.' + present_page.str + ' tbody').append(row);
-            }
-        }
-    });
-    $.get("connect-data.php?command=6&sql=true", function(data) {
-        console.log(data);
-    });
-}
-
-function load_sa_receipt() {
-    $.get("connect-data.php?command=8", function(data) {
-        // console.log(data);
-        var table_json = JSON.parse(data);
-        var head = table_json.head;
-        present_table_col_count = table_json.column;
-
-        $('#professsion').empty();
-        var select_field_msg = '<option value="">Select search field...</option>';
-        $("#professsion").append(select_field_msg);
-
-        for (var i = 0; i < present_table_col_count; i++) {
-            var col = '<th>' + head[i] + '</th>';
-            var dropdown = "<option value=\"option " + i + "\" id=\"field_choice\">" + head[i] + "</option>";
-            // console.log(dropdown);
-
-            $('div.' + present_page.str + ' thead > tr').append(col);
-            $("#professsion").append(dropdown);
-
-        }
-        var body = table_json.body;
-        if (body !== "") {
-            for (var i = 0; i < body.length; i++) {
-                var row = "<tr>\n";
-                for (var j = 0; j < present_table_col_count; j++) {
-                    row += "<td>" + body[i][j] + "</td>\n";
-                }
-                row += "</tr>\n"
-                $('div.' + present_page.str + ' tbody').append(row);
-            }
-        }
-    });
-    $.get("connect-data.php?command=8&sql=true", function(data) {
-        console.log(data);
-    });
-}
-
-function load_book_no_bought() {
-    $.get("connect-data.php?command=9", function(data) {
-        // console.log(data);
-        var table_json = JSON.parse(data);
-        var head = table_json.head;
-        present_table_col_count = table_json.column;
-
-        $('#professsion').empty();
-        var select_field_msg = '<option value="">Select search field...</option>';
-        $("#professsion").append(select_field_msg);
-
-        for (var i = 0; i < present_table_col_count; i++) {
-            var col = '<th>' + head[i] + '</th>';
-            var dropdown = "<option value=\"option " + i + "\" id=\"field_choice\">" + head[i] + "</option>";
-            // console.log(dropdown);
-
-            $('div.' + present_page.str + ' thead > tr').append(col);
-            $("#professsion").append(dropdown);
-
-        }
-        var body = table_json.body;
-        if (body !== "") {
-            for (var i = 0; i < body.length; i++) {
-                var row = "<tr>\n";
-                for (var j = 0; j < present_table_col_count; j++) {
-                    row += "<td>" + body[i][j] + "</td>\n";
-                }
-                row += "</tr>\n"
-                $('div.' + present_page.str + ' tbody').append(row);
-            }
-        }
-    });
-    $.get("connect-data.php?command=9&sql=true", function(data) {
+    $.get("connect-data.php?command="+command+"&sql=true", function(data) {
         console.log(data);
     });
 }
