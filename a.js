@@ -7,16 +7,17 @@ var selected_search_field = "";
 var dialog;
 $(document).ready(function() {
     dialog = document.querySelector('dialog');
-    menu = ['home', 'publisher', 'book', 'book-no-bought', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery', 'ord-on-day', 'ord-delivery', 'sa-receipt', 'rc-receipt', 'unique-book'];
+    menu = ['home', 'publisher', 'book', 'book-no-bought', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery', 'ord-on-day', 'ord-delivery-sa', 'sa-receipt', 'rc-receipt', 'unique-book', 'ord-delivery-rc'];
     table_page = ['publisher', 'book', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery'];
-    complex_page = ['ord-on-day', 'ord-delivery', 'sa-receipt', 'book-no-bought', 'rc-receipt', 'unique-book']
+    complex_page = ['ord-on-day', 'ord-delivery-sa', 'sa-receipt', 'book-no-bought', 'rc-receipt', 'unique-book', 'ord-delivery-rc']
     command_map = {
         'ord-on-day' : 6,
-        'ord-delivery' : 7,
+        'ord-delivery-sa' : 7,
         'sa-receipt' : 8,
         'book-no-bought' : 9,
         'rc-receipt' : 10,
-        'unique-book' : 11
+        'unique-book' : 11,
+        'ord-delivery-rc' : 12
     }
     // dialog.showModal();
 });

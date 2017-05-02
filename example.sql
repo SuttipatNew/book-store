@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 02, 2017 at 03:49 PM
+-- Generation Time: May 02, 2017 at 09:55 PM
 -- Server version: 5.7.18-0ubuntu0.16.04.1
 -- PHP Version: 7.1.4-1+deb.sury.org~xenial+1
 
@@ -10382,7 +10382,7 @@ INSERT INTO `sub_district` (`SubDistrictID`, `SubDistrictCode`, `SubDistrictName
 
 CREATE TABLE `zipcodes` (
   `id` int(11) NOT NULL,
-  `district_code` varchar(6) COLLATE utf8_bin NOT NULL,
+  `SubDistCode` varchar(6) COLLATE utf8_bin NOT NULL,
   `zipcode` varchar(5) COLLATE utf8_bin NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -10390,7 +10390,7 @@ CREATE TABLE `zipcodes` (
 -- Dumping data for table `zipcodes`
 --
 
-INSERT INTO `zipcodes` (`id`, `district_code`, `zipcode`) VALUES
+INSERT INTO `zipcodes` (`id`, `SubDistCode`, `zipcode`) VALUES
 (1, '100101', '10200'),
 (2, '100102', '10200'),
 (3, '100103', '10200'),
@@ -12432,7 +12432,7 @@ INSERT INTO `zipcodes` (`id`, `district_code`, `zipcode`) VALUES
 (2039, '320605', '32210'),
 (2040, '320606', '32210'),
 (2041, '320607', '32210');
-INSERT INTO `zipcodes` (`id`, `district_code`, `zipcode`) VALUES
+INSERT INTO `zipcodes` (`id`, `SubDistCode`, `zipcode`) VALUES
 (2042, '320610', '32210'),
 (2043, '320701', '32130'),
 (2044, '320702', '32130'),
@@ -14430,7 +14430,7 @@ INSERT INTO `zipcodes` (`id`, `district_code`, `zipcode`) VALUES
 (4036, '480201', '48160'),
 (4037, '480202', '48160'),
 (4038, '480203', '48160');
-INSERT INTO `zipcodes` (`id`, `district_code`, `zipcode`) VALUES
+INSERT INTO `zipcodes` (`id`, `SubDistCode`, `zipcode`) VALUES
 (4039, '480204', '48160'),
 (4040, '480205', '48160'),
 (4041, '480206', '48160'),
@@ -16428,7 +16428,7 @@ INSERT INTO `zipcodes` (`id`, `district_code`, `zipcode`) VALUES
 (6033, '720904', '72160'),
 (6034, '720905', '72160'),
 (6035, '720906', '72220');
-INSERT INTO `zipcodes` (`id`, `district_code`, `zipcode`) VALUES
+INSERT INTO `zipcodes` (`id`, `SubDistCode`, `zipcode`) VALUES
 (6036, '720907', '72160'),
 (6037, '720908', '72160'),
 (6038, '720909', '72160'),
