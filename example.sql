@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 02, 2017 at 03:30 PM
+-- Generation Time: May 02, 2017 at 03:49 PM
 -- Server version: 5.7.18-0ubuntu0.16.04.1
 -- PHP Version: 7.1.4-1+deb.sury.org~xenial+1
 
@@ -1262,93 +1262,94 @@ INSERT INTO `ord_line` (`OrdLineID`, `OrdID`, `IssueID`, `Quantity`, `LastUpdate
 --
 
 CREATE TABLE `province` (
-  `PROVINCE_CODE` varchar(2) COLLATE utf8_unicode_ci NOT NULL,
-  `PROVINCE_NAME` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
-  `PROVINCE_NAME_ENG` varchar(150) COLLATE utf8_unicode_ci NOT NULL
+  `ProvinceID` int(5) NOT NULL,
+  `ProvinceCode` varchar(2) COLLATE utf8_unicode_ci NOT NULL,
+  `ProvinceName` varchar(150) COLLATE utf8_unicode_ci NOT NULL,
+  `ProvinceNameEng` varchar(150) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `province`
 --
 
-INSERT INTO `province` (`PROVINCE_CODE`, `PROVINCE_NAME`, `PROVINCE_NAME_ENG`) VALUES
-('10', 'กรุงเทพมหานคร   ', 'Bangkok'),
-('11', 'สมุทรปราการ   ', 'Samut Prakan'),
-('12', 'นนทบุรี   ', 'Nonthaburi'),
-('13', 'ปทุมธานี   ', 'Pathum Thani'),
-('14', 'พระนครศรีอยุธยา   ', 'Phra Nakhon Si Ayutthaya'),
-('15', 'อ่างทอง   ', 'Ang Thong'),
-('16', 'ลพบุรี   ', 'Loburi'),
-('17', 'สิงห์บุรี   ', 'Sing Buri'),
-('18', 'ชัยนาท   ', 'Chai Nat'),
-('19', 'สระบุรี', 'Saraburi'),
-('20', 'ชลบุรี   ', 'Chon Buri'),
-('21', 'ระยอง   ', 'Rayong'),
-('22', 'จันทบุรี   ', 'Chanthaburi'),
-('23', 'ตราด   ', 'Trat'),
-('24', 'ฉะเชิงเทรา   ', 'Chachoengsao'),
-('25', 'ปราจีนบุรี   ', 'Prachin Buri'),
-('26', 'นครนายก   ', 'Nakhon Nayok'),
-('27', 'สระแก้ว   ', 'Sa Kaeo'),
-('30', 'นครราชสีมา   ', 'Nakhon Ratchasima'),
-('31', 'บุรีรัมย์   ', 'Buri Ram'),
-('32', 'สุรินทร์   ', 'Surin'),
-('33', 'ศรีสะเกษ   ', 'Si Sa Ket'),
-('34', 'อุบลราชธานี   ', 'Ubon Ratchathani'),
-('35', 'ยโสธร   ', 'Yasothon'),
-('36', 'ชัยภูมิ   ', 'Chaiyaphum'),
-('37', 'อำนาจเจริญ   ', 'Amnat Charoen'),
-('39', 'หนองบัวลำภู   ', 'Nong Bua Lam Phu'),
-('40', 'ขอนแก่น   ', 'Khon Kaen'),
-('41', 'อุดรธานี   ', 'Udon Thani'),
-('42', 'เลย   ', 'Loei'),
-('43', 'หนองคาย   ', 'Nong Khai'),
-('44', 'มหาสารคาม   ', 'Maha Sarakham'),
-('45', 'ร้อยเอ็ด   ', 'Roi Et'),
-('46', 'กาฬสินธุ์   ', 'Kalasin'),
-('47', 'สกลนคร   ', 'Sakon Nakhon'),
-('48', 'นครพนม   ', 'Nakhon Phanom'),
-('49', 'มุกดาหาร   ', 'Mukdahan'),
-('50', 'เชียงใหม่   ', 'Chiang Mai'),
-('51', 'ลำพูน   ', 'Lamphun'),
-('52', 'ลำปาง   ', 'Lampang'),
-('53', 'อุตรดิตถ์   ', 'Uttaradit'),
-('54', 'แพร่   ', 'Phrae'),
-('55', 'น่าน   ', 'Nan'),
-('56', 'พะเยา   ', 'Phayao'),
-('57', 'เชียงราย   ', 'Chiang Rai'),
-('58', 'แม่ฮ่องสอน   ', 'Mae Hong Son'),
-('60', 'นครสวรรค์   ', 'Nakhon Sawan'),
-('61', 'อุทัยธานี   ', 'Uthai Thani'),
-('62', 'กำแพงเพชร   ', 'Kamphaeng Phet'),
-('63', 'ตาก   ', 'Tak'),
-('64', 'สุโขทัย   ', 'Sukhothai'),
-('65', 'พิษณุโลก   ', 'Phitsanulok'),
-('66', 'พิจิตร   ', 'Phichit'),
-('67', 'เพชรบูรณ์   ', 'Phetchabun'),
-('70', 'ราชบุรี   ', 'Ratchaburi'),
-('71', 'กาญจนบุรี   ', 'Kanchanaburi'),
-('72', 'สุพรรณบุรี   ', 'Suphan Buri'),
-('73', 'นครปฐม   ', 'Nakhon Pathom'),
-('74', 'สมุทรสาคร   ', 'Samut Sakhon'),
-('75', 'สมุทรสงคราม   ', 'Samut Songkhram'),
-('76', 'เพชรบุรี   ', 'Phetchaburi'),
-('77', 'ประจวบคีรีขันธ์   ', 'Prachuap Khiri Khan'),
-('80', 'นครศรีธรรมราช   ', 'Nakhon Si Thammarat'),
-('81', 'กระบี่   ', 'Krabi'),
-('82', 'พังงา   ', 'Phangnga'),
-('83', 'ภูเก็ต   ', 'Phuket'),
-('84', 'สุราษฎร์ธานี   ', 'Surat Thani'),
-('85', 'ระนอง   ', 'Ranong'),
-('86', 'ชุมพร   ', 'Chumphon'),
-('90', 'สงขลา   ', 'Songkhla'),
-('91', 'สตูล   ', 'Satun'),
-('92', 'ตรัง   ', 'Trang'),
-('93', 'พัทลุง   ', 'Phatthalung'),
-('94', 'ปัตตานี   ', 'Pattani'),
-('95', 'ยะลา   ', 'Yala'),
-('96', 'นราธิวาส   ', 'Narathiwat'),
-('97', 'บึงกาฬ', 'buogkan');
+INSERT INTO `province` (`ProvinceID`, `ProvinceCode`, `ProvinceName`, `ProvinceNameEng`) VALUES
+(1, '10', 'กรุงเทพมหานคร   ', 'Bangkok'),
+(2, '11', 'สมุทรปราการ   ', 'Samut Prakan'),
+(3, '12', 'นนทบุรี   ', 'Nonthaburi'),
+(4, '13', 'ปทุมธานี   ', 'Pathum Thani'),
+(5, '14', 'พระนครศรีอยุธยา   ', 'Phra Nakhon Si Ayutthaya'),
+(6, '15', 'อ่างทอง   ', 'Ang Thong'),
+(7, '16', 'ลพบุรี   ', 'Loburi'),
+(8, '17', 'สิงห์บุรี   ', 'Sing Buri'),
+(9, '18', 'ชัยนาท   ', 'Chai Nat'),
+(10, '19', 'สระบุรี', 'Saraburi'),
+(11, '20', 'ชลบุรี   ', 'Chon Buri'),
+(12, '21', 'ระยอง   ', 'Rayong'),
+(13, '22', 'จันทบุรี   ', 'Chanthaburi'),
+(14, '23', 'ตราด   ', 'Trat'),
+(15, '24', 'ฉะเชิงเทรา   ', 'Chachoengsao'),
+(16, '25', 'ปราจีนบุรี   ', 'Prachin Buri'),
+(17, '26', 'นครนายก   ', 'Nakhon Nayok'),
+(18, '27', 'สระแก้ว   ', 'Sa Kaeo'),
+(19, '30', 'นครราชสีมา   ', 'Nakhon Ratchasima'),
+(20, '31', 'บุรีรัมย์   ', 'Buri Ram'),
+(21, '32', 'สุรินทร์   ', 'Surin'),
+(22, '33', 'ศรีสะเกษ   ', 'Si Sa Ket'),
+(23, '34', 'อุบลราชธานี   ', 'Ubon Ratchathani'),
+(24, '35', 'ยโสธร   ', 'Yasothon'),
+(25, '36', 'ชัยภูมิ   ', 'Chaiyaphum'),
+(26, '37', 'อำนาจเจริญ   ', 'Amnat Charoen'),
+(27, '39', 'หนองบัวลำภู   ', 'Nong Bua Lam Phu'),
+(28, '40', 'ขอนแก่น   ', 'Khon Kaen'),
+(29, '41', 'อุดรธานี   ', 'Udon Thani'),
+(30, '42', 'เลย   ', 'Loei'),
+(31, '43', 'หนองคาย   ', 'Nong Khai'),
+(32, '44', 'มหาสารคาม   ', 'Maha Sarakham'),
+(33, '45', 'ร้อยเอ็ด   ', 'Roi Et'),
+(34, '46', 'กาฬสินธุ์   ', 'Kalasin'),
+(35, '47', 'สกลนคร   ', 'Sakon Nakhon'),
+(36, '48', 'นครพนม   ', 'Nakhon Phanom'),
+(37, '49', 'มุกดาหาร   ', 'Mukdahan'),
+(38, '50', 'เชียงใหม่   ', 'Chiang Mai'),
+(39, '51', 'ลำพูน   ', 'Lamphun'),
+(40, '52', 'ลำปาง   ', 'Lampang'),
+(41, '53', 'อุตรดิตถ์   ', 'Uttaradit'),
+(42, '54', 'แพร่   ', 'Phrae'),
+(43, '55', 'น่าน   ', 'Nan'),
+(44, '56', 'พะเยา   ', 'Phayao'),
+(45, '57', 'เชียงราย   ', 'Chiang Rai'),
+(46, '58', 'แม่ฮ่องสอน   ', 'Mae Hong Son'),
+(47, '60', 'นครสวรรค์   ', 'Nakhon Sawan'),
+(48, '61', 'อุทัยธานี   ', 'Uthai Thani'),
+(49, '62', 'กำแพงเพชร   ', 'Kamphaeng Phet'),
+(50, '63', 'ตาก   ', 'Tak'),
+(51, '64', 'สุโขทัย   ', 'Sukhothai'),
+(52, '65', 'พิษณุโลก   ', 'Phitsanulok'),
+(53, '66', 'พิจิตร   ', 'Phichit'),
+(54, '67', 'เพชรบูรณ์   ', 'Phetchabun'),
+(55, '70', 'ราชบุรี   ', 'Ratchaburi'),
+(56, '71', 'กาญจนบุรี   ', 'Kanchanaburi'),
+(57, '72', 'สุพรรณบุรี   ', 'Suphan Buri'),
+(58, '73', 'นครปฐม   ', 'Nakhon Pathom'),
+(59, '74', 'สมุทรสาคร   ', 'Samut Sakhon'),
+(60, '75', 'สมุทรสงคราม   ', 'Samut Songkhram'),
+(61, '76', 'เพชรบุรี   ', 'Phetchaburi'),
+(62, '77', 'ประจวบคีรีขันธ์   ', 'Prachuap Khiri Khan'),
+(63, '80', 'นครศรีธรรมราช   ', 'Nakhon Si Thammarat'),
+(64, '81', 'กระบี่   ', 'Krabi'),
+(65, '82', 'พังงา   ', 'Phangnga'),
+(66, '83', 'ภูเก็ต   ', 'Phuket'),
+(67, '84', 'สุราษฎร์ธานี   ', 'Surat Thani'),
+(68, '85', 'ระนอง   ', 'Ranong'),
+(69, '86', 'ชุมพร   ', 'Chumphon'),
+(70, '90', 'สงขลา   ', 'Songkhla'),
+(71, '91', 'สตูล   ', 'Satun'),
+(72, '92', 'ตรัง   ', 'Trang'),
+(73, '93', 'พัทลุง   ', 'Phatthalung'),
+(74, '94', 'ปัตตานี   ', 'Pattani'),
+(75, '95', 'ยะลา   ', 'Yala'),
+(76, '96', 'นราธิวาส   ', 'Narathiwat'),
+(77, '97', 'บึงกาฬ', 'buogkan');
 
 -- --------------------------------------------------------
 
@@ -17960,7 +17961,7 @@ ALTER TABLE `ord_line`
 -- Indexes for table `province`
 --
 ALTER TABLE `province`
-  ADD PRIMARY KEY (`PROVINCE_CODE`);
+  ADD PRIMARY KEY (`ProvinceID`);
 
 --
 -- Indexes for table `publisher`
@@ -18026,6 +18027,11 @@ ALTER TABLE `order_table`
 --
 ALTER TABLE `ord_line`
   MODIFY `OrdLineID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+--
+-- AUTO_INCREMENT for table `province`
+--
+ALTER TABLE `province`
+  MODIFY `ProvinceID` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 --
 -- AUTO_INCREMENT for table `sub_district`
 --
