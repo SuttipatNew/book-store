@@ -360,7 +360,7 @@ HAVING COUNT(*) > 0";
     $data_json .= "]}\n";
     echo $data_json;
 } elseif ($_GET['command'] == '9') {
-    $head = array('BookTitle');
+    $head = array('BookTitle', 'IssueDate');
     $data_json = "{ \"head\" : [";
     $sql = "SELECT ";
     for ($i = 0; $i < count($head); $i++) {
