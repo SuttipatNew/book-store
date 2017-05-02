@@ -298,7 +298,7 @@ if ($_GET['command'] == '1') {
     INNER JOIN district ON sub_district.DistrictID = district.DistrictID
     INNER JOIN province ON district.ProvinceID = province.ProvinceID
     INNER JOIN zipcodes ON zipcodes.SubDistCode = sub_district.SubDistrictCode
-    WHERE customer.IsSubAgent = \"Yes\" AND OrdDate = CURDATE() AND OrdID And Delivery = \"Yes\"";
+    WHERE customer.IsSubAgent = \"Yes\" AND OrdDate = CURDATE() And Delivery = \"Yes\"";
     if (isset($_GET['sql']) && $_GET['sql'] == "true") {
         echo $sql;
         return;
@@ -515,7 +515,7 @@ HAVING COUNT(*) = 1";
     INNER JOIN district ON sub_district.DistrictID = district.DistrictID
     INNER JOIN province ON district.ProvinceID = province.ProvinceID
     INNER JOIN zipcodes ON zipcodes.SubDistCode = sub_district.SubDistrictCode
-    WHERE customer.IsSubAgent AND OrdDate = CURDATE() AND OrdID AND Delivery = \"Yes\"";
+    WHERE customer.IsSubAgent = \"No\" AND OrdDate = CURDATE() AND Delivery = \"Yes\"";
     if (isset($_GET['sql']) && $_GET['sql'] == "true") {
         echo $sql;
         return;

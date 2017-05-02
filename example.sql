@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 04, 2017 at 10:52 AM
+-- Generation Time: May 02, 2017 at 11:19 AM
 -- Server version: 5.7.18-0ubuntu0.16.04.1
 -- PHP Version: 7.1.4-1+deb.sury.org~xenial+1
 
@@ -1231,7 +1231,7 @@ CREATE TABLE `order_table` (
 --
 
 INSERT INTO `order_table` (`OrdID`, `CustID`, `Discount`, `Delivery`, `OrdDate`, `LastUpdate`) VALUES
-(1, '4', 2, 'Yes', '2017-05-04', '2017-05-02 10:35:19'),
+(1, '4', 2, 'Yes', '2017-05-02', '2017-05-02 11:07:38'),
 (2, '2', 15, 'Yes', '2017-05-02', '2017-05-02 10:25:06'),
 (3, '1', 15, 'No', '2017-05-02', '2017-05-02 10:34:50'),
 (4, '3', 15, 'No', '2017-05-02', '2017-05-02 10:28:41'),
