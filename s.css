@@ -42,6 +42,6 @@ div.progress-bar {
     width: 100%;
 }
 
-div.book-no-bought * {
+div.book-no-bought *, div.unique-book * {
     text-align: center;
 }

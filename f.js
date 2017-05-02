@@ -1,26 +1,22 @@
-var menu = ['home', 'publisher', 'book', 'book-no-bought', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery', 'ord-on-day', 'ord-delivery', 'sa-receipt', 'rc-receipt'];
-var table_page = ['publisher', 'book', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery']; //name of page that have to get data from db
-var complex_page = ['ord-on-day', 'ord-delivery', 'sa-receipt', 'book-no-bought', 'rc-receipt'];
-var command_map = {
-    'ord-on-day' : 6,
-    'ord-delivery' : 7,
-    'sa-receipt' : 8,
-    'book-no-bought' : 9,
-    'rc-receipt' : 10
-}
+var menu;
+var table_page; //name of page that have to get data from db
+var complex_page;
+var command_map;
 var action = "";
 var selected_search_field = "";
 var dialog;
 $(document).ready(function() {
     dialog = document.querySelector('dialog');
-    menu = ['home', 'publisher', 'book', 'book-no-bought', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery', 'ord-on-day', 'ord-delivery', 'sa-receipt', 'rc-receipt'];
-    complex_page = ['ord-on-day', 'ord-delivery', 'sa-receipt', 'book-no-bought', 'rc-receipt']
+    menu = ['home', 'publisher', 'book', 'book-no-bought', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery', 'ord-on-day', 'ord-delivery', 'sa-receipt', 'rc-receipt', 'unique-book'];
+    table_page = ['publisher', 'book', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery'];
+    complex_page = ['ord-on-day', 'ord-delivery', 'sa-receipt', 'book-no-bought', 'rc-receipt', 'unique-book']
     command_map = {
         'ord-on-day' : 6,
         'ord-delivery' : 7,
         'sa-receipt' : 8,
         'book-no-bought' : 9,
-        'rc-receipt' : 10
+        'rc-receipt' : 10,
+        'unique-book' : 11
     }
     // dialog.showModal();
 });

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 02, 2017 at 09:25 AM
+-- Generation Time: May 02, 2017 at 11:51 AM
 -- Server version: 5.7.18-0ubuntu0.16.04.1
 -- PHP Version: 7.1.4-1+deb.sury.org~xenial+1
 
@@ -1146,7 +1146,9 @@ CREATE TABLE `issue` (
 --
 
 INSERT INTO `issue` (`IssueID`, `IssueDate`, `QtyOnHand`, `BookID`, `LastUpdate`) VALUES
-(1, '2017-05-02', 10, 'B0001', '2017-05-02 09:24:08');
+(1, '2017-05-02', 10, 'B0001', '2017-05-02 09:24:08'),
+(2, '2017-05-02', 20, 'B0001', '2017-05-02 11:43:01'),
+(3, '2017-05-02', 20, 'B0003', '2017-05-02 11:43:10');
 
 -- --------------------------------------------------------
 
@@ -1167,6 +1169,7 @@ CREATE TABLE `order_table` (
 --
 
 INSERT INTO `order_table` (`OrdID`, `CustID`, `Discount`, `OrdDate`, `LastUpdate`) VALUES
+(1, 'C001', 15, '2017-05-02', '2017-05-02 10:16:42'),
 (2, 'S002', 2, '2017-05-01', '2017-05-01 06:09:45'),
 (3, 'S001', 3, '2017-04-30', '2017-04-30 21:17:37');
 
@@ -1188,6 +1191,7 @@ CREATE TABLE `ord_line` (
 --
 
 INSERT INTO `ord_line` (`OrdID`, `IssueID`, `Quantity`, `LastUpdate`) VALUES
+(1, 1, 2, '2017-05-02 10:16:50'),
 (2, 1, 10, '2017-05-02 09:17:56');
 
 -- --------------------------------------------------------
@@ -17921,7 +17925,7 @@ ALTER TABLE `delivery`
 -- AUTO_INCREMENT for table `issue`
 --
 ALTER TABLE `issue`
-  MODIFY `IssueID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `IssueID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `order_table`
 --
