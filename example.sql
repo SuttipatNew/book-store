@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.4.1deb2ubuntu2
--- http://www.phpmyadmin.net
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: May 02, 2017 at 09:55 PM
--- Server version: 5.7.18-0ubuntu0.16.04.1
--- PHP Version: 7.1.4-1+deb.sury.org~xenial+1
+-- Host: 127.0.0.1
+-- Generation Time: May 02, 2017 at 10:13 AM
+-- Server version: 10.1.21-MariaDB
+-- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -104,28 +104,6 @@ INSERT INTO `book` (`BookID`, `BookTitle`, `Price`, `PubID`, `LastUpdate`) VALUE
 ('B0009', 'คู่สร้างคู่สม', 25, 'P005', '2017-05-02 13:27:29'),
 ('B0010', 'Divergent', 220, 'P006', '2017-05-02 13:27:58'),
 ('B0011', 'Fifty Shade of Grey', 250, 'P006', '2017-05-02 13:31:12');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `delivery`
---
-
-CREATE TABLE `delivery` (
-  `DvlID` int(11) NOT NULL,
-  `OrdID` int(11) NOT NULL,
-  `LastUpdate` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `delivery`
---
-
-INSERT INTO `delivery` (`DvlID`, `OrdID`, `LastUpdate`) VALUES
-(1, 2, '2017-05-02 15:09:36'),
-(2, 6, '2017-05-02 15:09:44'),
-(3, 8, '2017-05-02 15:09:51'),
-(4, 9, '2017-05-02 15:10:07');
 
 -- --------------------------------------------------------
 
@@ -1203,6 +1181,7 @@ CREATE TABLE `order_table` (
   `OrdID` int(1) NOT NULL,
   `CustID` char(4) CHARACTER SET utf8 NOT NULL,
   `Discount` double NOT NULL,
+  `Delivery` varchar(3) NOT NULL DEFAULT 'No',
   `OrdDate` date NOT NULL,
   `LastUpdate` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -1211,17 +1190,17 @@ CREATE TABLE `order_table` (
 -- Dumping data for table `order_table`
 --
 
-INSERT INTO `order_table` (`OrdID`, `CustID`, `Discount`, `OrdDate`, `LastUpdate`) VALUES
-(1, 'C001', 2, '2017-05-02', '2017-05-02 13:58:14'),
-(2, 'S002', 15, '2017-05-01', '2017-05-02 13:58:20'),
-(3, 'S001', 15, '2017-04-30', '2017-05-02 13:58:05'),
-(4, 'S003', 15, '2017-05-02', '2017-05-02 13:57:33'),
-(5, 'S004', 15, '2017-05-02', '2017-05-02 13:58:51'),
-(6, 'S008', 15, '2017-05-02', '2017-05-02 14:02:15'),
-(7, 'C002', 0, '2017-05-02', '2017-05-02 14:03:10'),
-(8, 'C006', 2, '2017-05-02', '2017-05-02 14:03:28'),
-(9, 'C010', 10, '2017-05-02', '2017-05-02 14:03:57'),
-(10, 'C009', 5, '2017-05-02', '2017-05-02 14:04:18');
+INSERT INTO `order_table` (`OrdID`, `CustID`, `Discount`, `Delivery`, `OrdDate`, `LastUpdate`) VALUES
+(1, 'C001', 2, 'Yes', '2017-05-02', '2017-05-03 15:09:20'),
+(2, 'S002', 15, 'Yes', '2017-05-02', '2017-05-02 15:10:39'),
+(3, 'S001', 15, 'No', '2017-04-30', '2017-05-02 13:58:05'),
+(4, 'S003', 15, 'No', '2017-05-02', '2017-05-02 13:57:33'),
+(5, 'S004', 15, 'No', '2017-05-02', '2017-05-02 13:58:51'),
+(6, 'S008', 15, 'No', '2017-05-02', '2017-05-02 14:02:15'),
+(7, 'C002', 0, 'No', '2017-05-02', '2017-05-02 14:03:10'),
+(8, 'C006', 2, 'No', '2017-05-02', '2017-05-02 14:03:28'),
+(9, 'C010', 10, 'No', '2017-05-02', '2017-05-02 14:03:57'),
+(10, 'C009', 5, 'No', '2017-05-02', '2017-05-02 14:04:18');
 
 -- --------------------------------------------------------
 
@@ -17927,12 +17906,6 @@ ALTER TABLE `book`
   ADD PRIMARY KEY (`BookID`);
 
 --
--- Indexes for table `delivery`
---
-ALTER TABLE `delivery`
-  ADD PRIMARY KEY (`DvlID`);
-
---
 -- Indexes for table `district`
 --
 ALTER TABLE `district`
@@ -18002,11 +17975,6 @@ ALTER TABLE `zipcodes`
 --
 ALTER TABLE `address`
   MODIFY `AddrID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1011;
---
--- AUTO_INCREMENT for table `delivery`
---
-ALTER TABLE `delivery`
-  MODIFY `DvlID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `district`
 --
