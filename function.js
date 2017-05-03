@@ -7,18 +7,20 @@ var selected_search_field = "";
 var dialog;
 $(document).ready(function() {
     dialog = document.querySelector('dialog');
-    menu = ['home', 'publisher', 'book', 'book-no-bought', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery', 'ord-on-day-sa', 'ord-delivery-sa', 'sa-receipt', 'rc-receipt', 'unique-book', 'ord-delivery-rc', 'ord-on-day-rc'];
+    menu = ['home', 'publisher', 'book', 'book-no-bought', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery', 'ord-on-day-sa', 'ord-delivery-sa', 'sa-receipt', 'rc-receipt', 'unique-book', 'ord-delivery-rc', 'ord-on-day-rc', 'ord-info-sa', 'ord-info-rc'];
     table_page = ['publisher', 'book', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery'];
-    complex_page = ['ord-on-day-sa', 'ord-delivery-sa', 'sa-receipt', 'book-no-bought', 'rc-receipt', 'unique-book', 'ord-delivery-rc', 'ord-on-day-rc']
+    complex_page = ['ord-on-day-sa', 'ord-delivery-sa', 'sa-receipt', 'book-no-bought', 'rc-receipt', 'unique-book', 'ord-delivery-rc', 'ord-on-day-rc', 'ord-info-sa', 'ord-info-rc']
     command_map = {
-        'ord-on-day-sa' : 6,
-        'ord-delivery-sa' : 7,
-        'sa-receipt' : 8,
-        'book-no-bought' : 9,
-        'rc-receipt' : 10,
-        'unique-book' : 11,
-        'ord-delivery-rc' : 12,
-        'ord-on-day-rc' : 13
+        'ord-on-day-sa': 6,
+        'ord-delivery-sa': 7,
+        'sa-receipt': 8,
+        'book-no-bought': 9,
+        'rc-receipt': 10,
+        'unique-book': 11,
+        'ord-delivery-rc': 12,
+        'ord-on-day-rc': 13,
+        'ord-info-sa': 14,
+        'ord-info-rc': 15
     }
     // dialog.showModal();
 });
@@ -58,10 +60,10 @@ function bind_all() {
     //     }
     // });
 
-    $("#professsion").unbind().change(function(){
-            // console.log("eiei")
-            selected_search_field = $('#professsion option:selected').text();
-            // console.log(selected_search_field);
+    $("#professsion").unbind().change(function() {
+        // console.log("eiei")
+        selected_search_field = $('#professsion option:selected').text();
+        // console.log(selected_search_field);
     });
 
     dialog = document.querySelector('dialog');
@@ -106,7 +108,7 @@ function refresh_page(progress_bar, _callback) {
         $.get("connect-data.php?command=1&table=" + present_page.str + '&sql=true', function(data) {
             console.log(data);
         });
-    } else if(complex_page.indexOf(present_page.str) !== -1) {
+    } else if (complex_page.indexOf(present_page.str) !== -1) {
         console.log(present_page.str);
         load_complex_page(command_map[present_page.str]);
         remove_progress_bar();
@@ -200,7 +202,7 @@ function change_page() {
             $.get("connect-data.php?command=1&table=" + present_page.str + "&sql=true", function(data) {
                 console.log(data);
             });
-        } else if(complex_page.indexOf(present_page.str) !== -1) {
+        } else if (complex_page.indexOf(present_page.str) !== -1) {
             console.log(JSON.stringify(command_map));
             load_complex_page(command_map[present_page.str]);
             remove_progress_bar();
@@ -409,7 +411,7 @@ function delete_data() {
 
 function load_complex_page(command) {
     console.log('command:' + command);
-    $.get("connect-data.php?command="+command, function(data) {
+    $.get("connect-data.php?command=" + command, function(data) {
         // console.log(data);
         var table_json = JSON.parse(data);
         var head = table_json.head;
@@ -440,7 +442,7 @@ function load_complex_page(command) {
             }
         }
     });
-    $.get("connect-data.php?command="+command+"&sql=true", function(data) {
+    $.get("connect-data.php?command=" + command + "&sql=true", function(data) {
         console.log(data);
     });
 }
@@ -448,25 +450,25 @@ function load_complex_page(command) {
 function search() {
     // console.log('click search');
     var keyword = $('input.search-box').val();
-    if(keyword !== '') {
+    if (keyword !== '') {
         // var table_json = JSON.parse(data);
         console.log(keyword + ' ' + selected_search_field);
         console.log(selected_search_field);
         var php_command = "connect-data.php?command=5&table=" + present_page.str;
         php_command += "&field=" + selected_search_field + "&data=" + keyword;
         console.log("php command: " + php_command);
-         $.get(php_command, function(data) {
+        $.get(php_command, function(data) {
             // console.log('get data');
             // console.log(data);
             // refresh_page(true);
-            while($('tbody tr').length > 0) {
+            while ($('tbody tr').length > 0) {
                 $('tbody tr').remove();
             }
             var data_json = JSON.parse(data);
             // console.log(data_json[0][1]);
-            for(var i = 0; i < data_json.length; i++) {
+            for (var i = 0; i < data_json.length; i++) {
                 var row = "<tr>\n";
-                for(var j = 0; j < data_json[i].length; j++) {
+                for (var j = 0; j < data_json[i].length; j++) {
                     row += "<td>" + data_json[i][j] + "</td>\n";
                 }
                 row += "</tr>";
