@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
--- https://www.phpmyadmin.net/
+-- version 4.5.4.1deb2ubuntu2
+-- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: May 03, 2017 at 06:50 PM
--- Server version: 10.1.21-MariaDB
--- PHP Version: 5.6.30
+-- Host: localhost
+-- Generation Time: May 04, 2017 at 10:52 AM
+-- Server version: 5.7.18-0ubuntu0.16.04.1
+-- PHP Version: 7.1.4-1+deb.sury.org~xenial+1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -104,6 +104,46 @@ INSERT INTO `book` (`BookID`, `BookTitle`, `Price`, `PubID`, `LastUpdate`) VALUE
 ('B0009', 'คู่สร้างคู่สม', 25, 'P005', '2017-05-02 13:27:29'),
 ('B0010', 'Divergent', 220, 'P006', '2017-05-02 13:27:58'),
 ('B0011', 'Fifty Shade of Grey', 250, 'P006', '2017-05-02 13:31:12');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer`
+--
+
+CREATE TABLE `customer` (
+  `CustID` int(11) NOT NULL,
+  `CustName` varchar(200) CHARACTER SET utf8 NOT NULL,
+  `AddrID` int(11) NOT NULL,
+  `IsSubAgent` varchar(3) NOT NULL DEFAULT 'No',
+  `LastUpdate` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `customer`
+--
+
+INSERT INTO `customer` (`CustID`, `CustName`, `AddrID`, `IsSubAgent`, `LastUpdate`) VALUES
+(1, 'ศูนย์หนังสือชะอำ', 156, 'Yes', '2017-05-04 00:00:00'),
+(2, 'เอกวรา', 459, 'Yes', '2017-05-04 00:00:00'),
+(3, 'กิจเจริญ', 987, 'Yes', '2017-05-04 00:00:00'),
+(4, 'Nick', 1001, 'No', '2017-05-04 00:00:00'),
+(5, 'จัดไป', 411, 'Yes', '2017-05-04 00:00:00'),
+(6, 'Tony', 1002, 'No', '2017-05-04 00:00:00'),
+(7, 'นิวบุ๊คส์', 346, 'Yes', '2017-05-04 00:00:00'),
+(8, 'ดำแดง', 345, 'Yes', '2017-05-04 00:00:00'),
+(9, 'Jason', 1003, 'No', '2017-05-04 00:00:00'),
+(10, 'โต๊ะไม้', 598, 'Yes', '2017-05-04 00:00:00'),
+(11, 'Captain', 1004, 'No', '2017-05-04 00:00:00'),
+(12, 'ดวงแก้ว', 598, 'Yes', '2017-05-04 00:00:00'),
+(13, 'Mermaid', 1006, 'No', '2017-05-04 00:00:00'),
+(14, 'ทันใจ', 348, 'Yes', '2017-05-04 00:00:00'),
+(15, 'Snow white', 1007, 'No', '2017-05-04 00:00:00'),
+(16, 'หนังสือคู่คิด', 846, 'Yes', '2017-05-04 00:00:00'),
+(17, 'Anna', 1008, 'No', '2017-05-04 00:00:00'),
+(18, 'Rihanna', 1009, 'No', '2017-05-04 00:00:00'),
+(19, 'Taylor', 1010, 'No', '2017-05-04 00:00:00'),
+(20, 'Aerial', 1005, 'No', '2017-05-04 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -1191,16 +1231,16 @@ CREATE TABLE `order_table` (
 --
 
 INSERT INTO `order_table` (`OrdID`, `CustID`, `Discount`, `Delivery`, `OrdDate`, `LastUpdate`) VALUES
-(1, 'C001', 2, 'Yes', '2017-05-02', '2017-05-03 15:09:20'),
-(2, 'S002', 15, 'Yes', '2017-05-02', '2017-05-02 15:10:39'),
-(3, 'S001', 15, 'No', '2017-04-30', '2017-05-02 13:58:05'),
-(4, 'S003', 15, 'No', '2017-05-02', '2017-05-02 13:57:33'),
-(5, 'S004', 15, 'No', '2017-05-02', '2017-05-02 13:58:51'),
-(6, 'S008', 15, 'No', '2017-05-02', '2017-05-02 14:02:15'),
-(7, 'C002', 0, 'No', '2017-05-02', '2017-05-02 14:03:10'),
-(8, 'C006', 2, 'No', '2017-05-02', '2017-05-02 14:03:28'),
-(9, 'C010', 10, 'No', '2017-05-02', '2017-05-02 14:03:57'),
-(10, 'C009', 5, 'No', '2017-05-02', '2017-05-02 14:04:18');
+(1, '4', 2, 'Yes', '2017-05-04', '2017-05-02 10:35:19'),
+(2, '2', 15, 'Yes', '2017-05-02', '2017-05-02 10:25:06'),
+(3, '1', 15, 'No', '2017-05-02', '2017-05-02 10:34:50'),
+(4, '3', 15, 'No', '2017-05-02', '2017-05-02 10:28:41'),
+(5, '5', 15, 'No', '2017-05-02', '2017-05-02 10:29:00'),
+(6, '12', 15, 'No', '2017-05-02', '2017-05-02 10:29:13'),
+(7, '6', 0, 'No', '2017-05-02', '2017-05-02 10:28:57'),
+(8, '13', 2, 'No', '2017-05-02', '2017-05-02 10:29:23'),
+(9, '19', 10, 'No', '2017-05-02', '2017-05-02 10:30:03'),
+(10, '19', 5, 'No', '2017-05-02', '2017-05-02 10:29:39');
 
 -- --------------------------------------------------------
 
@@ -17906,6 +17946,12 @@ ALTER TABLE `book`
   ADD PRIMARY KEY (`BookID`);
 
 --
+-- Indexes for table `customer`
+--
+ALTER TABLE `customer`
+  ADD PRIMARY KEY (`CustID`);
+
+--
 -- Indexes for table `district`
 --
 ALTER TABLE `district`
@@ -17975,6 +18021,11 @@ ALTER TABLE `zipcodes`
 --
 ALTER TABLE `address`
   MODIFY `AddrID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1011;
+--
+-- AUTO_INCREMENT for table `customer`
+--
+ALTER TABLE `customer`
+  MODIFY `CustID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 --
 -- AUTO_INCREMENT for table `district`
 --

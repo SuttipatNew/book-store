@@ -57,8 +57,8 @@ if ($_GET['command'] == '1') {
         }
         }
         echo "], ";
-        echo "\"column\" : " . $col_num . ", \n";
-        echo "\n\"body\" : ";
+        echo "\"column\" : " . $col_num . ", ";
+        echo "\"body\" : ";
     }
     $sql = "SELECT * FROM " . $_GET['table'];
     if (isset($_GET['sql']) && $_GET['sql'] == "true") {
@@ -237,7 +237,7 @@ if ($_GET['command'] == '1') {
        echo "]\n";
    }
 } elseif ($_GET['command'] == '6') {
-    $head = array('SAName', 'order_table.OrdID', 'BookTitle', 'Quantity');
+    $head = array('CustName', 'order_table.OrdID', 'BookTitle', 'Quantity');
     $data_json = "{ \"head\" : [";
     $sql = "SELECT ";
     for ($i = 0; $i < count($head); $i++) {
@@ -249,11 +249,11 @@ if ($_GET['command'] == '1') {
         }
     }
     $data_json .= "], \"column\" : " . count($head) . ", \"body\" : [";
-    $sql .= " FROM order_table INNER JOIN sub_agent ON CustID = SAID
+    $sql .= " FROM order_table INNER JOIN customer ON order_table.CustID = customer.CustID
     INNER JOIN ord_line ON order_table.OrdID = ord_line.OrdID
     INNER JOIN issue ON ord_line.IssueID = issue.IssueID
     INNER JOIN book ON issue.BookID = book.BookID
-    WHERE OrdDate = CURDATE() ORDER BY CustID";
+    WHERE customer.IsSubAgent = \"Yes\" AND OrdDate = CURDATE() ORDER BY order_table.CustID";
     if (isset($_GET['sql']) && $_GET['sql'] == "true") {
         echo $sql;
         return;
@@ -280,7 +280,7 @@ if ($_GET['command'] == '1') {
     $data_json .= "]}\n";
     echo $data_json;
 } elseif ($_GET['command'] == '7') {
-    $head = array('OrdID', 'SAName', 'Addr', 'Lane', 'Road', 'SubDistrictName', 'DistrictName', 'ProvinceName', 'zipcode');
+    $head = array('OrdID', 'CustName', 'Addr', 'Lane', 'Road', 'SubDistrictName', 'DistrictName', 'ProvinceName', 'zipcode');
     $data_json = "{ \"head\" : [";
     $sql = "SELECT ";
     for ($i = 0; $i < count($head); $i++) {
@@ -292,13 +292,13 @@ if ($_GET['command'] == '1') {
         }
     }
     $data_json .= "], \"column\" : " . count($head) . ", \"body\" : [";
-    $sql .= " FROM order_table INNER JOIN sub_agent ON order_table.CustID = sub_agent.SAID
-    INNER JOIN address ON sub_agent.AddrID = address.AddrID
+    $sql .= " FROM order_table INNER JOIN customer ON order_table.CustID = customer.CustID
+    INNER JOIN address ON customer.AddrID = address.AddrID
     INNER JOIN sub_district ON SubDistID = SubDistrictID
     INNER JOIN district ON sub_district.DistrictID = district.DistrictID
     INNER JOIN province ON district.ProvinceID = province.ProvinceID
     INNER JOIN zipcodes ON zipcodes.SubDistCode = sub_district.SubDistrictCode
-    WHERE OrdDate = CURDATE() AND OrdID And Delivery = \"Yes\"";
+    WHERE customer.IsSubAgent = \"Yes\" AND OrdDate = CURDATE() AND OrdID And Delivery = \"Yes\"";
     if (isset($_GET['sql']) && $_GET['sql'] == "true") {
         echo $sql;
         return;
@@ -325,7 +325,7 @@ if ($_GET['command'] == '1') {
     $data_json .= "]}\n";
     echo $data_json;
 } elseif ($_GET['command'] == '8') {
-    $head = array('SAName', 'SUM(Price*Quantity*(100-Discount)/100)');
+    $head = array('CustName', 'SUM(Price*Quantity*(100-Discount)/100)');
     $data_json = "{ \"head\" : [";
     $sql = "SELECT ";
     for ($i = 0; $i < count($head); $i++) {
@@ -340,9 +340,9 @@ if ($_GET['command'] == '1') {
     $sql .= " FROM order_table INNER JOIN ord_line ON order_table.OrdID = ord_line.OrdID
 INNER JOIN issue ON ord_line.IssueID = issue.IssueID
 INNER JOIN book ON issue.BookID = book.BookID
-INNER JOIN sub_agent ON sub_agent.SAID = order_table.CustID
-WHERE MONTH(order_table.OrdDate) = MONTH(CURDATE())
-GROUP BY CustID
+INNER JOIN customer ON customer.CustID = order_table.CustID
+WHERE customer.IsSubAgent = \"Yes\" AND MONTH(order_table.OrdDate) = MONTH(CURDATE())
+GROUP BY order_table.CustID
 HAVING COUNT(*) > 0";
     if (isset($_GET['sql']) && $_GET['sql'] == "true") {
         echo $sql;
@@ -411,7 +411,7 @@ WHERE NOT EXISTS
     $data_json .= "]}\n";
     echo $data_json;
 } elseif ($_GET['command'] == '10') {
-    $head = array('RCName', 'SUM(Price*Quantity*(100-Discount)/100)');
+    $head = array('CustName', 'SUM(Price*Quantity*(100-Discount)/100)');
     $data_json = "{ \"head\" : [";
     $sql = "SELECT ";
     for ($i = 0; $i < count($head); $i++) {
@@ -426,9 +426,9 @@ WHERE NOT EXISTS
     $sql .= " FROM order_table INNER JOIN ord_line ON order_table.OrdID = ord_line.OrdID
 INNER JOIN issue ON ord_line.IssueID = issue.IssueID
 INNER JOIN book ON issue.BookID = book.BookID
-INNER JOIN regular_cust ON regular_cust.RCID = order_table.CustID
-WHERE MONTH(order_table.OrdDate) = MONTH(CURDATE())
-GROUP BY CustID
+INNER JOIN customer ON customer.CustID = order_table.CustID
+WHERE customer.IsSubAgent = \"No\" AND MONTH(order_table.OrdDate) = MONTH(CURDATE())
+GROUP BY order_table.CustID
 HAVING COUNT(*) > 0";
     if (isset($_GET['sql']) && $_GET['sql'] == "true") {
         echo $sql;
@@ -497,7 +497,7 @@ HAVING COUNT(*) = 1";
     $data_json .= "]}\n";
     echo $data_json;
 } elseif ($_GET['command'] == '12') {
-    $head = array('OrdID', 'RCName', 'Addr', 'Lane', 'Road', 'SubDistrictName', 'DistrictName', 'ProvinceName', 'zipcode');
+    $head = array('OrdID', 'CustName', 'Addr', 'Lane', 'Road', 'SubDistrictName', 'DistrictName', 'ProvinceName', 'zipcode');
     $data_json = "{ \"head\" : [";
     $sql = "SELECT ";
     for ($i = 0; $i < count($head); $i++) {
@@ -509,13 +509,13 @@ HAVING COUNT(*) = 1";
         }
     }
     $data_json .= "], \"column\" : " . count($head) . ", \"body\" : [";
-    $sql .= " FROM order_table INNER JOIN regular_cust ON order_table.CustID = regular_cust.RCID
-    INNER JOIN address ON regular_cust.AddrID = address.AddrID
+    $sql .= " FROM order_table INNER JOIN customer ON order_table.CustID = customer.CustID
+    INNER JOIN address ON customer.AddrID = address.AddrID
     INNER JOIN sub_district ON SubDistID = SubDistrictID
     INNER JOIN district ON sub_district.DistrictID = district.DistrictID
     INNER JOIN province ON district.ProvinceID = province.ProvinceID
     INNER JOIN zipcodes ON zipcodes.SubDistCode = sub_district.SubDistrictCode
-    WHERE OrdDate = CURDATE() AND OrdID AND Delivery = \"Yes\"";
+    WHERE customer.IsSubAgent AND OrdDate = CURDATE() AND OrdID AND Delivery = \"Yes\"";
     if (isset($_GET['sql']) && $_GET['sql'] == "true") {
         echo $sql;
         return;
@@ -542,7 +542,7 @@ HAVING COUNT(*) = 1";
     $data_json .= "]}\n";
     echo $data_json;
 } elseif ($_GET['command'] == '13') {
-    $head = array('RCName', 'order_table.OrdID', 'BookTitle', 'Quantity');
+    $head = array('CustName', 'order_table.OrdID', 'BookTitle', 'Quantity');
     $data_json = "{ \"head\" : [";
     $sql = "SELECT ";
     for ($i = 0; $i < count($head); $i++) {
@@ -554,11 +554,11 @@ HAVING COUNT(*) = 1";
         }
     }
     $data_json .= "], \"column\" : " . count($head) . ", \"body\" : [";
-    $sql .= " FROM order_table INNER JOIN regular_cust ON CustID = RCID
+    $sql .= " FROM order_table INNER JOIN customer ON order_table.CustID = customer.CustID
     INNER JOIN ord_line ON order_table.OrdID = ord_line.OrdID
     INNER JOIN issue ON ord_line.IssueID = issue.IssueID
     INNER JOIN book ON issue.BookID = book.BookID
-    WHERE OrdDate = CURDATE() ORDER BY CustID";
+    WHERE customer.IsSubAgent = \"No\" AND OrdDate = CURDATE() ORDER BY order_table.CustID";
     if (isset($_GET['sql']) && $_GET['sql'] == "true") {
         echo $sql;
         return;
@@ -585,7 +585,7 @@ HAVING COUNT(*) = 1";
     $data_json .= "]}\n";
     echo $data_json;
 } elseif ($_GET['command'] == '14') {
-    $head = array('SAName', 'BookTitle', 'IssueDate');
+    $head = array('CustName', 'BookTitle', 'IssueDate');
     $data_json = "{ \"head\" : [";
     $sql = "SELECT ";
     for ($i = 0; $i < count($head); $i++) {
@@ -597,12 +597,12 @@ HAVING COUNT(*) = 1";
         }
     }
     $data_json .= "], \"column\" : " . count($head) . ", \"body\" : [";
-    $sql .= " FROM book, issue, publisher, order_table, sub_agent
-    WHERE book.BooKID = issue.BookID AND book.PubID = publisher.pubID AND SAID = CustID
-    AND CustID IN
+    $sql .= " FROM book, issue, publisher, order_table, customer
+    WHERE book.BooKID = issue.BookID AND book.PubID = publisher.pubID AND order_table.CustID = customer.CustID
+    AND order_table.CustID IN
     (SELECT CustID FROM order_table, book, issue, ord_line
-    WHERE issue.BookID = book.BookID AND order_table.OrdID = ord_line.OrdID AND ord_line.IssueID = issue.IssueID)
-    ORDER BY SAName";
+    WHERE customer.IsSubAgent = \"Yes\" AND issue.BookID = book.BookID AND order_table.OrdID = ord_line.OrdID AND ord_line.IssueID = issue.IssueID)
+    ORDER BY CustName";
     if (isset($_GET['sql']) && $_GET['sql'] == "true") {
         echo $sql;
         return;
@@ -629,7 +629,7 @@ HAVING COUNT(*) = 1";
     $data_json .= "]}\n";
     echo $data_json;
 } elseif ($_GET['command'] == '15') {
-    $head = array('RCName', 'BookTitle', 'IssueDate');
+    $head = array('CustName', 'BookTitle', 'IssueDate');
     $data_json = "{ \"head\" : [";
     $sql = "SELECT ";
     for ($i = 0; $i < count($head); $i++) {
@@ -641,11 +641,11 @@ HAVING COUNT(*) = 1";
         }
     }
     $data_json .= "], \"column\" : " . count($head) . ", \"body\" : [";
-    $sql .= " FROM book, issue, publisher, order_table, regular_cust
-    WHERE book.BooKID = issue.BookID AND book.PubID = publisher.pubID AND RCID = CustID AND CustID IN
+    $sql .= " FROM book, issue, publisher, order_table, customer
+    WHERE book.BooKID = issue.BookID AND book.PubID = publisher.pubID AND order_table.CustID = customer.CustID AND order_table.CustID IN
     (SELECT CustID FROM order_table, book, issue, ord_line
-    WHERE issue.BookID = book.BookID AND order_table.OrdID = ord_line.OrdID AND ord_line.IssueID = issue.IssueID)
-    ORDER BY RCName";
+    WHERE customer.IsSubAgent = \"No\" AND issue.BookID = book.BookID AND order_table.OrdID = ord_line.OrdID AND ord_line.IssueID = issue.IssueID)
+    ORDER BY CustName";
     if (isset($_GET['sql']) && $_GET['sql'] == "true") {
         echo $sql;
         return;

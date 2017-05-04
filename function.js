@@ -7,8 +7,8 @@ var selected_search_field = "";
 var dialog;
 $(document).ready(function() {
     dialog = document.querySelector('dialog');
-    menu = ['home', 'publisher', 'book', 'book-no-bought', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery', 'ord-on-day-sa', 'ord-delivery-sa', 'sa-receipt', 'rc-receipt', 'unique-book', 'ord-delivery-rc', 'ord-on-day-rc', 'ord-info-sa', 'ord-info-rc'];
-    table_page = ['publisher', 'book', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery'];
+    menu = ['home', 'publisher', 'book', 'book-no-bought', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery', 'ord-on-day-sa', 'ord-delivery-sa', 'sa-receipt', 'rc-receipt', 'unique-book', 'ord-delivery-rc', 'ord-on-day-rc', 'ord-info-sa', 'ord-info-rc', 'customer'];
+    table_page = ['publisher', 'book', 'issue', 'ord_line', 'sub_agent', 'regular_cust', 'address', 'order_table', 'delivery', 'customer'];
     complex_page = ['ord-on-day-sa', 'ord-delivery-sa', 'sa-receipt', 'book-no-bought', 'rc-receipt', 'unique-book', 'ord-delivery-rc', 'ord-on-day-rc', 'ord-info-sa', 'ord-info-rc']
     command_map = {
         'ord-on-day-sa': 6,
@@ -166,6 +166,7 @@ function change_page() {
         old_page_html = $(present_page.selector.html());
         $('div.page.' + present_page.str).addClass("show");
         if (table_page.indexOf(present_page.str) != -1) {
+            console.log("connect-data.php?command=1&table=" + present_page.str);
             $.get("connect-data.php?command=1&table=" + present_page.str, function(data) {
                 // console.log(data);
                 var table_json = JSON.parse(data);
